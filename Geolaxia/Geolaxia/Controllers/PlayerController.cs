@@ -1,18 +1,31 @@
-﻿using System;
+﻿using Service.Players;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using log4net;
+using Model;
 
 namespace Geolaxia.Controllers
 {
     public class PlayerController : ApiController
     {
+        private static readonly ILog logger = LogManager.GetLogger(typeof(PlayerController));
+        private IPlayerService service;
+
+        public PlayerController(IPlayerService service)
+        {
+            this.service = service;
+        }
+
         // GET api/<controller>
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            logger.Info("get players");
+            IList<Player> players = service.List();
+            return new string[] { players[0].UserName, players[1].UserName };
         }
 
         // GET api/<controller>/5

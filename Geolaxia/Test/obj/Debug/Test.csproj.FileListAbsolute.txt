@@ -1,0 +1,10 @@
+C:\Users\uriel\Desktop\Facu\Trabajo Profesional\Geolaxia\Geolaxia\Test\bin\Debug\Test.dll
+C:\Users\uriel\Desktop\Facu\Trabajo Profesional\Geolaxia\Geolaxia\Test\bin\Debug\Test.pdb
+C:\Users\uriel\Desktop\Facu\Trabajo Profesional\Geolaxia\Geolaxia\Test\bin\Debug\Castle.Core.dll
+C:\Users\uriel\Desktop\Facu\Trabajo Profesional\Geolaxia\Geolaxia\Test\bin\Debug\Moq.dll
+C:\Users\uriel\Desktop\Facu\Trabajo Profesional\Geolaxia\Geolaxia\Test\bin\Debug\nunit.framework.dll
+C:\Users\uriel\Desktop\Facu\Trabajo Profesional\Geolaxia\Geolaxia\Test\bin\Debug\Castle.Core.xml
+C:\Users\uriel\Desktop\Facu\Trabajo Profesional\Geolaxia\Geolaxia\Test\bin\Debug\Moq.xml
+C:\Users\uriel\Desktop\Facu\Trabajo Profesional\Geolaxia\Geolaxia\Test\bin\Debug\nunit.framework.xml
+C:\Users\uriel\Desktop\Facu\Trabajo Profesional\Geolaxia\Geolaxia\Test\obj\Debug\Test.dll
+C:\Users\uriel\Desktop\Facu\Trabajo Profesional\Geolaxia\Geolaxia\Test\obj\Debug\Test.pdb
