@@ -61,6 +61,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
@@ -74,48 +75,39 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GeolaxiaModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GeolaxiaModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GeolaxiaModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GeolaxiaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GeolaxiaModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GeolaxiaModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Player.cs">
-      <DependentUpon>GeolaxiaModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="BlackPlanet.cs" />
+    <Compile Include="BluePlanet.cs" />
+    <Compile Include="Canon.cs" />
+    <Compile Include="Cost.cs" />
+    <Compile Include="CrystalMine.cs" />
+    <Compile Include="DarkMatterMine.cs" />
+    <Compile Include="EnergyCentral.cs" />
+    <Compile Include="EnergyFuelCentral.cs" />
+    <Compile Include="Facility.cs" />
+    <Compile Include="Galaxy.cs" />
+    <Compile Include="GeolaxiaContext.cs" />
+    <Compile Include="GeolaxiaInitializer.cs" />
+    <Compile Include="MetalMine.cs" />
+    <Compile Include="Military.cs" />
+    <Compile Include="Mine.cs" />
+    <Compile Include="Planet.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Probe.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shield.cs" />
+    <Compile Include="Ship.cs" />
+    <Compile Include="ShipX.cs" />
+    <Compile Include="ShipY.cs" />
+    <Compile Include="ShipZ.cs" />
+    <Compile Include="SolarPanel.cs" />
+    <Compile Include="SolarSystem.cs" />
+    <Compile Include="Trader.cs" />
+    <Compile Include="WhitePlanet.cs" />
+    <Compile Include="WindTurbine.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="GeolaxiaModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>GeolaxiaModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <None Include="App.Config" />
-    <None Include="GeolaxiaModel.edmx.diagram">
-      <DependentUpon>GeolaxiaModel.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="GeolaxiaModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>GeolaxiaModel.edmx</DependentUpon>
-      <LastGenOutput>GeolaxiaModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="GeolaxiaModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>GeolaxiaModel.edmx</DependentUpon>
-      <LastGenOutput>GeolaxiaModel.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

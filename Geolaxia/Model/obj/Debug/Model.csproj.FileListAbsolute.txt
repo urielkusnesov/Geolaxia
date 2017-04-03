@@ -17,3 +17,4 @@ C:\Users\uriel\Desktop\Facu\Trabajo Profesional\Geolaxia\Geolaxia\Model\obj\Debu
 C:\Users\uriel\Desktop\Facu\Trabajo Profesional\Geolaxia\Geolaxia\Model\obj\Debug\Model.pdb
 C:\Users\uriel\Desktop\Facu\Trabajo Profesional\Geolaxia\Geolaxia\Model\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\uriel\Desktop\Facu\Trabajo Profesional\Geolaxia\Geolaxia\Model\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\uriel\Desktop\Facu\Trabajo Profesional\Geolaxia\Geolaxia\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache

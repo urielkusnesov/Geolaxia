@@ -17,7 +17,7 @@ namespace Geolaxia.Dependencies
         {
             // Comunicacion Directa
             // Cuando se solicite una implementacion de IConfiguracionProvider o ConfiguracionProvider, ninject devolverá ConfiguracionProvider
-            Bind<DbContext>().To<GeolaxiaEntities>().InRequestScope();
+            Bind<DbContext>().To<GeolaxiaContext>().InRequestScope();
             Bind<IRepositoryService, RepositoryService>().To<RepositoryService>().InRequestScope();
             Bind<IPlayerService, PlayerService>().To<PlayerService>().InRequestScope();
         }
