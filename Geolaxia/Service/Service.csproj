@@ -63,6 +63,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Planets\IPlanetService.cs" />
+    <Compile Include="Planets\PlanetService.cs" />
     <Compile Include="Players\IPlayerService.cs" />
     <Compile Include="Players\PlayerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

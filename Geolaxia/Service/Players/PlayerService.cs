@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.Players
+namespace Service.Planets
 {
     public class PlayerService : IPlayerService
     {
@@ -21,6 +21,11 @@ namespace Service.Players
         public Player Get(int id)
         {
             return repository.Get<Player>(id);
+        }
+
+        public Player GetByUsername(string username)
+        {
+            return repository.Get<Player>(x => x.UserName == username);
         }
 
         public IList<Player> List(Expression<Func<Player, bool>> filter = null)
@@ -63,6 +68,11 @@ namespace Service.Players
             var result = repository.Remove<Player>(id);
             repository.SaveChanges();
             return result;
+        }
+
+        public bool ValidateToken(string username, string token) 
+        {
+            return repository.Exists<Player>(x => x.UserName == username && x.Token == token);
         }
     }
 }

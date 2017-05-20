@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using Model;
 using System.Linq.Expressions;
 
-namespace Service.Players
+namespace Service.Planets
 {
     public interface IPlayerService
     {
         Player Get(int id);
+
+        Player GetByUsername(string username);
 
         IList<Player> List(Expression<Func<Player, bool>> filter = null);
 
@@ -21,5 +23,7 @@ namespace Service.Players
         Player Remove(Player player);
 
         Player Remove(int id);
+
+        bool ValidateToken(string username, string token);
     }
 }

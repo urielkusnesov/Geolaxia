@@ -7,7 +7,7 @@ using Ninject.Modules;
 using Ninject.Web.Common;
 using Model;
 using Repository;
-using Service.Players;
+using Service.Planets;
 
 namespace Geolaxia.Dependencies
 {

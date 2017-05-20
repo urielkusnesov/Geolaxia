@@ -1,7 +1,7 @@
 ﻿using Geolaxia.Controllers;
 using Moq;
 using NUnit.Framework;
-using Service.Players;
+using Service.Planets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
