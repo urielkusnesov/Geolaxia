@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Model.Enum;
 
 namespace Model
 {
@@ -10,10 +11,41 @@ namespace Model
     {
         protected override void Seed(GeolaxiaContext context)
         {
-            var players = new List<Player> { new Player { Id = 1, UserName = "Uriel" }, new Player { Id = 2, UserName = "Ramiro" } };
+            var players = new List<Player> { 
+                new Player { Id = 1, UserName = "Uriel", FirstName = "Uriel", LastName = "Kusnesov", Password = "pass1" },
+                new Player { Id = 2, UserName = "Ramiro", FirstName = "Ramiro", LastName = "Doi", Password = "pass2" }
+            };
+
             foreach (Player player in players)
             {
                 context.Players.Add(player);
+            }
+
+            var galaxies = new List<Galaxy> { 
+                new Galaxy { Id = 1, Name = "Galaxy" }
+            };
+
+            foreach (Galaxy galaxy in galaxies)
+            {
+                context.Galaxies.Add(galaxy);
+            }
+
+            var solarSystems = new List<SolarSystem> { new SolarSystem { Id = 1, Name = "Solar System", Galaxy = galaxies[0] } };
+            
+            foreach(SolarSystem solarSystem in solarSystems) 
+            {
+                context.SolarSystems.Add(solarSystem); 
+            }
+
+            var planets = new List<Planet> { 
+                new WhitePlanet { Id= 1, PlanetType = PlanetType.White, Name = "White", Conqueror = players[0], Crystal = 100, Metal = 200, DarkMatter = 300, Energy = 400, SolarSystem = solarSystems[0] },
+                new BluePlanet { Id= 2, PlanetType = PlanetType.Blue, Name = "Blue", Conqueror = players[0], Crystal = 10, Metal = 20, DarkMatter = 30, Energy = 40, SolarSystem = solarSystems[0] },
+                new BlackPlanet { Id= 3, PlanetType = PlanetType.Black, Name = "Black", Conqueror = players[1], Crystal = 150, Metal = 250, DarkMatter = 350, Energy = 450, SolarSystem = solarSystems[0] }
+            };
+
+            foreach (Planet planet in planets)
+            {
+                context.Planets.Add(planet);
             }
 
             var shipX = new ShipX { Id = 1, Name = "X1", Attack = 10 };

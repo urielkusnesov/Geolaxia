@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Model.Enum;
 
 namespace Model
 {
     public class WhitePlanet : Planet
     {
+        public WhitePlanet() {
+            this.PlanetType = PlanetType.White;
+        }
     }
 }

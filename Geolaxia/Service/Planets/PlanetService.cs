@@ -17,6 +17,11 @@ namespace Service.Planets
             this.repository = repository;
         }
 
+        public Planet Get(int id)
+        {
+            return repository.Get<Planet>(id);
+        }
+
         public IList<Planet> GetByPlayer(string username)
         {
             var planets = repository.List<Planet>(x => x.Conqueror.UserName == username);

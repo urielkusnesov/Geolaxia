@@ -19,7 +19,7 @@ namespace Model
         public virtual string Password { get; set; }
         public virtual int Level { get; set; }
         public virtual int ResourcesUsed { get; set; }
-        public virtual IList<Planet> planets { get; set; }
+        public virtual IList<Planet> Planets { get; set; }
         public virtual string Token { get; set; }
         public virtual string FirstName { get; set; }
         public virtual string LastName { get; set; }

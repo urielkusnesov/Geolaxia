@@ -72,7 +72,7 @@ namespace Geolaxia.Controllers
                     if (player != null)
                     {
                         var okResponse = new ApiResponse { Data = player, Status = new Status { Result = "ok", Description = "" } };
-                        var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None));
+                        var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore}));
                         return json;
                     }
                 }
@@ -95,7 +95,7 @@ namespace Geolaxia.Controllers
                 {
                     logger.Info(player.UserName + " registered succesfully");
                     var response = new ApiResponse { Status = new Status { Result = "ok", Description = "" } };
-                    JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+                    JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
                     return json;
                 }
                 else

@@ -9,6 +9,8 @@ namespace Service.Planets
 {
     public interface IPlanetService
     {
+        Planet Get(int id);
+
         IList<Planet> GetByPlayer(string username);
     }
 }

@@ -83,6 +83,7 @@
     <Compile Include="DarkMatterMine.cs" />
     <Compile Include="EnergyCentral.cs" />
     <Compile Include="EnergyFuelCentral.cs" />
+    <Compile Include="Enum\PlanetType.cs" />
     <Compile Include="Facility.cs" />
     <Compile Include="Galaxy.cs" />
     <Compile Include="GeolaxiaContext.cs" />

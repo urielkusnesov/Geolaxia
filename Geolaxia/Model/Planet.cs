@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,5 +18,10 @@ namespace Model
         public virtual int Energy { get; set; }
         public virtual bool IsOrigin { get; set; }
         public virtual SolarSystem SolarSystem { get; set; }
+        public virtual int PositionX { get; set; }
+        public virtual int PositionY { get; set; }
+        public virtual int PositionZ { get; set; }
+        //para pasar le herencia al cliente
+        public virtual PlanetType PlanetType { get; set; }
     }
 }
