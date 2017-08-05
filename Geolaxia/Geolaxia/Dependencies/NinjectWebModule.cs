@@ -20,6 +20,7 @@ namespace Geolaxia.Dependencies
             Bind<DbContext>().To<GeolaxiaContext>().InRequestScope();
             Bind<IRepositoryService, RepositoryService>().To<RepositoryService>().InRequestScope();
             Bind<IPlayerService, PlayerService>().To<PlayerService>().InRequestScope();
+            Bind<IPlanetService, PlanetService>().To<PlanetService>().InRequestScope();
         }
     }
 }

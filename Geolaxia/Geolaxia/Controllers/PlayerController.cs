@@ -18,10 +18,12 @@ namespace Geolaxia.Controllers
     {
         private static readonly ILog logger = LogManager.GetLogger(typeof(PlayerController));
         private IPlayerService service;
+        private IPlanetService planetService;
 
-        public PlayerController(IPlayerService service)
+        public PlayerController(IPlayerService service, IPlanetService planetService)
         {
             this.service = service;
+            this.planetService = planetService;
         }
 
         // GET api/player/getall
@@ -64,16 +66,19 @@ namespace Geolaxia.Controllers
                 var player = service.GetByUsername(username);
                 if (player != null)
                 {
-                    logger.Info(username + " logged in succesfully");
-                    string token = System.Guid.NewGuid().ToString();
-                    //save the new token
-                    player.Token = token;
-                    player = service.Update(player.Id, player);
-                    if (player != null)
+                    if (player.Password == password)
                     {
-                        var okResponse = new ApiResponse { Data = player, Status = new Status { Result = "ok", Description = "" } };
-                        var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore}));
-                        return json;
+                        logger.Info(username + " logged in succesfully");
+                        string token = System.Guid.NewGuid().ToString();
+                        //save the new token
+                        player.Token = token;
+                        player = service.Update(player.Id, player);
+                        if (player != null)
+                        {
+                            var okResponse = new ApiResponse { Data = player, Status = new Status { Result = "ok", Description = "" } };
+                            var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                            return json;
+                        }
                     }
                 }
                 var response = new ApiResponse { Status = new Status { Result = "error", Description = "Usuario o contraseña incorrectos" } };
@@ -84,12 +89,85 @@ namespace Geolaxia.Controllers
             return JObject.Parse(JsonConvert.SerializeObject(responseError, Formatting.None));
         }
 
+        // GET api/player/facebooklogin/
+        [HttpGet]
+        public JObject FacebookLogin()
+        {
+            var userId = "";
+            var token = "";
+            var username = "";
+            var email = "";
+            var firstName = "";
+            var lastName = "";
+
+            var request = Request;
+            var headers = request.Headers;
+            if (!headers.Contains("userid") || !headers.Contains("token") || !headers.Contains("username") || !headers.Contains("email") || !headers.Contains("firstName") || !headers.Contains("lastName"))
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "Request invalido" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
+
+            userId = headers.GetValues("userid").First();
+            token = headers.GetValues("token").First();
+            username = headers.GetValues("username").First();
+            email = headers.GetValues("email").First();
+            firstName = headers.GetValues("firstName").First();
+            lastName = headers.GetValues("lastName").First();
+
+            if (!String.IsNullOrEmpty(userId) && !String.IsNullOrEmpty(token) && !String.IsNullOrEmpty(username))
+            {
+                logger.Info("loging in for facebook user: " + userId);
+                var player = service.GetByFacebookId(userId);
+                if (player != null)
+                {
+                    logger.Info(username + " logged in succesfully");
+                    //save the new token
+                    player.Token = token;
+                    player = service.Update(player.Id, player);
+                    if (player != null)
+                    {
+                        var okResponse = new ApiResponse { Data = player, Status = new Status { Result = "ok", Description = "" } };
+                        var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                        return json;
+                    }
+                }
+                else
+                {
+                    var newPlayer = new Player();
+                    newPlayer.UserName = username;
+                    newPlayer.Token = token;
+                    newPlayer.Email = email;
+                    newPlayer.FacebookId = userId;
+                    newPlayer.FirstName = firstName;
+                    newPlayer.LastName = lastName;
+
+                    var registerResponse = Register(newPlayer);
+                    if (registerResponse["Status"]["Result"].ToString().Equals("ok"))
+                    {
+                        var okResponse = new ApiResponse { Data = newPlayer, Status = new Status { Result = "ok", Description = "" } };
+                        var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                        return json;
+                    }
+
+                    return registerResponse;
+                }
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "Ocurrio un error registrando el usuario" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
+
+            var responseError = new ApiResponse { Status = new Status { Result = "error", Description = "Ocurrio un error validando el usuario. Intente nuevamente" } };
+            return JObject.Parse(JsonConvert.SerializeObject(responseError, Formatting.None));
+        }
+
         // POST api/player/register (json player in body)
+        [HttpPost]
         public JObject Register(Player player)
         {
             logger.Info("registering new player");
             try
             {
+                player.Planets.Add(AssignInitialPlanet());
                 var newPlayer = service.Add(player);
                 if (newPlayer != null)
                 {
@@ -111,6 +189,11 @@ namespace Geolaxia.Controllers
                 JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
                 return json;
             }
+        }
+
+        private Planet AssignInitialPlanet()
+        {
+            return planetService.GetRandomFreePlanet();
         }
 
         // PUT api/player/update/id (json player in body)

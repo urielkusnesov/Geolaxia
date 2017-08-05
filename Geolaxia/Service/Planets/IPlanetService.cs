@@ -12,5 +12,7 @@ namespace Service.Planets
         Planet Get(int id);
 
         IList<Planet> GetByPlayer(string username);
+
+        Planet GetRandomFreePlanet();
     }
 }

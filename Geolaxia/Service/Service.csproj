@@ -63,6 +63,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attacks\AttackService.cs" />
+    <Compile Include="Attacks\IAttackService.cs" />
     <Compile Include="Planets\IPlanetService.cs" />
     <Compile Include="Planets\PlanetService.cs" />
     <Compile Include="Players\IPlayerService.cs" />

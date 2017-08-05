@@ -14,6 +14,8 @@ namespace Service.Planets
 
         Player GetByUsername(string username);
 
+        Player GetByFacebookId(string userId);
+
         IList<Player> List(Expression<Func<Player, bool>> filter = null);
 
         Player Add(Player player);

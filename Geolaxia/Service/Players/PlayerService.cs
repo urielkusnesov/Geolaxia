@@ -28,6 +28,11 @@ namespace Service.Planets
             return repository.Get<Player>(x => x.UserName == username);
         }
 
+        public Player GetByFacebookId(string userId)
+        {
+            return repository.Get<Player>(x => x.FacebookId == userId);
+        }
+
         public IList<Player> List(Expression<Func<Player, bool>> filter = null)
         {
             return repository.List<Player>(filter);

@@ -151,3 +151,5 @@ C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\obj\Debug\Geolaxia.csproj.
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\obj\Debug\Geolaxia.csprojResolveAssemblyReference.cache
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\obj\Debug\Geolaxia.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\obj\Debug\Geolaxia.pdb
+C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\System.Net.Http.Primitives.dll
+C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\System.Net.Http.Primitives.xml

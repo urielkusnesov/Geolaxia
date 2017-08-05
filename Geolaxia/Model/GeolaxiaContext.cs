@@ -22,9 +22,12 @@ namespace Model
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            //el initializer es dropcreatedatabase
             Database.SetInitializer<GeolaxiaContext>(new GeolaxiaInitializer());
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
+            modelBuilder.Entity<Attack>().ToTable("Attack");
+            modelBuilder.Entity<Cost>().ToTable("Cost");
             modelBuilder.Entity<BlackPlanet>().ToTable("BlackPlanet");
             modelBuilder.Entity<WhitePlanet>().ToTable("WhitePlanet");
             modelBuilder.Entity<BluePlanet>().ToTable("BluePlanet");
@@ -44,6 +47,8 @@ namespace Model
             modelBuilder.Entity<SolarPanel>().ToTable("SolarPanel");
             modelBuilder.Entity<Trader>().ToTable("Trader");
             modelBuilder.Entity<WindTurbine>().ToTable("WindTurbine");
+            modelBuilder.Entity<Facility>().ToTable("Facility");
+
 
         }
 
@@ -73,5 +78,6 @@ namespace Model
         public DbSet<ShipZ> ShipsZ { get; set; }
         public DbSet<Trader> Traders { get; set; }
         public DbSet<Probe> Probes { get; set; }
+        public DbSet<Attack> Attacks { get; set; }
     }
 }
