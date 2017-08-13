@@ -3,6 +3,7 @@ using log4net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Service.Planets;
+using Service.Players;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +13,13 @@ using System.Web.Http;
 
 namespace Geolaxia.Controllers
 {
-    public class PlanetController : ApiController
+    public class PlanetController : BaseController
     {
         private static readonly ILog logger = LogManager.GetLogger(typeof(PlanetController));
         private IPlanetService service;
         private IPlayerService playerService;
 
-        public PlanetController(IPlanetService service, IPlayerService playerService)
+        public PlanetController(IPlanetService service, IPlayerService playerService) : base(playerService)
         {
             this.service = service;
             this.playerService = playerService;
@@ -28,25 +29,14 @@ namespace Geolaxia.Controllers
         [HttpGet]
         public JObject GetByPlayer()
         {
-            string username = "";
-            string token = "";
-            var request = Request;
-            var headers = request.Headers;
-            if (!headers.Contains("username") || !headers.Contains("token"))
+            if (!ValidateToken())
             {
-                var response = new ApiResponse { Status = new Status { Result = "error", Description = "Sesión invalida" } };
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
                 return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
             }
-            username = headers.GetValues("username").First();
-            token = headers.GetValues("token").First();
 
-            logger.Info("getting planets for player " + username);
-
-            if (!playerService.ValidateToken(username, token)) 
-            {
-                var response = new ApiResponse { Status = new Status { Result = "error", Description = "Token invalido" } };
-                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
-            }
+            var headers = Request.Headers;
+            string username = headers.GetValues("username").First();
 
             try
             {

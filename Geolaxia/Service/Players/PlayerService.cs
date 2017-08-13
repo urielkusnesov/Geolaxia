@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.Planets
+namespace Service.Players
 {
     public class PlayerService : IPlayerService
     {

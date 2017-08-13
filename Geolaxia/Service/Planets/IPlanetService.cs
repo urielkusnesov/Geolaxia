@@ -13,6 +13,12 @@ namespace Service.Planets
 
         IList<Planet> GetByPlayer(string username);
 
+        IList<Planet> GetBySolarSystem(int solarSystemId);
+
         Planet GetRandomFreePlanet();
+
+        IList<Galaxy> GetAllGalaxies();
+
+        IList<SolarSystem> GetSolarSystemsByGalaxy(int galaxyId);
     }
 }

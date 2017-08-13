@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Model;
+using Model.DTO;
 
 namespace Service.Attacks
 {
@@ -16,5 +17,7 @@ namespace Service.Attacks
         Attack Remove(Attack attack);
 
         Attack Remove(int id);
+
+        Attack GetFromDTO(AttackDTO attackDTO);
     }
 }

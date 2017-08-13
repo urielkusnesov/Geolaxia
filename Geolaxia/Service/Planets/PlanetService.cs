@@ -30,6 +30,12 @@ namespace Service.Planets
             return planets;
         }
 
+        public IList<Planet> GetBySolarSystem(int solarSystemId)
+        {
+            var planets = repository.List<Planet>(x => x.SolarSystem.Id == solarSystemId);
+            return planets;
+        }
+
         public Planet GetRandomFreePlanet()
         {
             var planets = repository.List<Planet>(x => x.Conqueror == null);
@@ -69,6 +75,16 @@ namespace Service.Planets
             {
                 repository.Add<Planet>(planet);
             }
+        }
+
+        public IList<Galaxy> GetAllGalaxies()
+        {
+            return repository.List<Galaxy>();
+        }
+
+        public IList<SolarSystem> GetSolarSystemsByGalaxy(int galaxyId)
+        {
+            return repository.List<SolarSystem>(x => x.Galaxy.Id == galaxyId);
         }
     }
 }

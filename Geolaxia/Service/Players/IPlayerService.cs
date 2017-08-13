@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Model;
 using System.Linq.Expressions;
 
-namespace Service.Planets
+namespace Service.Players
 {
     public interface IPlayerService
     {

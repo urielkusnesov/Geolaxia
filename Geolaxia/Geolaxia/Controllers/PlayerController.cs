@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Geolaxia.Models;
 using System.Web.Helpers;
 using Newtonsoft.Json.Linq;
+using Service.Players;
 
 namespace Geolaxia.Controllers
 {
