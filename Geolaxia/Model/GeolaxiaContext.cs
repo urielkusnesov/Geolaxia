@@ -26,58 +26,66 @@ namespace Model
             Database.SetInitializer<GeolaxiaContext>(new GeolaxiaInitializer());
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
-            modelBuilder.Entity<Attack>().ToTable("Attack");
+            modelBuilder.Entity<Player>().ToTable("Player");
             modelBuilder.Entity<Cost>().ToTable("Cost");
-            modelBuilder.Entity<BlackPlanet>().ToTable("BlackPlanet");
+            modelBuilder.Entity<Galaxy>().ToTable("Galaxy");
+            modelBuilder.Entity<SolarSystem>().ToTable("SolarSystem");
             modelBuilder.Entity<WhitePlanet>().ToTable("WhitePlanet");
             modelBuilder.Entity<BluePlanet>().ToTable("BluePlanet");
-            modelBuilder.Entity<Canon>().ToTable("Canon");
+            modelBuilder.Entity<BlackPlanet>().ToTable("BlackPlanet");
+            modelBuilder.Entity<Facility>().ToTable("Facility");
+            modelBuilder.Entity<EnergyCentral>().ToTable("EnergyCentral");
+            modelBuilder.Entity<EnergyFuelCentral>().ToTable("EnergyFuelCentral");
             modelBuilder.Entity<CrystalMine>().ToTable("CrystalMine");
             modelBuilder.Entity<MetalMine>().ToTable("MetalMine");
             modelBuilder.Entity<DarkMatterMine>().ToTable("DarkMatterMine");
-            modelBuilder.Entity<EnergyCentral>().ToTable("EnergyCentral");
-            modelBuilder.Entity<EnergyFuelCentral>().ToTable("EnergyFuelCentral");
-            modelBuilder.Entity<Mine>().ToTable("Mine");
-            modelBuilder.Entity<Probe>().ToTable("Probe");
+            modelBuilder.Entity<SolarPanel>().ToTable("SolarPanel");
+            modelBuilder.Entity<WindTurbine>().ToTable("WindTurbine");
+            modelBuilder.Entity<Canon>().ToTable("Canon");
             modelBuilder.Entity<Shield>().ToTable("Shield");
-            modelBuilder.Entity<Ship>().ToTable("Ship");
             modelBuilder.Entity<ShipX>().ToTable("ShipX");
             modelBuilder.Entity<ShipY>().ToTable("ShipY");
             modelBuilder.Entity<ShipZ>().ToTable("ShipZ");
-            modelBuilder.Entity<SolarPanel>().ToTable("SolarPanel");
             modelBuilder.Entity<Trader>().ToTable("Trader");
-            modelBuilder.Entity<WindTurbine>().ToTable("WindTurbine");
-            modelBuilder.Entity<Facility>().ToTable("Facility");
+            modelBuilder.Entity<Probe>().ToTable("Probe");
+            modelBuilder.Entity<Attack>().ToTable("Attack");
 
-
+            //abstract classes, we use TPT inheritance strategy
+            modelBuilder.Entity<Military>().ToTable("Military");
+            modelBuilder.Entity<Mine>().ToTable("Mine");
+            modelBuilder.Entity<Planet>().ToTable("Planet");
+            modelBuilder.Entity<Ship>().ToTable("Ship");
         }
 
         public DbSet<Player> Players { get; set; }
         public DbSet<Cost> Costs { get; set; }
         public DbSet<Galaxy> Galaxies { get; set; }
         public DbSet<SolarSystem> SolarSystems { get; set; }
-        public DbSet<Planet> Planets { get; set; }
         public DbSet<WhitePlanet> WhitePlanets { get; set; }
         public DbSet<BluePlanet> BluePlanets { get; set; }
         public DbSet<BlackPlanet> BlackPlanets { get; set; }
         public DbSet<Facility> Facilities { get; set; }
         public DbSet<EnergyCentral> EnergyCentrals { get; set; }
         public DbSet<EnergyFuelCentral> EnergyFuelCentrals { get; set; }
-        public DbSet<Mine> Mines { get; set; }
         public DbSet<CrystalMine> CrystalMines { get; set; }
         public DbSet<MetalMine> MetalMines { get; set; }
         public DbSet<DarkMatterMine> DarkMatterMines { get; set; }
         public DbSet<SolarPanel> SolarPanel { get; set; }
         public DbSet<WindTurbine> WindTurbine { get; set; }
-        public DbSet<Military> Militaries { get; set; }
         public DbSet<Canon> Canons { get; set; }
         public DbSet<Shield> Shields { get; set; }
-        public DbSet<Ship> Ships { get; set; }
         public DbSet<ShipX> ShipsX { get; set; }
         public DbSet<ShipY> ShipsY { get; set; }
         public DbSet<ShipZ> ShipsZ { get; set; }
         public DbSet<Trader> Traders { get; set; }
         public DbSet<Probe> Probes { get; set; }
         public DbSet<Attack> Attacks { get; set; }
+
+        //abstract classes
+        public DbSet<Military> Militaries { get; set; }
+        public DbSet<Mine> Mines { get; set; }
+        public DbSet<Planet> Planets { get; set; }
+        public DbSet<Ship> Ships { get; set; }
+
     }
 }

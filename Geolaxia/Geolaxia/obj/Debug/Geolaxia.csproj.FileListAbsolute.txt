@@ -107,12 +107,9 @@ C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\Model.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\Newtonsoft.Json.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\Ninject.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\Ninject.Web.Common.dll
-C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\Ninject.Web.Mvc.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\Repository.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\Service.dll
-C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\System.Net.Http.Extensions.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\System.Net.Http.Formatting.dll
-C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\System.Web.Helpers.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\System.Web.Http.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\System.Web.Http.WebHost.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\System.Web.Mvc.dll
@@ -134,10 +131,7 @@ C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\log4net.xml
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\Newtonsoft.Json.xml
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\Ninject.xml
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\Ninject.Web.Common.xml
-C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\Ninject.Web.Mvc.xml
-C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\System.Net.Http.Extensions.xml
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\System.Net.Http.Formatting.xml
-C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\System.Web.Helpers.xml
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\System.Web.Http.xml
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\System.Web.Http.WebHost.xml
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\System.Web.Mvc.xml
@@ -147,9 +141,6 @@ C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\System.Web.Razor.xml
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\System.Web.WebPages.xml
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\System.Web.WebPages.Deployment.xml
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\System.Web.WebPages.Razor.xml
-C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\obj\Debug\Geolaxia.csproj.App.config
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\obj\Debug\Geolaxia.csprojResolveAssemblyReference.cache
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\obj\Debug\Geolaxia.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\obj\Debug\Geolaxia.pdb
-C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\System.Net.Http.Primitives.dll
-C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Geolaxia\bin\System.Net.Http.Primitives.xml

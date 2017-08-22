@@ -7,25 +7,26 @@ using Newtonsoft.Json.Linq;
 using Service.Attacks;
 using Service.Planets;
 using Service.Players;
+using Service.Ships;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Http;
 
 namespace Geolaxia.Controllers
 {
     public class AttackController : BaseController
     {
-        private static readonly ILog logger = LogManager.GetLogger(typeof(PlanetController));
+        private static readonly ILog logger = LogManager.GetLogger(typeof(AttackController));
         private IPlayerService playerService;
         private IPlanetService planetService;
+        private IShipService shipService;
         private IAttackService service;
 
-        public AttackController(IAttackService service, IPlayerService playerService, IPlanetService planetService) : base(playerService)
+        public AttackController(IAttackService service, IPlayerService playerService, IPlanetService planetService, IShipService shipService) : base(playerService)
         {
             this.service = service;
             this.planetService = planetService;
+            this.shipService = shipService;
         }
 
         // POST api/attack/attack (json attack in body)
@@ -65,7 +66,8 @@ namespace Geolaxia.Controllers
             }
         }
 
-        // POST api/attack/galaxies
+        //api/attack/galaxies
+        [HttpGet]
         public JObject Galaxies()
         {
             if (!ValidateToken())
@@ -82,7 +84,7 @@ namespace Geolaxia.Controllers
                 var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
                 return json;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
                 JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
@@ -90,7 +92,8 @@ namespace Geolaxia.Controllers
             }
         }
 
-        // POST api/attack/solarsystems
+        //api/attack/solarsystems
+        [HttpPost]
         public JObject SolarSystems(int galaxyId)
         {
             if (!ValidateToken())
@@ -102,12 +105,12 @@ namespace Geolaxia.Controllers
             logger.Info("getting solar systems in galaxy: " + galaxyId);
             try
             {
-                IList<SolarSystem> solarSystems = planetService.GetSolarSystemsByGalaxy(galaxyId);
+                IList<SolarSystem> solarSystems = planetService.GetSolarSystemsByGalaxy(Convert.ToInt32(galaxyId));
                 var okResponse = new ApiResponse { Data = solarSystems, Status = new Status { Result = "ok", Description = "" } };
                 var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
                 return json;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
                 JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
@@ -115,8 +118,9 @@ namespace Geolaxia.Controllers
             }
         }
 
-        // POST api/attack/planetbyss
-        public JObject SolarSystems(int solarSystemId)
+        //api/attack/planetbyss
+        [HttpPost]
+        public JObject PlanetsBySS(int solarSystemId)
         {
             if (!ValidateToken())
             {
@@ -132,7 +136,33 @@ namespace Geolaxia.Controllers
                 var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
                 return json;
             }
-            catch (Exception e)
+            catch (Exception ex)
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
+                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+                return json;
+            }
+        }
+
+        //api/attack/fleet
+        [HttpPost]
+        public JObject Fleet(int planetId)
+        {
+            if (!ValidateToken())
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
+
+            logger.Info("getting fleet from planet: " + planetId);
+            try
+            {
+                IList<Ship> ships = shipService.GetByPlanet(planetId);
+                var okResponse = new ApiResponse { Data = ships, Status = new Status { Result = "ok", Description = "" } };
+                var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                return json;
+            }
+            catch (Exception ex)
             {
                 var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
                 JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));

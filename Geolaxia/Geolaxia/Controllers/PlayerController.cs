@@ -2,14 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using log4net;
 using Model;
 using Newtonsoft.Json;
 using Geolaxia.Models;
-using System.Web.Helpers;
 using Newtonsoft.Json.Linq;
 using Service.Players;
 
@@ -168,7 +165,7 @@ namespace Geolaxia.Controllers
             logger.Info("registering new player");
             try
             {
-                player.Planets.Add(AssignInitialPlanet());
+                player.Planets = new List<Planet> {AssignInitialPlanet()};
                 var newPlayer = service.Add(player);
                 if (newPlayer != null)
                 {

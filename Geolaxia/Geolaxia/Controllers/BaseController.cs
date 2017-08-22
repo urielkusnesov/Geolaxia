@@ -1,14 +1,6 @@
-﻿using Geolaxia.Models;
-using log4net;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Service.Planets;
+﻿using log4net;
 using Service.Players;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace Geolaxia.Controllers
@@ -38,12 +30,7 @@ namespace Geolaxia.Controllers
 
             logger.Info("getting planets for player " + username);
 
-            if (!playerService.ValidateToken(username, token))
-            {
-                return false;
-            }
-
-            return true;
+            return playerService.ValidateToken(username, token);
         }
     }
 }

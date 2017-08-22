@@ -1,9 +1,6 @@
 ﻿using Ninject;
 using Ninject.Syntax;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Http.Dependencies;
 
 namespace Geolaxia.App_Start

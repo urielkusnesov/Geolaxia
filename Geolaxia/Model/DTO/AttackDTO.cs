@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Model.DTO
 {
@@ -13,7 +10,7 @@ namespace Model.DTO
         public int AttackerPlanetId { get; set; }
         public int DestinationPlayerId { get; set; }
         public int DestinationPlanetId { get; set; }
-        public List<int> FleetIds { get; set; }
+        public IList<int> FleetIds { get; set; }
         public DateTime FleetDeparture { get; set; }
         public DateTime FleetArrival { get; set; }
     }

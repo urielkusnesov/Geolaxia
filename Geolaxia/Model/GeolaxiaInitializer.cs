@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Model.Enum;
 
 namespace Model
@@ -54,7 +50,7 @@ namespace Model
                 context.Planets.Add(planet);
             }
 
-            var shipX = new ShipX { Id = 1, Name = "X1", Attack = 10 };
+            var shipX = new ShipX { Id = 1, Name = "X1", Attack = 10, Planet = planets[0]};
             context.ShipsX.Add(shipX);
 
             context.SaveChanges();
