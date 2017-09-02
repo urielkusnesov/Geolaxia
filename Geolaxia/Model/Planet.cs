@@ -6,6 +6,7 @@ namespace Model
     {
         public virtual int Id { get; set; }
         public virtual string Name { get; set; }
+        public virtual int Order { get; set; }
         public virtual Player Conqueror { get; set; }
         public virtual int Crystal { get; set; }
         public virtual int Metal { get; set; }

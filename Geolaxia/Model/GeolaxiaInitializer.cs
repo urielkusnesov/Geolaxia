@@ -34,15 +34,15 @@ namespace Model
             }
 
             var planets = new List<Planet> { 
-                new WhitePlanet { Id= 1, PlanetType = PlanetType.White, Name = "White", Conqueror = players[0], Crystal = 100, Metal = 200, DarkMatter = 300, Energy = 400, SolarSystem = solarSystems[0] },
-                new BluePlanet { Id= 2, PlanetType = PlanetType.Blue, Name = "Blue", Conqueror = players[0], Crystal = 10, Metal = 20, DarkMatter = 30, Energy = 40, SolarSystem = solarSystems[0] },
-                new BlackPlanet { Id= 3, PlanetType = PlanetType.Black, Name = "Black", Conqueror = players[1], Crystal = 150, Metal = 250, DarkMatter = 350, Energy = 450, SolarSystem = solarSystems[0] },
-                new WhitePlanet { Id= 4, PlanetType = PlanetType.White, Name = "White2", Crystal = 100, Metal = 200, DarkMatter = 300, Energy = 400, SolarSystem = solarSystems[0] },
-                new BluePlanet { Id= 5, PlanetType = PlanetType.Blue, Name = "Blue2", Crystal = 10, Metal = 20, DarkMatter = 30, Energy = 40, SolarSystem = solarSystems[0] },
-                new BlackPlanet { Id= 6, PlanetType = PlanetType.Black, Name = "Black2", Crystal = 150, Metal = 250, DarkMatter = 350, Energy = 450, SolarSystem = solarSystems[0] },
-                new WhitePlanet { Id= 7, PlanetType = PlanetType.White, Name = "White3", Crystal = 100, Metal = 200, DarkMatter = 300, Energy = 400, SolarSystem = solarSystems[0] },
-                new BluePlanet { Id= 8, PlanetType = PlanetType.Blue, Name = "Blue3", Crystal = 10, Metal = 20, DarkMatter = 30, Energy = 40, SolarSystem = solarSystems[0] },
-                new BlackPlanet { Id= 9, PlanetType = PlanetType.Black, Name = "Black3", Crystal = 150, Metal = 250, DarkMatter = 350, Energy = 450, SolarSystem = solarSystems[0] }
+                new WhitePlanet { Id= 1, PlanetType = PlanetType.White, Name = "White", Order = 1, Conqueror = players[0], Crystal = 100, Metal = 200, DarkMatter = 300, Energy = 400, SolarSystem = solarSystems[0] },
+                new BluePlanet { Id= 2, PlanetType = PlanetType.Blue, Name = "Blue", Order = 2, Conqueror = players[0], Crystal = 10, Metal = 20, DarkMatter = 30, Energy = 40, SolarSystem = solarSystems[0] },
+                new BlackPlanet { Id= 3, PlanetType = PlanetType.Black, Name = "Black", Order = 3, Conqueror = players[1], Crystal = 150, Metal = 250, DarkMatter = 350, Energy = 450, SolarSystem = solarSystems[0] },
+                new WhitePlanet { Id= 4, PlanetType = PlanetType.White, Name = "White2", Order = 4, Crystal = 100, Metal = 200, DarkMatter = 300, Energy = 400, SolarSystem = solarSystems[0] },
+                new BluePlanet { Id= 5, PlanetType = PlanetType.Blue, Name = "Blue2", Order = 5, Crystal = 10, Metal = 20, DarkMatter = 30, Energy = 40, SolarSystem = solarSystems[0] },
+                new BlackPlanet { Id= 6, PlanetType = PlanetType.Black, Name = "Black2", Order = 6, Crystal = 150, Metal = 250, DarkMatter = 350, Energy = 450, SolarSystem = solarSystems[0] },
+                new WhitePlanet { Id= 7, PlanetType = PlanetType.White, Name = "White3", Order = 7, Crystal = 100, Metal = 200, DarkMatter = 300, Energy = 400, SolarSystem = solarSystems[0] },
+                new BluePlanet { Id= 8, PlanetType = PlanetType.Blue, Name = "Blue3", Order = 8, Crystal = 10, Metal = 20, DarkMatter = 30, Energy = 40, SolarSystem = solarSystems[0] },
+                new BlackPlanet { Id= 9, PlanetType = PlanetType.Black, Name = "Black3", Order = 9, Crystal = 150, Metal = 250, DarkMatter = 350, Energy = 450, SolarSystem = solarSystems[0] }
             };
 
             foreach (Planet planet in planets)
@@ -50,7 +50,7 @@ namespace Model
                 context.Planets.Add(planet);
             }
 
-            var shipX = new ShipX { Id = 1, Name = "X1", Attack = 10, Planet = planets[0]};
+            var shipX = new ShipX { Id = 1, Name = "X1", Attack = 10, Planet = planets[0], Speed = 10};
             context.ShipsX.Add(shipX);
 
             context.SaveChanges();

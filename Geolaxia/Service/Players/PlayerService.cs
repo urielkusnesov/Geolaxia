@@ -76,5 +76,21 @@ namespace Service.Players
         {
             return repository.Exists<Player>(x => x.UserName == username && x.Token == token);
         }
+
+        public bool SetPosition(string latitude, string longitude, int id)
+        {
+            try
+            {
+                var player = repository.Get<Player>(id);
+                player.lastLatitude = latitude;
+                player.lastLongitude = longitude;
+                repository.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

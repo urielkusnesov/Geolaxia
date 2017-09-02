@@ -189,6 +189,14 @@ namespace Geolaxia.Controllers
             }
         }
 
+        // POST api/player/setposition (json player in body)
+        [HttpPost]
+        public void SetPosition(Player player)
+        {
+            logger.Info("Seteando la ultima posicion del jugador");
+            service.SetPosition(player.lastLatitude, player.lastLongitude);
+        }
+
         private Planet AssignInitialPlanet()
         {
             return planetService.GetRandomFreePlanet();

@@ -1,4 +1,6 @@
-﻿using Model;
+﻿using System;
+using System.Collections.Generic;
+using Model;
 using Model.DTO;
 using Repository;
 using Service.Planets;
@@ -48,6 +50,9 @@ namespace Service.Attacks
 
         public Attack GetFromDTO(AttackDTO dto)
         {
+            List<string> fleetIds = dto.FleetIds.Split(',').ToList();
+            List<int> attackFleet = fleetIds.Select(fleet => Convert.ToInt32(fleet)).ToList();
+
             return new Attack
             {
                 Id = dto.Id,
@@ -55,7 +60,7 @@ namespace Service.Attacks
                 AttackerPlanet = planetService.Get(dto.DestinationPlanetId),
                 DestinationPlayer = playerService.Get(dto.DestinationPlayerId),
                 DestinationPlanet = planetService.Get(dto.DestinationPlanetId),
-                Fleet = repository.List<Ship>(x => dto.FleetIds.Contains(x.Id)).ToList(),
+                Fleet = repository.List<Ship>(x => attackFleet.Contains(x.Id)).ToList(),
                 FleetDeparture = dto.FleetDeparture,
                 FleetArrival = dto.FleetArrival
             };

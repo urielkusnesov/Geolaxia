@@ -24,5 +24,7 @@ namespace Service.Players
         Player Remove(int id);
 
         bool ValidateToken(string username, string token);
+
+        bool SetPosition(string latitude, string longitude);
     }
 }

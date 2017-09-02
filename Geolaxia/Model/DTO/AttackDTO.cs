@@ -10,7 +10,7 @@ namespace Model.DTO
         public int AttackerPlanetId { get; set; }
         public int DestinationPlayerId { get; set; }
         public int DestinationPlanetId { get; set; }
-        public IList<int> FleetIds { get; set; }
+        public string FleetIds { get; set; }
         public DateTime FleetDeparture { get; set; }
         public DateTime FleetArrival { get; set; }
     }

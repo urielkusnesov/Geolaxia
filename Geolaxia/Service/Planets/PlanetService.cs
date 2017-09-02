@@ -3,6 +3,7 @@ using Model.Enum;
 using Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Service.Planets
 {
@@ -29,7 +30,7 @@ namespace Service.Planets
 
         public IList<Planet> GetBySolarSystem(int solarSystemId)
         {
-            var planets = repository.List<Planet>(x => x.SolarSystem.Id == solarSystemId);
+            var planets = repository.List<Planet>(x => x.SolarSystem.Id == solarSystemId).OrderBy(x => x.Order).ToList();
             return planets;
         }
 
