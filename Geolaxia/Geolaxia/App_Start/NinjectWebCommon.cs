@@ -1,18 +1,17 @@
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Geolaxia.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(Geolaxia.App_Start.NinjectWebCommon), "Stop")]
+using System;
+using System.Web;
+using System.Web.Http;
+using Geolaxia;
+using Geolaxia.Dependencies;
+using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+using Ninject;
+using Ninject.Web.Common;
 
-namespace Geolaxia.App_Start
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(NinjectWebCommon), "Start")]
+[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(NinjectWebCommon), "Stop")]
+
+namespace Geolaxia
 {
-    using System;
-    using System.Web;
-
-    using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-
-    using Ninject;
-    using Ninject.Web.Common;
-    using Geolaxia.Dependencies;
-    using System.Web.Http;
-
     public static class NinjectWebCommon
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();

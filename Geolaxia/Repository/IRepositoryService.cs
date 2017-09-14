@@ -23,5 +23,7 @@ namespace Repository
         TEntidad Remove<TEntidad>(object id) where TEntidad : class;
 
         int SaveChanges();
+
+        IList<int> ExecuteListQuery(string sql);
     }
 }

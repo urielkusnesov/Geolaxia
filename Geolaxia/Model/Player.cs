@@ -25,7 +25,7 @@ namespace Model
         public virtual string LastName { get; set; }
         public virtual string Email { get; set; }
         public virtual string FacebookId { get; set; }
-        public virtual string lastLatitude { get; set; }
-        public virtual string lastLongitude { get; set; }
+        public virtual string LastLatitude { get; set; }
+        public virtual string LastLongitude { get; set; }
     }
 }

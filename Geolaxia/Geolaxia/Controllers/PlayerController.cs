@@ -194,7 +194,7 @@ namespace Geolaxia.Controllers
         public void SetPosition(Player player)
         {
             logger.Info("Seteando la ultima posicion del jugador");
-            service.SetPosition(player.lastLatitude, player.lastLongitude);
+            service.SetPosition(player.LastLatitude, player.LastLongitude, player.Id);
         }
 
         private Planet AssignInitialPlanet()

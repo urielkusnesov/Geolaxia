@@ -82,8 +82,8 @@ namespace Service.Players
             try
             {
                 var player = repository.Get<Player>(id);
-                player.lastLatitude = latitude;
-                player.lastLongitude = longitude;
+                player.LastLatitude = latitude;
+                player.LastLongitude = longitude;
                 repository.SaveChanges();
                 return true;
             }
@@ -92,5 +92,20 @@ namespace Service.Players
                 return false;
             }
         }
-    }
+
+        public IList<Player> GetCloserPlayers(string username)
+        {
+            var player = repository.Get<Player>(x => x.UserName == username);
+
+            var sql = String.Format("declare @geo1 geography = geography::Point({0}, {1}, 4326)" +
+                                    "select Id from Player " +
+                                    "where @geo1.STDistance(geography::Point(LastLatitude, LastLongitude, 4326)) / 1000 < 5 and Id <> {2}", 
+                                    player.LastLatitude, player.LastLongitude, player.Id);
+            var playerIds = repository.ExecuteListQuery(sql);
+
+            var closerPlayers = repository.List<Player>(x => playerIds.Contains(x.Id));
+
+            return closerPlayers;
+        }
+     }
 }

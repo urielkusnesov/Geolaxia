@@ -4,6 +4,7 @@ using Ninject.Web.Common;
 using Model;
 using Repository;
 using Service.Attacks;
+using Service.Defenses;
 using Service.Planets;
 using Service.Players;
 using Service.Ships;
@@ -22,6 +23,7 @@ namespace Geolaxia.Dependencies
             Bind<IPlanetService, PlanetService>().To<PlanetService>().InRequestScope();
             Bind<IShipService, ShipService>().To<ShipService>().InRequestScope();
             Bind<IAttackService, AttackService>().To<AttackService>().InRequestScope();
+            Bind<IDefenseService, DefenseService>().To<DefenseService>().InRequestScope();
         }
     }
 }

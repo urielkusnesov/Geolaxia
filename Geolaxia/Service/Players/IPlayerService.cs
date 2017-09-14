@@ -25,6 +25,8 @@ namespace Service.Players
 
         bool ValidateToken(string username, string token);
 
-        bool SetPosition(string latitude, string longitude);
+        bool SetPosition(string latitude, string longitude, int id);
+
+        IList<Player> GetCloserPlayers(string username);
     }
 }

@@ -1,9 +1,9 @@
-﻿using Ninject;
-using Ninject.Syntax;
-using System;
+﻿using System;
 using System.Web.Http.Dependencies;
+using Ninject;
+using Ninject.Syntax;
 
-namespace Geolaxia.App_Start
+namespace Geolaxia
 {
     // Provides a Ninject implementation of IDependencyScope
     // which resolves services using the Ninject container.

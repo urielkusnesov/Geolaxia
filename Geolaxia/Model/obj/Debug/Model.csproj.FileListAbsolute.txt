@@ -23,6 +23,5 @@ C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\bin\Debug\Model.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\bin\Debug\Model.pdb
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\bin\Debug\EntityFramework.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\bin\Debug\EntityFramework.xml
-C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\obj\Debug\Model.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\obj\Debug\Model.pdb

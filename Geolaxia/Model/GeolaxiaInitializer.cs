@@ -50,8 +50,15 @@ namespace Model
                 context.Planets.Add(planet);
             }
 
-            var shipX = new ShipX { Id = 1, Name = "X1", Attack = 10, Planet = planets[0], Speed = 10};
-            context.ShipsX.Add(shipX);
+            var ships = new List<Ship>
+            {
+                new ShipX { Id = 1, Name = "X1", Attack = 10, Defence = 20, Planet = planets[0], Speed = 10},
+                new ShipX { Id = 2, Name = "X2", Attack = 10, Defence = 30, Planet = planets[3], Speed = 10}
+            };
+            foreach (Ship ship in ships)
+            {
+                context.Ships.Add(ship);
+            }
 
             context.SaveChanges();
         }

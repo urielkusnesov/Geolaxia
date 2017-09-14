@@ -10,7 +10,10 @@ using Service.Players;
 using Service.Ships;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
+using Service.Defenses;
+using Timer = System.Timers.Timer;
 
 namespace Geolaxia.Controllers
 {
@@ -21,12 +24,17 @@ namespace Geolaxia.Controllers
         private IPlanetService planetService;
         private IShipService shipService;
         private IAttackService service;
+        private IDefenseService defenseService;
 
-        public AttackController(IAttackService service, IPlayerService playerService, IPlanetService planetService, IShipService shipService) : base(playerService)
+        private static System.Timers.Timer aTimer;
+
+        public AttackController(IAttackService service, IPlayerService playerService, IPlanetService planetService, IShipService shipService, IDefenseService defenseService) : base(playerService)
         {
             this.service = service;
             this.planetService = planetService;
             this.shipService = shipService;
+            this.playerService = playerService;
+            this.defenseService = defenseService;
         }
 
         // POST api/attack/attack (json attack in body)
@@ -47,6 +55,8 @@ namespace Geolaxia.Controllers
                 if (newAttack != null)
                 {
                     logger.Info("attack added succesfully");
+                    SetTimer(attack);
+
                     var response = new ApiResponse { Status = new Status { Result = "ok", Description = "" } };
                     JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
                     return json;
@@ -64,6 +74,23 @@ namespace Geolaxia.Controllers
                 JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
                 return json;
             }
+        }
+
+        private void SetTimer(Attack attack)
+        {
+            // Figure how much time until arrival
+            DateTime departure = DateTime.Now;
+            DateTime arrival = attack.FleetArrival;
+
+            int msUntilArrival = (int)(arrival - departure).TotalMilliseconds;
+
+            // Create a timer with a timeToArrival interval.
+            aTimer = new Timer(msUntilArrival);
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += (sender, e) => service.PerformAttack(aTimer, attack);
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
+            aTimer.Start();
         }
 
         //api/attack/galaxies
@@ -159,6 +186,32 @@ namespace Geolaxia.Controllers
             {
                 IList<Ship> ships = shipService.GetByPlanet(planetId);
                 var okResponse = new ApiResponse { Data = ships, Status = new Status { Result = "ok", Description = "" } };
+                var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                return json;
+            }
+            catch (Exception ex)
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
+                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+                return json;
+            }
+        }
+
+        //api/attack/closerplayers
+        [HttpGet]
+        public JObject CloserPlayers()
+        {
+            if (!ValidateToken())
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
+
+            logger.Info("getting closer players");
+            try
+            {
+                IList<Player> players = playerService.GetCloserPlayers(Request.Headers.GetValues("username").First());
+                var okResponse = new ApiResponse { Data = players, Status = new Status { Result = "ok", Description = "" } };
                 var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
                 return json;
             }

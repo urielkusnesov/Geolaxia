@@ -65,6 +65,11 @@ namespace Repository
             return Set<TEntidad>().Remove(Get<TEntidad>(id));
         }
 
+        public IList<int> ExecuteListQuery(string sql)
+        {
+            return context.Database.SqlQuery<int>(sql).ToList();
+        }
+
         public int SaveChanges()
         {
             try

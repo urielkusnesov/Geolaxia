@@ -1,5 +1,6 @@
 ﻿using Model;
 using Model.DTO;
+using System.Timers;
 
 namespace Service.Attacks
 {
@@ -14,5 +15,7 @@ namespace Service.Attacks
         Attack Remove(int id);
 
         Attack GetFromDTO(AttackDTO attackDTO);
+
+        void PerformAttack(Timer timer, Attack attack);
     }
 }

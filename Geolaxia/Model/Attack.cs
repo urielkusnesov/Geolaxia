@@ -10,7 +10,7 @@ namespace Model
         public virtual Planet AttackerPlanet { get; set; }
         public virtual Player DestinationPlayer { get; set; }
         public virtual Planet DestinationPlanet { get; set; }
-        public virtual List<Ship> Fleet { get; set; }
+        public virtual IList<Ship> Fleet { get; set; }
         public virtual DateTime FleetDeparture { get; set; }
         public virtual DateTime FleetArrival { get; set; }
     }
