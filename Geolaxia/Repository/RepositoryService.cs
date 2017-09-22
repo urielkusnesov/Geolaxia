@@ -78,7 +78,7 @@ namespace Repository
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
     }

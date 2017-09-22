@@ -41,7 +41,7 @@ namespace Geolaxia.Controllers
         }
 
         // GET api/player/login/
-        [HttpGet]    
+        [HttpGet]
         public JObject Login()
         {
             var username = "";
@@ -165,7 +165,7 @@ namespace Geolaxia.Controllers
             logger.Info("registering new player");
             try
             {
-                player.Planets = new List<Planet> {AssignInitialPlanet()};
+                player.Planets = new List<Planet> { AssignInitialPlanet() };
                 var newPlayer = service.Add(player);
                 if (newPlayer != null)
                 {
@@ -176,7 +176,7 @@ namespace Geolaxia.Controllers
                 }
                 else
                 {
-                    var response = new ApiResponse { Status = new Status { Result = "error", Description = "No se pudo crear el usuario. Intente nuevamente"} };
+                    var response = new ApiResponse { Status = new Status { Result = "error", Description = "No se pudo crear el usuario. Intente nuevamente" } };
                     JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
                     return json;
                 }

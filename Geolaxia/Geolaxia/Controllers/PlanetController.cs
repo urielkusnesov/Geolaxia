@@ -16,7 +16,8 @@ namespace Geolaxia.Controllers
         private IPlanetService service;
         private IPlayerService playerService;
 
-        public PlanetController(IPlanetService service, IPlayerService playerService) : base(playerService)
+        public PlanetController(IPlanetService service, IPlayerService playerService)
+            : base(playerService)
         {
             this.service = service;
             this.playerService = playerService;
@@ -42,7 +43,7 @@ namespace Geolaxia.Controllers
                 var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
                 return json;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex.Message);
                 var responseError = new ApiResponse { Status = new Status { Result = "error", Description = "Ocurrio un error al obtener sus planetas. Intente nuevamente" } };

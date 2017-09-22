@@ -22,6 +22,8 @@ C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\bin\Debug\Model.dll.config
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\bin\Debug\Model.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\bin\Debug\Model.pdb
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\bin\Debug\EntityFramework.dll
+C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\bin\Debug\Ninject.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\bin\Debug\EntityFramework.xml
+C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\bin\Debug\Ninject.xml
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\obj\Debug\Model.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\obj\Debug\Model.pdb

@@ -28,7 +28,8 @@ namespace Geolaxia.Controllers
 
         private static System.Timers.Timer aTimer;
 
-        public AttackController(IAttackService service, IPlayerService playerService, IPlanetService planetService, IShipService shipService, IDefenseService defenseService) : base(playerService)
+        public AttackController(IAttackService service, IPlayerService playerService, IPlanetService planetService, IShipService shipService, IDefenseService defenseService)
+            : base(playerService)
         {
             this.service = service;
             this.planetService = planetService;

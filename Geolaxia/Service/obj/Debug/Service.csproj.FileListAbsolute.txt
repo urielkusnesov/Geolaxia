@@ -26,11 +26,13 @@ C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Debug\Service.pdb
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Debug\EntityFramework.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Debug\Model.dll
+C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Debug\Ninject.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Debug\Repository.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Debug\Model.pdb
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Debug\Repository.pdb
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Debug\EntityFramework.xml
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Debug\Ninject.xml
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\obj\Debug\Service.csprojResolveAssemblyReference.cache
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\obj\Debug\Service.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\obj\Debug\Service.pdb

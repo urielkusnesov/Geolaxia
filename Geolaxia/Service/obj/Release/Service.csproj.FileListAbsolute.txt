@@ -1,0 +1,16 @@
+C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Release\Service.dll.config
+C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Release\Service.dll
+C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Release\Service.pdb
+C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Release\EntityFramework.dll
+C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Release\Model.dll
+C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Release\Ninject.dll
+C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Release\Repository.dll
+C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Release\Model.pdb
+C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Release\Repository.pdb
+C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Release\EntityFramework.xml
+C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\bin\Release\Ninject.xml
+C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\obj\Release\Service.csprojResolveAssemblyReference.cache
+C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\obj\Release\Service.dll
+C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Service\obj\Release\Service.pdb
