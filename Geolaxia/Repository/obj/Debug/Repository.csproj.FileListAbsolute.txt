@@ -30,3 +30,17 @@ C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Repository\bin\Debug\log4net.xml
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Repository\bin\Debug\Ninject.xml
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Repository\obj\Debug\Repository.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Repository\obj\Debug\Repository.pdb
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Repository\bin\Debug\Repository.dll.config
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Repository\bin\Debug\Repository.dll
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Repository\bin\Debug\Repository.pdb
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Repository\bin\Debug\EntityFramework.dll
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Repository\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Repository\bin\Debug\log4net.dll
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Repository\bin\Debug\Ninject.dll
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Repository\bin\Debug\EntityFramework.xml
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Repository\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Repository\bin\Debug\log4net.xml
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Repository\bin\Debug\Ninject.xml
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Repository\obj\Debug\Repository.csprojResolveAssemblyReference.cache
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Repository\obj\Debug\Repository.dll
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Repository\obj\Debug\Repository.pdb
