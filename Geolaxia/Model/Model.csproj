@@ -54,6 +54,7 @@
     <Compile Include="DTO\AttackDTO.cs" />
     <Compile Include="EnergyCentral.cs" />
     <Compile Include="EnergyFuelCentral.cs" />
+    <Compile Include="Enum\MineType.cs" />
     <Compile Include="Enum\PlanetType.cs" />
     <Compile Include="Enum\ShipType.cs" />
     <Compile Include="Facility.cs" />

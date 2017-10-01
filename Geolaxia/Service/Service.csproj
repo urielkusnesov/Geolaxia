@@ -51,6 +51,8 @@
   <ItemGroup>
     <Compile Include="Attacks\AttackService.cs" />
     <Compile Include="Attacks\IAttackService.cs" />
+    <Compile Include="Construction\ConstructionService.cs" />
+    <Compile Include="Construction\IConstructionService.cs" />
     <Compile Include="Defenses\DefenseService.cs" />
     <Compile Include="Defenses\IDefenseService.cs" />
     <Compile Include="Planets\IPlanetService.cs" />

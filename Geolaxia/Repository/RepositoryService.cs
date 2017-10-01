@@ -15,24 +15,24 @@ namespace Repository
             this.context = context;
         }
 
-        private IDbSet<TEntidad> Set<TEntidad>() where TEntidad : class
+        private IDbSet<TEntity> Set<TEntity>() where TEntity : class
         {
-            return context.Set<TEntidad>();
+            return context.Set<TEntity>();
         }
 
-        public TEntidad Get<TEntidad>(object id) where TEntidad : class
+        public TEntity Get<TEntity>(object id) where TEntity : class
         {
-            return context.Set<TEntidad>().Find(id);
+            return context.Set<TEntity>().Find(id);
         }
 
-        public TEntidad Get<TEntidad>(Expression<Func<TEntidad, bool>> filter) where TEntidad : class
+        public TEntity Get<TEntity>(Expression<Func<TEntity, bool>> filter) where TEntity : class
         {
-            return context.Set<TEntidad>().SingleOrDefault(filter);
+            return context.Set<TEntity>().SingleOrDefault(filter);
         }
 
-        public IList<TEntidad> List<TEntidad>(Expression<Func<TEntidad, bool>> filter = null) where TEntidad : class
+        public IList<TEntity> List<TEntity>(Expression<Func<TEntity, bool>> filter = null) where TEntity : class
         {
-            IQueryable<TEntidad> result = context.Set<TEntidad>();
+            IQueryable<TEntity> result = context.Set<TEntity>();
             if (filter != null)
             {
                 result = result.Where(filter);
@@ -40,34 +40,48 @@ namespace Repository
             return result.ToList();
         }
 
-        public int Count<TEntidad>(Expression<Func<TEntidad, bool>> filter = null) where TEntidad : class
+        public int Count<TEntity>(Expression<Func<TEntity, bool>> filter = null) where TEntity : class
         {
-            return filter != null ? Set<TEntidad>().Count(filter) : Set<TEntidad>().Count();
+            return filter != null ? Set<TEntity>().Count(filter) : Set<TEntity>().Count();
         }
 
-        public bool Exists<TEntidad>(Expression<Func<TEntidad, bool>> filter) where TEntidad : class
+        public bool Exists<TEntity>(Expression<Func<TEntity, bool>> filter) where TEntity : class
         {
-            return Set<TEntidad>().Where(filter).Any();
+            return Set<TEntity>().Where(filter).Any();
         }
 
-        public TEntidad Add<TEntidad>(TEntidad entidad) where TEntidad : class
+        public TEntity Add<TEntity>(TEntity entidad) where TEntity : class
         {
-            return Set<TEntidad>().Add(entidad);
+            return Set<TEntity>().Add(entidad);
         }
 
-        public TEntidad Remove<TEntidad>(TEntidad entidad) where TEntidad : class
+        public TEntity Remove<TEntity>(TEntity entidad) where TEntity : class
         {
-            return Set<TEntidad>().Remove(Get<TEntidad>(entidad));
+            return Set<TEntity>().Remove(Get<TEntity>(entidad));
         }
 
-        public TEntidad Remove<TEntidad>(object id) where TEntidad : class
+        public TEntity Remove<TEntity>(object id) where TEntity : class
         {
-            return Set<TEntidad>().Remove(Get<TEntidad>(id));
+            return Set<TEntity>().Remove(Get<TEntity>(id));
         }
 
         public IList<int> ExecuteListQuery(string sql)
         {
             return context.Database.SqlQuery<int>(sql).ToList();
+        }
+
+        public TEntity Max<TEntity, TOrder>(Expression<Func<TEntity, bool>> filtro, Expression<Func<TEntity, TOrder>> orderColumn)
+            where TEntity : class
+            where TOrder : IComparable
+        {
+            return Set<TEntity>().Where(filtro).OrderByDescending(orderColumn).FirstOrDefault();
+        }
+
+        public TEntity Min<TEntity, TOrder>(Expression<Func<TEntity, bool>> filtro, Expression<Func<TEntity, TOrder>> orderColumn)
+            where TEntity : class
+            where TOrder : IComparable
+        {
+            return Set<TEntity>().Where(filtro).OrderBy(orderColumn).FirstOrDefault();
         }
 
         public int SaveChanges()

@@ -6,21 +6,29 @@ namespace Repository
 {
     public interface IRepositoryService
     {
-        TEntidad Get<TEntidad>(object id) where TEntidad : class;
+        TEntity Get<TEntity>(object id) where TEntity : class;
 
-        TEntidad Get<TEntidad>(Expression<Func<TEntidad, bool>> filter) where TEntidad : class;
+        TEntity Get<TEntity>(Expression<Func<TEntity, bool>> filter) where TEntity : class;
 
-        IList<TEntidad> List<TEntidad>(Expression<Func<TEntidad, bool>> filter = null) where TEntidad : class;
+        IList<TEntity> List<TEntity>(Expression<Func<TEntity, bool>> filter = null) where TEntity : class;
 
-        int Count<TEntidad>(Expression<Func<TEntidad, bool>> filter = null) where TEntidad : class;
+        int Count<TEntity>(Expression<Func<TEntity, bool>> filter = null) where TEntity : class;
 
-        bool Exists<TEntidad>(Expression<Func<TEntidad, bool>> filter) where TEntidad : class;
+        bool Exists<TEntity>(Expression<Func<TEntity, bool>> filter) where TEntity : class;
 
-        TEntidad Add<TEntidad>(TEntidad entidad) where TEntidad : class;
+        TEntity Add<TEntity>(TEntity entidad) where TEntity : class;
 
-        TEntidad Remove<TEntidad>(TEntidad entidad) where TEntidad : class;
+        TEntity Remove<TEntity>(TEntity entidad) where TEntity : class;
 
-        TEntidad Remove<TEntidad>(object id) where TEntidad : class;
+        TEntity Remove<TEntity>(object id) where TEntity : class;
+
+        TEntity Max<TEntity, TOrden>(Expression<Func<TEntity, bool>> filtro, Expression<Func<TEntity, TOrden>> columnaOrden)
+            where TEntity : class
+            where TOrden : IComparable;
+
+        TEntity Min<TEntity, TOrden>(Expression<Func<TEntity, bool>> filtro, Expression<Func<TEntity, TOrden>> columnaOrden)
+            where TEntity : class
+            where TOrden : IComparable;
 
         int SaveChanges();
 

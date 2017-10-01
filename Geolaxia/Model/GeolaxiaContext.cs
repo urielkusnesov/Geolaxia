@@ -50,7 +50,7 @@ namespace Model
             modelBuilder.Entity<Probe>().ToTable("Probe");
             modelBuilder.Entity<Attack>().ToTable("Attack");
 
-            //abstract classes, we use TPT inheritance strategy
+            //clases abstractas, usamos TPT inheritance strategy
             modelBuilder.Entity<Military>().ToTable("Military");
             modelBuilder.Entity<Mine>().ToTable("Mine");
             modelBuilder.Entity<Planet>().ToTable("Planet");
