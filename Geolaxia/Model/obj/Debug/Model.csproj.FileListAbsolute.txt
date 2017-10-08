@@ -18,16 +18,6 @@ C:\Users\uriel\Desktop\Facu\Trabajo Profesional\Geolaxia\Geolaxia\Model\obj\Debu
 C:\Users\uriel\Desktop\Facu\Trabajo Profesional\Geolaxia\Geolaxia\Model\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\uriel\Desktop\Facu\Trabajo Profesional\Geolaxia\Geolaxia\Model\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\uriel\Desktop\Facu\Trabajo Profesional\Geolaxia\Geolaxia\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
-C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Model\bin\Debug\Model.dll.config
-C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Model\bin\Debug\Model.dll
-C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Model\bin\Debug\Model.pdb
-C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Model\bin\Debug\EntityFramework.dll
-C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Model\bin\Debug\Ninject.dll
-C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Model\bin\Debug\EntityFramework.xml
-C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Model\bin\Debug\Ninject.xml
-C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
-C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Model\obj\Debug\Model.dll
-C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Model\obj\Debug\Model.pdb
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\bin\Debug\Model.dll.config
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\bin\Debug\Model.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\bin\Debug\Model.pdb
@@ -38,3 +28,13 @@ C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\bin\Debug\Ninject.xml
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\obj\Debug\Model.dll
 C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\obj\Debug\Model.pdb
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Model\bin\Debug\Model.dll.config
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Model\bin\Debug\Model.dll
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Model\bin\Debug\Model.pdb
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Model\bin\Debug\EntityFramework.dll
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Model\bin\Debug\Ninject.dll
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Model\bin\Debug\EntityFramework.xml
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Model\bin\Debug\Ninject.xml
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Model\obj\Debug\Model.dll
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Model\obj\Debug\Model.pdb
+C:\Users\Rha\Documents\GitHub\Geolaxia\Geolaxia\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
