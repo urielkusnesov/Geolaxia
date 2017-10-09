@@ -1,9 +1,0 @@
-C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\bin\Release\Model.dll.config
-C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\bin\Release\Model.dll
-C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\bin\Release\Model.pdb
-C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\bin\Release\EntityFramework.dll
-C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\bin\Release\Ninject.dll
-C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\bin\Release\EntityFramework.xml
-C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\bin\Release\Ninject.xml
-C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\obj\Release\Model.dll
-C:\Users\uriel\Desktop\TPP\Geolaxia\Geolaxia\Model\obj\Release\Model.pdb

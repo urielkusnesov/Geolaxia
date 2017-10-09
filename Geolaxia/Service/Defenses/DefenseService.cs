@@ -16,6 +16,6 @@ namespace Service.Defenses
         public IList<Canon> GetCanons(int planetId)
         {
             return repository.List<Canon>(x => x.Planet.Id == planetId);
-        } 
+        }
     }
 }

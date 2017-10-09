@@ -1,1 +1,0 @@
-c:\Users\uriel\OneDrive\Documentos\Visual Studio 2012\Projects\Geolaxia\Geolaxia.Tests\obj\Debug\Geolaxia.Tests.csprojResolveAssemblyReference.cache
