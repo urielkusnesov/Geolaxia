@@ -1,5 +1,7 @@
 ﻿using Model;
 using System.Collections.Generic;
+using System.Timers;
+using Model.DTO;
 
 namespace Service.Construction
 {
@@ -11,5 +13,8 @@ namespace Service.Construction
 
         Mine Add(Mine mine);
 
+        Mine GetFromDTO(MineDTO mineDto);
+
+        void BuildMine(Timer timer, MineDTO mineDto);
     }
 }

@@ -84,5 +84,15 @@ namespace Service.Planets
         {
             return repository.List<SolarSystem>(x => x.Galaxy.Id == galaxyId);
         }
+
+        public void UseResources(int planetId, Cost cost)
+        {
+            var planet = repository.Get<Planet>(planetId);
+            planet.Crystal -= cost.CrystalCost;
+            planet.Metal -= cost.MetalCost;
+            planet.DarkMatter -= cost.DarkMatterCost;
+
+            repository.SaveChanges();
+        }
     }
 }

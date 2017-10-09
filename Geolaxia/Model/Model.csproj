@@ -52,6 +52,7 @@
     <Compile Include="CrystalMine.cs" />
     <Compile Include="DarkMatterMine.cs" />
     <Compile Include="DTO\AttackDTO.cs" />
+    <Compile Include="DTO\MineDTO.cs" />
     <Compile Include="EnergyCentral.cs" />
     <Compile Include="EnergyFuelCentral.cs" />
     <Compile Include="Enum\MineType.cs" />

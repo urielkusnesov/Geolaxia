@@ -17,6 +17,49 @@ namespace Model
                 context.Players.Add(player);
             }
 
+            var costs = new List<Cost> {
+                new Cost { Id = 1, Element = "crysal mine L1", CrystalCost = 100, MetalCost = 100 },
+                new Cost { Id = 2, Element = "crysal mine L2", CrystalCost = 200, MetalCost = 200 },
+                new Cost { Id = 3, Element = "crysal mine L3", CrystalCost = 300, MetalCost = 300 },
+                new Cost { Id = 4, Element = "crysal mine L4", CrystalCost = 400, MetalCost = 400 },
+                new Cost { Id = 5, Element = "crysal mine L5", CrystalCost = 500, MetalCost = 500 },
+                new Cost { Id = 6, Element = "metal mine L1", CrystalCost = 100, MetalCost = 100 },
+                new Cost { Id = 7, Element = "metal mine L2", CrystalCost = 150, MetalCost = 150 },
+                new Cost { Id = 8, Element = "metal mine L3", CrystalCost = 200, MetalCost = 200 },
+                new Cost { Id = 9, Element = "metal mine L4", CrystalCost = 250, MetalCost = 250 },
+                new Cost { Id = 10, Element = "metal mine L5", CrystalCost = 300, MetalCost = 300 },
+                new Cost { Id = 11, Element = "dark matter mine L1", CrystalCost = 100, MetalCost = 100 },
+                new Cost { Id = 12, Element = "dark matter mine L2", CrystalCost = 300, MetalCost = 300 },
+                new Cost { Id = 13, Element = "dark matter mine L3", CrystalCost = 500, MetalCost = 500 },
+                new Cost { Id = 14, Element = "dark matter mine L4", CrystalCost = 700, MetalCost = 700 },
+                new Cost { Id = 15, Element = "dark matter mine L5", CrystalCost = 900, MetalCost = 900 },
+                new Cost { Id = 16, Element = "energy central L1", CrystalCost = 25, MetalCost = 100 },
+                new Cost { Id = 17, Element = "energy central L2", CrystalCost = 50, MetalCost = 200 },
+                new Cost { Id = 18, Element = "energy central L3", CrystalCost = 75, MetalCost = 300 },
+                new Cost { Id = 19, Element = "energy central L4", CrystalCost = 100, MetalCost = 400 },
+                new Cost { Id = 20, Element = "energy central L5", CrystalCost = 125, MetalCost = 500 },
+                new Cost { Id = 21, Element = "fuel energy central L1", CrystalCost = 25, MetalCost = 100 },
+                new Cost { Id = 22, Element = "fuel energy central L2", CrystalCost = 50, MetalCost = 200 },
+                new Cost { Id = 23, Element = "fuel energy central L3", CrystalCost = 75, MetalCost = 300 },
+                new Cost { Id = 24, Element = "fuel energy central L4", CrystalCost = 100, MetalCost = 400 },
+                new Cost { Id = 25, Element = "fuel energy central L5", CrystalCost = 125, MetalCost = 500 },
+                new Cost { Id = 26, Element = "solar panel", CrystalCost = 5, MetalCost = 20 },
+                new Cost { Id = 27, Element = "wind turbine", CrystalCost = 5, MetalCost = 20 },
+                new Cost { Id = 28, Element = "militar factory", CrystalCost = 2000, MetalCost = 2000, DarkMatterCost = 500},
+                new Cost { Id = 29, Element = "ship x", CrystalCost = 50, MetalCost = 250 },
+                new Cost { Id = 30, Element = "ship y", CrystalCost = 75, MetalCost = 500 },
+                new Cost { Id = 31, Element = "ship z", CrystalCost = 100, MetalCost = 1000 },
+                new Cost { Id = 32, Element = "canon", CrystalCost = 50, MetalCost = 100 },
+                new Cost { Id = 33, Element = "shield", CrystalCost = 5000, MetalCost = 5000 },
+                new Cost { Id = 34, Element = "probe", CrystalCost = 3000, MetalCost = 3000 },
+                new Cost { Id = 35, Element = "ship z", CrystalCost = 500, MetalCost = 500 }
+            };
+
+            foreach (Cost cost in costs)
+            {
+                context.Costs.Add(cost);
+            }
+
             var galaxies = new List<Galaxy> { 
                 new Galaxy { Id = 1, Name = "Galaxy" }
             };
@@ -52,8 +95,8 @@ namespace Model
 
             var ships = new List<Ship>
             {
-                new ShipX { Id = 1, Name = "X1", Attack = 10, Defence = 20, Planet = planets[0], Speed = 10},
-                new ShipX { Id = 2, Name = "X2", Attack = 10, Defence = 30, Planet = planets[3], Speed = 10}
+                new ShipX { Id = 1, Name = "X1", Attack = 10, Defence = 20, Planet = planets[0], Speed = 10, Cost = costs[28]},
+                new ShipX { Id = 2, Name = "X2", Attack = 10, Defence = 30, Planet = planets[3], Speed = 10, Cost = costs[29]}
             };
             foreach (Ship ship in ships)
             {

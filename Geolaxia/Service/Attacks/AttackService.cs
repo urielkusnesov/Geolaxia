@@ -17,16 +17,12 @@ namespace Service.Attacks
         private readonly IRepositoryService repository;
         private IPlayerService playerService;
         private IPlanetService planetService;
-        private IShipService shipService;
-        private IDefenseService defenseService;
 
-        public AttackService(IRepositoryService repository, IPlayerService playerService, IPlanetService planetService, IShipService shipService, IDefenseService defenseService)
+        public AttackService(IRepositoryService repository, IPlayerService playerService, IPlanetService planetService)
         {
             this.repository = repository;
             this.playerService = playerService;
             this.planetService = planetService;
-            this.shipService = shipService;
-            this.defenseService = defenseService;
         }
 
         public Attack Get(int id)

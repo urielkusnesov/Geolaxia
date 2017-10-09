@@ -16,5 +16,7 @@ namespace Service.Planets
         IList<Galaxy> GetAllGalaxies();
 
         IList<SolarSystem> GetSolarSystemsByGalaxy(int galaxyId);
+
+        void UseResources(int planetId, Cost cost);
     }
 }

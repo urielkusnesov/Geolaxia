@@ -7,7 +7,10 @@ using Service.Construction;
 using Service.Players;
 using System;
 using System.Collections.Generic;
+using System.Timers;
 using System.Web.Http;
+using Model.DTO;
+using Service.Planets;
 
 namespace Geolaxia.Controllers
 {
@@ -16,11 +19,16 @@ namespace Geolaxia.Controllers
         private static readonly ILog logger = LogManager.GetLogger(typeof(ConstructionController));
         private IConstructionService service;
         private IPlayerService playerService;
+        private IPlanetService planetService;
 
-        public ConstructionController(IConstructionService service, IPlayerService playerService)
+        private static System.Timers.Timer aTimer;
+
+        public ConstructionController(IConstructionService service, IPlayerService playerService, IPlanetService planetService)
             :base(playerService)
         {
             this.service = service;
+            this.playerService = playerService;
+            this.planetService = planetService;
         }
 
         //api/construction/currentmines
@@ -75,9 +83,9 @@ namespace Geolaxia.Controllers
             }
         }
 
-        //api/construction/buildcrystal
+        //api/construction/startbuild
         [HttpPost]
-        public JObject BuildMine(Mine mine)
+        public JObject StartBuild(MineDTO mineDto)
         {
             if (!ValidateToken())
             {
@@ -85,29 +93,25 @@ namespace Geolaxia.Controllers
                 return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
             }
 
-            logger.Info("building crystal mine in planet: " + mine.Planet.Id);
-            try
-            {
-                var newMine = service.Add(mine);
-                if (newMine != null)
-                {
-                    var okResponse = new ApiResponse { Status = new Status { Result = "ok", Description = "" } };
-                    var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
-                    return json;                    
-                }
-                else
-                {
-                    var response = new ApiResponse { Status = new Status { Result = "error", Description = "no se pudo contruir la mina. Intente nuevamente" } };
-                    JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
-                    return json;                    
-                }
-            }
-            catch (Exception ex)
-            {
-                var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
-                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
-                return json;
-            }
+            logger.Info("start to build mine in planet: " + mineDto.PlanetId);
+            SetTimer(mineDto);
+        
+            var okResponse = new ApiResponse { Status = new Status { Result = "ok", Description = "" } };
+            var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+            return json;
+        }
+        
+        private void SetTimer(MineDTO mineDto)
+        {
+            var msUntilArrival = mineDto.ConstructionTime * 60 * 1000;
+
+            // Create a timer with a timeToArrival interval.
+            aTimer = new Timer(msUntilArrival);
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += (sender, e) => service.BuildMine(aTimer, mineDto);
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
+            aTimer.Start();
         }
     }
 }
