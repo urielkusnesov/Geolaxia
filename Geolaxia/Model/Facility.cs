@@ -1,4 +1,6 @@
-﻿namespace Model
+﻿using System;
+
+namespace Model
 {
     public abstract class Facility
     {
@@ -8,5 +10,6 @@
         public virtual int Level { get; set; }
         public virtual Planet Planet { get; set; }
         public virtual int Productivity { get; set; }
+        public virtual DateTime EnableDate { get; set; }
     }
 }

@@ -97,9 +97,9 @@ namespace Service.Players
         {
             var player = repository.Get<Player>(x => x.UserName == username);
 
-            var sql = String.Format("declare @geo1 geography = geography::Point({0}, {1}, 4326)" +
+            var sql = String.Format("declare @geo1 geography = geography::Point({0}, {1}, 4326) " +
                                     "select Id from Player " +
-                                    "where @geo1.STDistance(geography::Point(LastLatitude, LastLongitude, 4326)) / 1000 < 5 and Id <> {2}", 
+                                    "where LastLatitude is not null and LastLongitude is not null and @geo1.STDistance(geography::Point(LastLatitude, LastLongitude, 4326)) / 1000 < 5 and Id <> {2}", 
                                     player.LastLatitude, player.LastLongitude, player.Id);
             var playerIds = repository.ExecuteListQuery(sql);
 

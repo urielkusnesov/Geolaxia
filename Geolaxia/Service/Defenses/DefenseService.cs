@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Model;
 using Repository;
 
@@ -15,7 +16,7 @@ namespace Service.Defenses
 
         public IList<Canon> GetCanons(int planetId)
         {
-            return repository.List<Canon>(x => x.Planet.Id == planetId);
+            return repository.List<Canon>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now);
         }
     }
 }

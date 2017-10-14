@@ -1,7 +1,6 @@
 ﻿using Geolaxia.Models;
 using log4net;
 using Model;
-using Model.DTO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Service.Attacks;
@@ -10,10 +9,8 @@ using Service.Players;
 using Service.Ships;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Http;
 using Service.Defenses;
-using Timer = System.Timers.Timer;
 
 namespace Geolaxia.Controllers
 {
@@ -53,7 +50,7 @@ namespace Geolaxia.Controllers
             try
             {
                 IList<Canon> cannons = defenseService.GetCanons(planetId);
-                var okResponse = new ApiResponse { Data = cannons, Status = new Status { Result = "oka", Description = "" } };
+                var okResponse = new ApiResponse { Data = cannons, Status = new Status { Result = "ok", Description = "" } };
                 var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
                 
                 return (json);

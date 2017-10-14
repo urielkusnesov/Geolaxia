@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using System;
+using Model;
 using Repository;
 using System.Collections.Generic;
 
@@ -20,7 +21,7 @@ namespace Service.Ships
 
         public IList<Ship> GetByPlanet(int planetId)
         {
-            return repository.List<Ship>(x => x.Planet.Id == planetId);
+            return repository.List<Ship>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now);
         }
     }
 }

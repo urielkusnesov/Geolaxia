@@ -1,12 +1,10 @@
 ﻿using Geolaxia.Models;
 using log4net;
-using Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Service.Construction;
 using Service.Players;
 using System;
-using System.Collections.Generic;
 using System.Timers;
 using System.Web.Http;
 using Model.DTO;
@@ -93,22 +91,35 @@ namespace Geolaxia.Controllers
                 return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
             }
 
-            logger.Info("start to build mine in planet: " + mineDto.PlanetId);
-            SetTimer(mineDto);
-        
-            var okResponse = new ApiResponse { Status = new Status { Result = "ok", Description = "" } };
-            var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
-            return json;
+            var mine = service.GetFromDTO(mineDto);
+            mine.EnableDate = DateTime.Now.AddMinutes(mine.ConstructionTime);
+            var newMine = service.Add(mine);
+            if (newMine != null)
+            {
+                planetService.UseResources(mine.Planet.Id, mine.Cost);
+                logger.Info("start to build mine in planet: " + mineDto.PlanetId);
+                SetTimer(mineDto);
+
+                var okResponse = new ApiResponse { Status = new Status { Result = "ok", Description = "" } };
+                var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                return json;
+            }
+            else
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "No se pudo realizar la construccion. Intente nuevamente" } };
+                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+                return json;
+            }
         }
         
         private void SetTimer(MineDTO mineDto)
         {
-            var msUntilArrival = mineDto.ConstructionTime * 60 * 1000;
+            var msUntilFinish = mineDto.ConstructionTime * 60 * 1000;
 
             // Create a timer with a timeToArrival interval.
-            aTimer = new Timer(msUntilArrival);
+            aTimer = new Timer(msUntilFinish);
             // Hook up the Elapsed event for the timer. 
-            aTimer.Elapsed += (sender, e) => service.BuildMine(aTimer, mineDto);
+            aTimer.Elapsed += (sender, e) => service.FinishMine(aTimer, mineDto);
             aTimer.AutoReset = true;
             aTimer.Enabled = true;
             aTimer.Start();

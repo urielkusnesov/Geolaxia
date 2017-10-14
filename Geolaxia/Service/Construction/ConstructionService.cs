@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using System;
+using Model;
 using Repository;
 using System.Collections.Generic;
 using System.Timers;
@@ -23,9 +24,9 @@ namespace Service.Construction
         {
             var mines = new List<Mine>
             {
-                repository.Get<CrystalMine>(x => x.Planet.Id == planetId) ?? new CrystalMine{MineType = MineType.Crystal, Planet = new BlackPlanet(), Cost = new Cost()},
-                repository.Get<MetalMine>(x => x.Planet.Id == planetId) ?? new MetalMine{MineType = MineType.Metal, Planet = new BlackPlanet(), Cost = new Cost()},
-                repository.Get<DarkMatterMine>(x => x.Planet.Id == planetId) ?? new DarkMatterMine{MineType = MineType.DarkMatter, Planet = new BlackPlanet(), Cost = new Cost()}
+                repository.Get<CrystalMine>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now) ?? new CrystalMine{MineType = MineType.Crystal, Planet = new BlackPlanet(), Cost = new Cost()},
+                repository.Get<MetalMine>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now) ?? new MetalMine{MineType = MineType.Metal, Planet = new BlackPlanet(), Cost = new Cost()},
+                repository.Get<DarkMatterMine>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now) ?? new DarkMatterMine{MineType = MineType.DarkMatter, Planet = new BlackPlanet(), Cost = new Cost()}
             };
 
             return mines;
@@ -34,14 +35,17 @@ namespace Service.Construction
         
         public IList<Mine> GetMinesToBuild(int planetId)
         {
-            var currentCrystalMineLevel = repository.Get<CrystalMine>(x => x.Planet.Id == planetId) != null ? repository.Get<CrystalMine>(x => x.Planet.Id == planetId).Level : 0;
-            var currentMetalMineLevel = repository.Get<MetalMine>(x => x.Planet.Id == planetId) != null ? repository.Get<MetalMine>(x => x.Planet.Id == planetId).Level : 0;
-            var currentDarkMatterMineLevel = repository.Get<DarkMatterMine>(x => x.Planet.Id == planetId) != null ? repository.Get<DarkMatterMine>(x => x.Planet.Id == planetId).Level : 0;
+            var currentCrystalMineLevel = repository.Get<CrystalMine>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now) != null 
+                ? repository.Get<CrystalMine>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now).Level : 0;
+            var currentMetalMineLevel = repository.Get<MetalMine>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now) != null 
+                ? repository.Get<MetalMine>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now).Level : 0;
+            var currentDarkMatterMineLevel = repository.Get<DarkMatterMine>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now) != null 
+                ? repository.Get<DarkMatterMine>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now).Level : 0;
 
             var mines = new List<Mine>();
             
             var newCrystalMine = new CrystalMine {
-                Cost = new Cost { CrystalCost = 100*(currentCrystalMineLevel + 1), MetalCost = 100*(currentCrystalMineLevel + 1) },
+                Cost = repository.Get<Cost>(x => x.Element == "crystal mine L" + (currentCrystalMineLevel + 1).ToString()),
                 EnergyConsumption = 50 * (currentCrystalMineLevel + 1),
                 ConstructionTime = 1 + (20 * currentCrystalMineLevel),
                 Productivity = 50 * (currentCrystalMineLevel + 1),
@@ -51,7 +55,7 @@ namespace Service.Construction
             mines.Add(newCrystalMine);
 
             var newMetalMine = new MetalMine {
-                Cost = new Cost { CrystalCost = 50*(currentMetalMineLevel + 2), MetalCost = 50*(currentMetalMineLevel + 2) },
+                Cost = repository.Get<Cost>(x => x.Element == "metal mine L" + (currentCrystalMineLevel + 1).ToString()),
                 EnergyConsumption = 50 + (25 * currentMetalMineLevel),
                 ConstructionTime = 1 + (10 * currentMetalMineLevel),
                 Productivity = 100 * (currentMetalMineLevel + 1),
@@ -62,7 +66,7 @@ namespace Service.Construction
 
             var newDarkMatterMine = new DarkMatterMine
             {
-                Cost = new Cost { CrystalCost = 100 + (200 * currentDarkMatterMineLevel), MetalCost = 100 + (200 * currentDarkMatterMineLevel) },
+                Cost = repository.Get<Cost>(x => x.Element == "dark matter mine L" + (currentCrystalMineLevel + 1).ToString()),
                 EnergyConsumption = 100 + (200 * currentDarkMatterMineLevel),
                 ConstructionTime = 1 + (30 * currentDarkMatterMineLevel),
                 Productivity = 25 * (currentDarkMatterMineLevel + 1),
@@ -76,7 +80,7 @@ namespace Service.Construction
 
         public Mine Add(Mine mine)
         {
-            var previousMine = repository.Get<Mine>(x => x.Planet.Id == mine.Planet.Id && x.MineType == mine.MineType);
+            var previousMine = repository.Get<Mine>(x => x.Planet.Id == mine.Planet.Id && x.MineType == mine.MineType && x.EnableDate < DateTime.Now);
             if (previousMine == null || repository.Remove(previousMine) != null)
             {
                 var result = repository.Add(mine);
@@ -134,14 +138,11 @@ namespace Service.Construction
             return mine;
         }
 
-        public void BuildMine(Timer timer, MineDTO mineDto)
+        public void FinishMine(Timer timer, MineDTO mineDto)
         {
-            var mine = GetFromDTO(mineDto);
-            var newMine = Add(mine);
-            if (newMine != null)
-            {
-                planetService.UseResources(mineDto.PlanetId, mine.Cost);                
-            }
+            //destruyo el timer
+            timer.Stop();
+            timer.Dispose();
 
             //mandar notificacion push al usuario
         }

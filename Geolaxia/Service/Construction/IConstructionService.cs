@@ -15,6 +15,6 @@ namespace Service.Construction
 
         Mine GetFromDTO(MineDTO mineDto);
 
-        void BuildMine(Timer timer, MineDTO mineDto);
+        void FinishMine(Timer timer, MineDTO mineDto);
     }
 }

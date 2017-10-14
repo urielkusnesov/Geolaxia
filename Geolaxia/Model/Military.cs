@@ -1,4 +1,6 @@
-﻿namespace Model
+﻿using System;
+
+namespace Model
 {
     public abstract class Military
     {
@@ -8,5 +10,6 @@
         public virtual Cost Cost { get; set; }
         public virtual Planet Planet { get; set; }
         public virtual int RequiredLevel { get; set; }
+        public virtual DateTime EnableDate { get; set; }
     }
 }

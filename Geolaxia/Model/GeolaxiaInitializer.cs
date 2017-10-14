@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Model.Enum;
 
 namespace Model
@@ -18,11 +19,11 @@ namespace Model
             }
 
             var costs = new List<Cost> {
-                new Cost { Id = 1, Element = "crysal mine L1", CrystalCost = 100, MetalCost = 100 },
-                new Cost { Id = 2, Element = "crysal mine L2", CrystalCost = 200, MetalCost = 200 },
-                new Cost { Id = 3, Element = "crysal mine L3", CrystalCost = 300, MetalCost = 300 },
-                new Cost { Id = 4, Element = "crysal mine L4", CrystalCost = 400, MetalCost = 400 },
-                new Cost { Id = 5, Element = "crysal mine L5", CrystalCost = 500, MetalCost = 500 },
+                new Cost { Id = 1, Element = "crystal mine L1", CrystalCost = 100, MetalCost = 100 },
+                new Cost { Id = 2, Element = "crystal mine L2", CrystalCost = 200, MetalCost = 200 },
+                new Cost { Id = 3, Element = "crystal mine L3", CrystalCost = 300, MetalCost = 300 },
+                new Cost { Id = 4, Element = "crystal mine L4", CrystalCost = 400, MetalCost = 400 },
+                new Cost { Id = 5, Element = "crystal mine L5", CrystalCost = 500, MetalCost = 500 },
                 new Cost { Id = 6, Element = "metal mine L1", CrystalCost = 100, MetalCost = 100 },
                 new Cost { Id = 7, Element = "metal mine L2", CrystalCost = 150, MetalCost = 150 },
                 new Cost { Id = 8, Element = "metal mine L3", CrystalCost = 200, MetalCost = 200 },
@@ -95,13 +96,17 @@ namespace Model
 
             var ships = new List<Ship>
             {
-                new ShipX { Id = 1, Name = "X1", Attack = 10, Defence = 20, Planet = planets[0], Speed = 10, Cost = costs[28]},
-                new ShipX { Id = 2, Name = "X2", Attack = 10, Defence = 30, Planet = planets[3], Speed = 10, Cost = costs[29]}
+                new ShipX { Id = 1, Name = "X1", Attack = 10, Defence = 20, Planet = planets[0], Speed = 10, Cost = costs[28], EnableDate = DateTime.Now},
+                new ShipX { Id = 2, Name = "X2", Attack = 10, Defence = 30, Planet = planets[3], Speed = 10, Cost = costs[29], EnableDate = DateTime.Now}
             };
+
             foreach (Ship ship in ships)
             {
                 context.Ships.Add(ship);
             }
+
+            var canon = new Canon{Id = 1, Attack = 50, Defence = 50, Cost = costs[31], Planet = planets[0], Name = "C1", ConstructionTime = 3, RequiredLevel = 2, EnableDate = DateTime.Now};
+            context.Canons.Add(canon);
 
             context.SaveChanges();
         }
