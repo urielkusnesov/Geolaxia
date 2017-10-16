@@ -18,5 +18,12 @@ namespace Service.Defenses
         {
             return repository.List<Canon>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now);
         }
+
+        public Shield GetShieldStatus(int planetId)
+        {
+            Shield shield = repository.Get<Shield>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now);
+
+            return (shield);
+        }
     }
 }

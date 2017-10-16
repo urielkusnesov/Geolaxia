@@ -63,5 +63,34 @@ namespace Geolaxia.Controllers
                 return (json);
             }
         }
+
+        //api/defense/GetShieldStatus
+        [HttpPost]
+        public JObject GetShieldStatus(int planetId)
+        {
+            if (!ValidateToken())
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
+
+            logger.Info("getting shield status in planet: " + planetId);
+
+            try
+            {
+                Shield shield = defenseService.GetShieldStatus(planetId);
+                var okResponse = new ApiResponse { Data = shield, Status = new Status { Result = "ok", Description = "" } };
+                var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+
+                return (json);
+            }
+            catch (Exception ex)
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
+                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+
+                return (json);
+            }
+        }
     }
 }

@@ -108,6 +108,9 @@ namespace Model
             var canon = new Canon{Id = 1, Attack = 50, Defence = 50, Cost = costs[31], Planet = planets[0], Name = "C1", ConstructionTime = 3, RequiredLevel = 2, EnableDate = DateTime.Now};
             context.Canons.Add(canon);
 
+            var shield = new Shield { Id = 1, ConstructionTime = 3, Cost = costs[32], EnableDate = DateTime.Now, Name = "Shield1", Planet = planets[0], RequiredLevel = 1 };
+            context.Shields.Add(shield);
+
             context.SaveChanges();
         }
     }

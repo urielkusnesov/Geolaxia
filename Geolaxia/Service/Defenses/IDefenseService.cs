@@ -6,5 +6,6 @@ namespace Service.Defenses
     public interface IDefenseService
     {
         IList<Canon> GetCanons(int planetId);
+        Shield GetShieldStatus(int planetId);
     }
 }
