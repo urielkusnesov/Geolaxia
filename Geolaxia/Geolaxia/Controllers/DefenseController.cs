@@ -92,5 +92,34 @@ namespace Geolaxia.Controllers
                 return (json);
             }
         }
+
+        //api/defense/BuildCannons
+        [HttpPost]
+        public JObject BuildCannons(int planetId, int cant)
+        {
+            if (!ValidateToken())
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
+
+            logger.Info("builing cannons in planet: " + planetId);
+
+            try
+            {
+                defenseService.BuildCannons(planetId, cant);
+                var okResponse = new ApiResponse { Data = "", Status = new Status { Result = "ok", Description = "" } };
+                var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+
+                return (json);
+            }
+            catch (Exception ex)
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
+                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+
+                return (json);
+            }
+        }
     }
 }

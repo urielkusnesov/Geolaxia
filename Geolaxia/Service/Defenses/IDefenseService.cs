@@ -7,5 +7,6 @@ namespace Service.Defenses
     {
         IList<Canon> GetCanons(int planetId);
         Shield GetShieldStatus(int planetId);
+        void BuildCannons(int planetId, int cant);
     }
 }
