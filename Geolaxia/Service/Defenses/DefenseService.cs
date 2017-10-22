@@ -36,7 +36,7 @@ namespace Service.Defenses
         {
             for (int i = 1; i <= cant; i++)
             {
-                var result = repository.Add(new Canon { Planet = repository.Get<Planet>(planetId) , Attack = this.CANON_ATAQUE, Defence = this.CANON_DEFENSA, EnableDate = DateTime.Now.AddMinutes(i * this.CANON_CONST_TIEMPO)});
+                var result = repository.Add(new Canon { Planet = repository.Get<Planet>(planetId), Attack = this.CANON_ATAQUE, Defence = this.CANON_DEFENSA, EnableDate = DateTime.Now.AddMinutes(i * this.CANON_CONST_TIEMPO) });
             }
 
             var planet = repository.Get<Planet>(planetId);
@@ -44,6 +44,25 @@ namespace Service.Defenses
             planet.Crystal -= cant * this.CANON_CONST_COSTO_CRISTAL;
 
             repository.SaveChanges();
+        }
+
+        public long IsBuildingCannons(int planetId)
+        {
+            long buildingTime = this.GetMilli(DateTime.MinValue);
+
+            Canon cannon = repository.Max<Canon, DateTime>(x => x.Planet.Id.Equals(planetId) && x.EnableDate > DateTime.Now, x => x.EnableDate);
+
+            if (cannon != null)
+            {
+                buildingTime = this.GetMilli(cannon.EnableDate);
+            }
+
+            return (buildingTime);
+        }
+
+        private long GetMilli(DateTime date)
+        {
+            return (Convert.ToInt64(date.ToUniversalTime().Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds));
         }
     }
 }
