@@ -100,7 +100,7 @@ namespace Geolaxia.Controllers
                 logger.Info("start to build mine in planet: " + mineDto.PlanetId);
                 SetTimer(mineDto);
 
-                var okResponse = new ApiResponse { Status = new Status { Result = "ok", Description = "" } };
+                var okResponse = new ApiResponse { Data = newMine, Status = new Status { Result = "ok", Description = "" } };
                 var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
                 return json;
             }

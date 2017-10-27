@@ -2,6 +2,7 @@
 using Model;
 using Repository;
 using System.Collections.Generic;
+using System.Linq;
 using System.Timers;
 using Model.DTO;
 using Model.Enum;
@@ -22,25 +23,42 @@ namespace Service.Construction
 
         public IList<Mine> GetCurrentMines(int planetId)
         {
-            var mines = new List<Mine>
+            var currentCrystalMine = repository.Max<CrystalMine, int>(x => x.Planet.Id == planetId && x.EnableDate <= DateTime.Now, x => x.Level)
+                ?? new CrystalMine { MineType = MineType.Crystal, Planet = new BlackPlanet(), Cost = new Cost() };
+            var inConstructionCrystalMine = repository.Get<CrystalMine>(x => x.Planet.Id == planetId && x.EnableDate > DateTime.Now);
+            if (inConstructionCrystalMine != null)
             {
-                repository.Get<CrystalMine>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now) ?? new CrystalMine{MineType = MineType.Crystal, Planet = new BlackPlanet(), Cost = new Cost()},
-                repository.Get<MetalMine>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now) ?? new MetalMine{MineType = MineType.Metal, Planet = new BlackPlanet(), Cost = new Cost()},
-                repository.Get<DarkMatterMine>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now) ?? new DarkMatterMine{MineType = MineType.DarkMatter, Planet = new BlackPlanet(), Cost = new Cost()}
-            };
+                currentCrystalMine.EnableDate = inConstructionCrystalMine.EnableDate;
+            }
 
-            return mines;
+            var currentMetalMine = repository.Max<MetalMine, int>(x => x.Planet.Id == planetId && x.EnableDate <= DateTime.Now, x => x.Level)
+                ?? new MetalMine { MineType = MineType.Metal, Planet = new BlackPlanet(), Cost = new Cost() };
+            var inConstructionMetalMine = repository.Get<MetalMine>(x => x.Planet.Id == planetId && x.EnableDate > DateTime.Now);
+            if (inConstructionMetalMine != null)
+            {
+                currentMetalMine.EnableDate = inConstructionMetalMine.EnableDate;
+            }
+
+            var currentDarkMatterMine = repository.Max<DarkMatterMine, int>(x => x.Planet.Id == planetId && x.EnableDate <= DateTime.Now, x => x.Level)
+                ?? new DarkMatterMine { MineType = MineType.DarkMatter, Planet = new BlackPlanet(), Cost = new Cost() };
+            var inConstructionDarkMatterMine = repository.Get<DarkMatterMine>(x => x.Planet.Id == planetId && x.EnableDate > DateTime.Now);
+            if (inConstructionDarkMatterMine != null)
+            {
+                currentDarkMatterMine.EnableDate = inConstructionDarkMatterMine.EnableDate;
+            }
+            
+            return new List<Mine>{currentCrystalMine, currentMetalMine, currentDarkMatterMine };
         }
 
         
         public IList<Mine> GetMinesToBuild(int planetId)
         {
-            var currentCrystalMineLevel = repository.Get<CrystalMine>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now) != null 
-                ? repository.Get<CrystalMine>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now).Level : 0;
-            var currentMetalMineLevel = repository.Get<MetalMine>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now) != null 
-                ? repository.Get<MetalMine>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now).Level : 0;
-            var currentDarkMatterMineLevel = repository.Get<DarkMatterMine>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now) != null 
-                ? repository.Get<DarkMatterMine>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now).Level : 0;
+            var currentCrystalMineLevel = repository.Max<CrystalMine, int>(x => x.Planet.Id == planetId && x.EnableDate <= DateTime.Now, x => x.Level) != null
+                ? repository.Max<CrystalMine, int>(x => x.Planet.Id == planetId && x.EnableDate <= DateTime.Now, x => x.Level).Level : 0;
+            var currentMetalMineLevel = repository.Max<MetalMine, int>(x => x.Planet.Id == planetId && x.EnableDate <= DateTime.Now, x => x.Level) != null
+                ? repository.Max<MetalMine, int>(x => x.Planet.Id == planetId, x => x.Level).Level : 0;
+            var currentDarkMatterMineLevel = repository.Max<DarkMatterMine, int>(x => x.Planet.Id == planetId && x.EnableDate <= DateTime.Now, x => x.Level) != null
+                ? repository.Max<DarkMatterMine, int>(x => x.Planet.Id == planetId && x.EnableDate <= DateTime.Now, x => x.Level).Level : 0;
 
             var mines = new List<Mine>();
             
@@ -80,14 +98,9 @@ namespace Service.Construction
 
         public Mine Add(Mine mine)
         {
-            var previousMine = repository.Get<Mine>(x => x.Planet.Id == mine.Planet.Id && x.MineType == mine.MineType && x.EnableDate < DateTime.Now);
-            if (previousMine == null || repository.Remove(previousMine) != null)
-            {
-                var result = repository.Add(mine);
-                repository.SaveChanges();
-                return result;
-            }
-            return null;
+            var result = repository.Add(mine);
+            repository.SaveChanges();
+            return result;
         }
 
         public Mine GetFromDTO(MineDTO dto)
@@ -109,7 +122,7 @@ namespace Service.Construction
                     };
                     break;
                 case MineType.Metal:
-                    mine = new CrystalMine
+                    mine = new MetalMine
                     {
                         Id = dto.Id,
                         ConstructionTime = dto.ConstructionTime,
@@ -122,7 +135,7 @@ namespace Service.Construction
                     };
                     break;
                 case MineType.DarkMatter:
-                    mine = new CrystalMine
+                    mine = new DarkMatterMine
                     {
                         Id = dto.Id,
                         ConstructionTime = dto.ConstructionTime,

@@ -20,7 +20,7 @@ namespace Repository
 
         TEntity Remove<TEntity>(TEntity entidad) where TEntity : class;
 
-        TEntity Remove<TEntity>(object id) where TEntity : class;
+        TEntity Remove<TEntity>(int id) where TEntity : class;
 
         TEntity Max<TEntity, TOrden>(Expression<Func<TEntity, bool>> filtro, Expression<Func<TEntity, TOrden>> columnaOrden)
             where TEntity : class

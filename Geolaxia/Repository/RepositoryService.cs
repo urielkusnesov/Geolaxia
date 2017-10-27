@@ -12,6 +12,10 @@ namespace Repository
 
         public RepositoryService(DbContext context)
         {
+            if (!context.Database.Exists())
+            {
+                context.Database.Initialize(true);
+            }
             this.context = context;
         }
 
@@ -60,7 +64,7 @@ namespace Repository
             return Set<TEntity>().Remove(Get<TEntity>(entidad));
         }
 
-        public TEntity Remove<TEntity>(object id) where TEntity : class
+        public TEntity Remove<TEntity>(int id) where TEntity : class
         {
             return Set<TEntity>().Remove(Get<TEntity>(id));
         }
