@@ -14,6 +14,8 @@ namespace Service.Defenses
         private int CANON_CONST_COSTO_CRISTAL = 50;
         private int CANON_ATAQUE = 50;
         private int CANON_DEFENSA = 50;
+        private int PREGUNTAS_CANTIDAD_A_RESPONDER = 3;
+        private int PREGUNTAS_CANTIDAD_EN_BASE = 24; //tiene que ser la (cantidad + 1) por el random
 
         public DefenseService(IRepositoryService repository)
         {
@@ -63,6 +65,25 @@ namespace Service.Defenses
         private long GetMilli(DateTime date)
         {
             return (Convert.ToInt64(date.ToUniversalTime().Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds));
+        }
+
+        public List<Queztion> Get3RandomQuestions()
+        {
+            List<Queztion> questions = new List<Queztion>();
+            Queztion question = null;
+            Random rnd = new Random();
+
+            while (questions.Count != this.PREGUNTAS_CANTIDAD_A_RESPONDER)
+            {
+                question = repository.Get<Queztion>(x => x.Id.Equals(rnd.Next(1, this.PREGUNTAS_CANTIDAD_EN_BASE)));
+
+                if (!questions.Exists(x => x.Id.Equals(question.Id)))
+                {
+                    questions.Add(question);
+                }
+            }
+
+            return (questions);
         }
     }
 }

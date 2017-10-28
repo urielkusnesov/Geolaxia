@@ -10,5 +10,6 @@ namespace Service.Defenses
         Shield GetShieldStatus(int planetId);
         void BuildCannons(int planetId, int cant);
         long IsBuildingCannons(int planetId);
+        List<Queztion> Get3RandomQuestions();
     }
 }
