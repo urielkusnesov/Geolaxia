@@ -72,10 +72,13 @@ namespace Service.Defenses
             List<Queztion> questions = new List<Queztion>();
             Queztion question = null;
             Random rnd = new Random();
+            int id = 0;
 
             while (questions.Count != this.PREGUNTAS_CANTIDAD_A_RESPONDER)
             {
-                question = repository.Get<Queztion>(x => x.Id.Equals(rnd.Next(1, this.PREGUNTAS_CANTIDAD_EN_BASE)));
+                id = rnd.Next(1, this.PREGUNTAS_CANTIDAD_EN_BASE);
+
+                question = repository.Get<Queztion>(x => x.Id.Equals(id));
 
                 if (!questions.Exists(x => x.Id.Equals(question.Id)))
                 {

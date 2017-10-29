@@ -130,7 +130,7 @@ namespace Model
             respuestas.Add("Sol");
             respuestas.Add("Júpiter");
             respuestas.Add("Saturno");
-            question.Answer = string.Join("|", respuestas);
+            question.Answers = string.Join("|", respuestas);
             question.CorrectAnswer = "Júpiter";
             context.Questions.Add(question);
 
@@ -143,7 +143,7 @@ namespace Model
             respuestas.Add("Plutón");
             respuestas.Add("Júpiter");
             respuestas.Add("Venus");
-            question.Answer = string.Join("|", respuestas);
+            question.Answers = string.Join("|", respuestas);
             question.CorrectAnswer = "Mercurio";
             context.Questions.Add(question);
 
@@ -156,7 +156,7 @@ namespace Model
             respuestas.Add("Urano");
             respuestas.Add("Neptuno");
             respuestas.Add("Mercurio");
-            question.Answer = string.Join("|", respuestas);
+            question.Answers = string.Join("|", respuestas);
             question.CorrectAnswer = "Tierra";
             context.Questions.Add(question);
 
@@ -169,7 +169,7 @@ namespace Model
             respuestas.Add("100 años");
             respuestas.Add("20 años");
             respuestas.Add("60 años");
-            question.Answer = string.Join("|", respuestas);
+            question.Answers = string.Join("|", respuestas);
             question.CorrectAnswer = "75 años";
             context.Questions.Add(question);
 
@@ -182,7 +182,7 @@ namespace Model
             respuestas.Add("1973");
             respuestas.Add("1979");
             respuestas.Add("1968");
-            question.Answer = string.Join("|", respuestas);
+            question.Answers = string.Join("|", respuestas);
             question.CorrectAnswer = "1969";
             context.Questions.Add(question);
 
@@ -195,7 +195,7 @@ namespace Model
             respuestas.Add("Michael Collins");
             respuestas.Add("Neil Armstrong");
             respuestas.Add("Nil Armstrong");
-            question.Answer = string.Join("|", respuestas);
+            question.Answers = string.Join("|", respuestas);
             question.CorrectAnswer = "Neil Armstrong";
             context.Questions.Add(question);
 
@@ -208,7 +208,7 @@ namespace Model
             respuestas.Add("Michael Collins");
             respuestas.Add("Neil Armstrong");
             respuestas.Add("Nil Armstrong");
-            question.Answer = string.Join("|", respuestas);
+            question.Answers = string.Join("|", respuestas);
             question.CorrectAnswer = "Edwin Aldrin";
             context.Questions.Add(question);
 
@@ -221,7 +221,7 @@ namespace Model
             respuestas.Add("11");
             respuestas.Add("13");
             respuestas.Add("14");
-            question.Answer = string.Join("|", respuestas);
+            question.Answers = string.Join("|", respuestas);
             question.CorrectAnswer = "11";
             context.Questions.Add(question);
             
@@ -234,7 +234,7 @@ namespace Model
             respuestas.Add("10");
             respuestas.Add("20");
             respuestas.Add("17");
-            question.Answer = string.Join("|", respuestas);
+            question.Answers = string.Join("|", respuestas);
             question.CorrectAnswer = "17";
             context.Questions.Add(question);
 
@@ -243,12 +243,12 @@ namespace Model
             question.Question = "¿Cuál es la distancia de la Tierra con el Sol?";
             respuestas.Clear();
             respuestas.Add("12742 km");
-            respuestas.Add("1,3914 millones km");
+            respuestas.Add("1.3914 millones km");
             respuestas.Add("30000 km");
             respuestas.Add("170 millones km");
-            respuestas.Add("149,6 millones km");
-            question.Answer = string.Join("|", respuestas);
-            question.CorrectAnswer = "149,6 millones km";
+            respuestas.Add("149.6 millones km");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "149.6 millones km";
             context.Questions.Add(question);
 
             //Pregunta 11
@@ -260,7 +260,7 @@ namespace Model
             respuestas.Add("450000 km");
             respuestas.Add("1 millón km");
             respuestas.Add("30000 km");
-            question.Answer = string.Join("|", respuestas);
+            question.Answers = string.Join("|", respuestas);
             question.CorrectAnswer = "384400 km";
             context.Questions.Add(question);
 
@@ -268,12 +268,12 @@ namespace Model
             question = new Queztion();
             question.Question = "¿Cuál es el diámetro de la Tierra?";
             respuestas.Clear();
-            respuestas.Add("1,3914 millones km");
+            respuestas.Add("1.3914 millones km");
             respuestas.Add("3474 km");
             respuestas.Add("12742 km");
             respuestas.Add("3000 km");
             respuestas.Add("3.2 millones km");
-            question.Answer = string.Join("|", respuestas);
+            question.Answers = string.Join("|", respuestas);
             question.CorrectAnswer = "12742 km";
             context.Questions.Add(question);
 
@@ -285,9 +285,9 @@ namespace Model
             respuestas.Add("12742 km");
             respuestas.Add("3000 km");
             respuestas.Add("3.2 millones km");
-            respuestas.Add("1,3914 millones km");
-            question.Answer = string.Join("|", respuestas);
-            question.CorrectAnswer = "1,3914 millones km";
+            respuestas.Add("1.3914 millones km");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "1.3914 millones km";
             context.Questions.Add(question);
 
             //Pregunta 14
@@ -299,7 +299,7 @@ namespace Model
             respuestas.Add("5011 millones de años");
             respuestas.Add("11.210 millones de años");
             respuestas.Add("13.810 millones de años");
-            question.Answer = string.Join("|", respuestas);
+            question.Answers = string.Join("|", respuestas);
             question.CorrectAnswer = "13.810 millones de años";
             context.Questions.Add(question);
 
@@ -312,7 +312,7 @@ namespace Model
             respuestas.Add("3");
             respuestas.Add("5");
             respuestas.Add("1");
-            question.Answer = string.Join("|", respuestas);
+            question.Answers = string.Join("|", respuestas);
             question.CorrectAnswer = "5";
             context.Questions.Add(question);
 
@@ -325,7 +325,7 @@ namespace Model
             respuestas.Add("8766 horas");
             respuestas.Add("8770 horas");
             respuestas.Add("8768 horas");
-            question.Answer = string.Join("|", respuestas);
+            question.Answers = string.Join("|", respuestas);
             question.CorrectAnswer = "8766 horas";
             context.Questions.Add(question);
 
@@ -338,7 +338,7 @@ namespace Model
             respuestas.Add("Plutón");
             respuestas.Add("Júpiter");
             respuestas.Add("Venus");
-            question.Answer = string.Join("|", respuestas);
+            question.Answers = string.Join("|", respuestas);
             question.CorrectAnswer = "Mercurio";
             context.Questions.Add(question);
 
@@ -351,7 +351,7 @@ namespace Model
             respuestas.Add("Neptuno");
             respuestas.Add("Júpiter");
             respuestas.Add("Saturno");
-            question.Answer = string.Join("|", respuestas);
+            question.Answers = string.Join("|", respuestas);
             question.CorrectAnswer = "Marte";
             context.Questions.Add(question);
             
@@ -364,7 +364,7 @@ namespace Model
             respuestas.Add("Marte");
             respuestas.Add("Júpiter");
             respuestas.Add("Saturno");
-            question.Answer = string.Join("|", respuestas);
+            question.Answers = string.Join("|", respuestas);
             question.CorrectAnswer = "Neptuno";
             context.Questions.Add(question);
             
@@ -377,7 +377,7 @@ namespace Model
             respuestas.Add("122450");
             respuestas.Add("122400");
             respuestas.Add("132400");
-            question.Answer = string.Join("|", respuestas);
+            question.Answers = string.Join("|", respuestas);
             question.CorrectAnswer = "122400";
             context.Questions.Add(question);
             
@@ -390,7 +390,7 @@ namespace Model
             respuestas.Add("Triangular");
             respuestas.Add("Elíptica");
             respuestas.Add("Aleatoria");
-            question.Answer = string.Join("|", respuestas);
+            question.Answers = string.Join("|", respuestas);
             question.CorrectAnswer = "Elíptica";
             context.Questions.Add(question);
             
@@ -403,7 +403,7 @@ namespace Model
             respuestas.Add("1958");
             respuestas.Add("1962");
             respuestas.Add("1965");
-            question.Answer = string.Join("|", respuestas);
+            question.Answers = string.Join("|", respuestas);
             question.CorrectAnswer = "1958";
             context.Questions.Add(question);
 
@@ -416,7 +416,7 @@ namespace Model
             respuestas.Add("Washington DC");
             respuestas.Add("New York");
             respuestas.Add("Colorado");
-            question.Answer = string.Join("|", respuestas);
+            question.Answers = string.Join("|", respuestas);
             question.CorrectAnswer = "Washington DC";
             context.Questions.Add(question);
 

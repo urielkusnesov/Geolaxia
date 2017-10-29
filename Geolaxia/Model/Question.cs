@@ -7,7 +7,7 @@ namespace Model
     {
         public virtual int Id { get; set; }
         public virtual string Question { get; set; }
-        public virtual string Answer { get; set; }
+        public virtual string Answers { get; set; }
         public virtual string CorrectAnswer { get; set; }
     }
 }
