@@ -3,6 +3,7 @@ using Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Model.Enum;
 
 namespace Service.Players
 {
@@ -93,13 +94,29 @@ namespace Service.Players
             }
         }
 
+        public bool SetWeather(string username, WeatherDesc weatherDesc, string windSpeed)
+        {
+            try
+            {
+                var player = repository.Get<Player>(x => x.UserName == username);
+                player.WeatherDesc = weatherDesc;
+                player.WeatherWindSpeed = Convert.ToDouble(windSpeed);
+                repository.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         public IList<Player> GetCloserPlayers(string username)
         {
             var player = repository.Get<Player>(x => x.UserName == username);
 
             var sql = String.Format("declare @geo1 geography = geography::Point({0}, {1}, 4326) " +
                                     "select Id from Player " +
-                                    "where LastLatitude is not null and LastLongitude is not null and @geo1.STDistance(geography::Point(LastLatitude, LastLongitude, 4326)) / 1000 < 5 and Id <> {2}", 
+                                    "where @geo1.STDistance(geography::Point(ISNULL(LastLatitude, 85), ISNULL(LastLongitude, 180), 4326)) / 1000 < 5 and Id <> {2}", 
                                     player.LastLatitude, player.LastLongitude, player.Id);
             var playerIds = repository.ExecuteListQuery(sql);
 

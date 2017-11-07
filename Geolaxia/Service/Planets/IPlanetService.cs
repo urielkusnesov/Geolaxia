@@ -1,5 +1,6 @@
 ﻿using Model;
 using System.Collections.Generic;
+using Model.DTO;
 
 namespace Service.Planets
 {
@@ -18,5 +19,9 @@ namespace Service.Planets
         IList<SolarSystem> GetSolarSystemsByGalaxy(int galaxyId);
 
         void UseResources(int planetId, Cost cost);
+
+        void AddMineResources(MineDTO mineDto);
+
+        void AddEnergy(EnergyFacilityDTO energyFacilityDto);
     }
 }

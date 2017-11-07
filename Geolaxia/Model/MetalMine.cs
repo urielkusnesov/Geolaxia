@@ -8,5 +8,11 @@ namespace Model
         {
             this.MineType = MineType.Metal;
         }
+
+        public override void AddResource(Planet planet)
+        {
+            planet.AddMetal(Productivity);
+            planet.Energy -= EnergyConsumption;
+        }
     }
 }

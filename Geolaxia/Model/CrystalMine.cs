@@ -8,5 +8,11 @@ namespace Model
         {
             this.MineType = MineType.Crystal;
         }
+
+        public override void AddResource(Planet planet)
+        {
+            planet.AddCrystal(Productivity);
+            planet.Energy -= EnergyConsumption;
+        }
     }
 }

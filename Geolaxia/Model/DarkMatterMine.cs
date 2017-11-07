@@ -8,5 +8,11 @@ namespace Model
         {
             this.MineType = MineType.DarkMatter;
         }
+
+        public override void AddResource(Planet planet)
+        {
+            planet.AddDarkMatter(Productivity);
+            planet.Energy -= EnergyConsumption;
+        }
     }
 }

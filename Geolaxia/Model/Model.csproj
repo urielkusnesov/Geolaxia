@@ -52,12 +52,16 @@
     <Compile Include="CrystalMine.cs" />
     <Compile Include="DarkMatterMine.cs" />
     <Compile Include="DTO\AttackDTO.cs" />
+    <Compile Include="DTO\EnergyFacilityDTO.cs" />
     <Compile Include="DTO\MineDTO.cs" />
     <Compile Include="EnergyCentral.cs" />
+    <Compile Include="EnergyFacility.cs" />
     <Compile Include="EnergyFuelCentral.cs" />
+    <Compile Include="Enum\EnergyFacilityType.cs" />
     <Compile Include="Enum\MineType.cs" />
     <Compile Include="Enum\PlanetType.cs" />
     <Compile Include="Enum\ShipType.cs" />
+    <Compile Include="Enum\WeatherDesc.cs" />
     <Compile Include="Facility.cs" />
     <Compile Include="Galaxy.cs" />
     <Compile Include="GeolaxiaContext.cs" />

@@ -7,18 +7,20 @@ using log4net;
 using Model;
 using Newtonsoft.Json;
 using Geolaxia.Models;
+using Model.Enum;
 using Newtonsoft.Json.Linq;
 using Service.Players;
 
 namespace Geolaxia.Controllers
 {
-    public class PlayerController : ApiController
+    public class PlayerController : BaseController
     {
         private static readonly ILog logger = LogManager.GetLogger(typeof(PlayerController));
         private IPlayerService service;
         private IPlanetService planetService;
 
-        public PlayerController(IPlayerService service, IPlanetService planetService)
+        public PlayerController(IPlayerService service, IPlanetService planetService) 
+            : base(service)
         {
             this.service = service;
             this.planetService = planetService;
@@ -195,6 +197,17 @@ namespace Geolaxia.Controllers
         {
             logger.Info("Seteando la ultima posicion del jugador");
             service.SetPosition(player.LastLatitude, player.LastLongitude, player.Id);
+        }
+
+        // POST api/player/setweather
+        [HttpGet]
+        public void SetWeather(WeatherDesc weatherDesc, string windSpeed)
+        {
+            var headers = Request.Headers;
+            string username = headers.GetValues("username").First();
+
+            logger.Info("Seteando el clima en la posicion del jugador");
+            service.SetWeather(username, weatherDesc, windSpeed);
         }
 
         private Planet AssignInitialPlanet()

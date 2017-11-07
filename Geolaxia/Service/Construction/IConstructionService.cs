@@ -16,5 +16,25 @@ namespace Service.Construction
         Mine GetFromDTO(MineDTO mineDto);
 
         void FinishMine(Timer timer, MineDTO mineDto);
+
+        EnergyCentral GetCurrentEnergyCentral(int planetId);
+
+        EnergyFuelCentral GetCurrentEnergyFuelCentral(int planetId);
+
+        IList<SolarPanel> GetCurrentSolarPanels(int planetId);
+
+        IList<WindTurbine> GetCurrentWindTurbines(int planetId);
+
+        IList<EnergyFacility> GetEnergyFacilitiesToBuild(int planetId);
+
+        EnergyFacility Add(EnergyFacility energyFacility);
+
+        void AddSolarPanels(int planetId, int qtt);
+
+        void AddWindTurbines(int planetId, int qtt);
+
+        EnergyFacility GetFromDTO(EnergyFacilityDTO energyFacilityDto);
+
+        void FinishEnergyFacility(Timer timer, EnergyFacilityDTO energyFacilityDto);
     }
 }

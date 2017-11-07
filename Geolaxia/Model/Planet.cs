@@ -8,9 +8,9 @@ namespace Model
         public virtual string Name { get; set; }
         public virtual int Order { get; set; }
         public virtual Player Conqueror { get; set; }
-        public virtual int Crystal { get; set; }
-        public virtual int Metal { get; set; }
-        public virtual int DarkMatter { get; set; }
+        public virtual double Crystal { get; set; }
+        public virtual double Metal { get; set; }
+        public virtual double DarkMatter { get; set; }
         public virtual int Energy { get; set; }
         public virtual bool IsOrigin { get; set; }
         public virtual SolarSystem SolarSystem { get; set; }
@@ -19,5 +19,9 @@ namespace Model
         public virtual int PositionZ { get; set; }
         //para pasar le herencia al cliente
         public virtual PlanetType PlanetType { get; set; }
+
+        public abstract void AddCrystal(int productivity);
+        public abstract void AddMetal(int productivity);
+        public abstract void AddDarkMatter(int productivity);
     }
 }

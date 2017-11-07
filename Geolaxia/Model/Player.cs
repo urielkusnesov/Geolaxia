@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Model.Enum;
+
 namespace Model
 {
     using System;
@@ -27,5 +29,7 @@ namespace Model
         public virtual string FacebookId { get; set; }
         public virtual string LastLatitude { get; set; }
         public virtual string LastLongitude { get; set; }
+        public virtual WeatherDesc WeatherDesc { get; set; }
+        public virtual double WeatherWindSpeed { get; set; }
     }
 }

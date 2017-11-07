@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Model;
 using System.Linq.Expressions;
+using Model.Enum;
 
 namespace Service.Players
 {
@@ -26,6 +27,8 @@ namespace Service.Players
         bool ValidateToken(string username, string token);
 
         bool SetPosition(string latitude, string longitude, int id);
+
+        bool SetWeather(string username, WeatherDesc weatherDesc, string windSpeed);
 
         IList<Player> GetCloserPlayers(string username);
     }

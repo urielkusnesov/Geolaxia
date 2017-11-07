@@ -4,6 +4,7 @@ using Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Model.DTO;
 
 namespace Service.Planets
 {
@@ -93,6 +94,140 @@ namespace Service.Planets
             planet.DarkMatter -= cost.DarkMatterCost;
 
             repository.SaveChanges();
+        }
+
+        public void AddMineResources(MineDTO mineDto)
+        {
+            using (var context = new GeolaxiaContext())
+            {
+                var repo = new RepositoryService(context);
+                var planet = repo.Get<Planet>(mineDto.PlanetId);
+                var mine = GetFromDTO(mineDto, repo);
+
+                mine.AddResource(planet);
+                repo.SaveChanges();
+            }
+        }
+
+        public void AddEnergy(EnergyFacilityDTO energyFacilityDto)
+        {
+            using (var context = new GeolaxiaContext())
+            {
+                var repo = new RepositoryService(context);
+                var planet = repo.Get<Planet>(energyFacilityDto.PlanetId);
+                var energyFacility = GetFromDTO(energyFacilityDto, repo);
+
+                energyFacility.AddEnergy(planet);
+                repo.SaveChanges();
+            }
+        }
+
+        public Mine GetFromDTO(MineDTO dto, IRepositoryService repo)
+        {
+            Mine mine = null;
+            switch (dto.MineType)
+            {
+                case MineType.Crystal:
+                    mine = new CrystalMine
+                    {
+                        Id = dto.Id,
+                        ConstructionTime = dto.ConstructionTime,
+                        Cost = repo.Get<Cost>(dto.CostId),
+                        EnergyConsumption = dto.EnergyConsumption,
+                        Level = dto.Level,
+                        MineType = MineType.Crystal,
+                        Planet = repo.Get<Planet>(dto.PlanetId),
+                        Productivity = dto.Productivity
+                    };
+                    break;
+                case MineType.Metal:
+                    mine = new MetalMine
+                    {
+                        Id = dto.Id,
+                        ConstructionTime = dto.ConstructionTime,
+                        Cost = repo.Get<Cost>(dto.CostId),
+                        EnergyConsumption = dto.EnergyConsumption,
+                        Level = dto.Level,
+                        MineType = MineType.Metal,
+                        Planet = repo.Get<Planet>(dto.PlanetId),
+                        Productivity = dto.Productivity
+                    };
+                    break;
+                case MineType.DarkMatter:
+                    mine = new DarkMatterMine
+                    {
+                        Id = dto.Id,
+                        ConstructionTime = dto.ConstructionTime,
+                        Cost = repo.Get<Cost>(dto.CostId),
+                        EnergyConsumption = dto.EnergyConsumption,
+                        Level = dto.Level,
+                        MineType = MineType.DarkMatter,
+                        Planet = repo.Get<Planet>(dto.PlanetId),
+                        Productivity = dto.Productivity
+                    };
+                    break;
+            }
+            return mine;
+        }
+
+        public EnergyFacility GetFromDTO(EnergyFacilityDTO dto, IRepositoryService repo)
+        {
+            EnergyFacility energyFacility = null;
+            switch (dto.EnergyFacilityType)
+            {
+                case EnergyFacilityType.EnergyCentral:
+                    energyFacility = new EnergyCentral
+                    {
+                        Id = dto.Id,
+                        ConstructionTime = dto.ConstructionTime,
+                        Cost = repo.Get<Cost>(dto.CostId),
+                        Level = dto.Level,
+                        EnergyFacilityType = EnergyFacilityType.EnergyCentral,
+                        Planet = repo.Get<Planet>(dto.PlanetId),
+                        Productivity = dto.Productivity
+                    };
+                    break;
+                case EnergyFacilityType.EnergyFuelCentral:
+                    energyFacility = new EnergyFuelCentral
+                    {
+                        Id = dto.Id,
+                        ConstructionTime = dto.ConstructionTime,
+                        Cost = repo.Get<Cost>(dto.CostId),
+                        Level = dto.Level,
+                        EnergyFacilityType = EnergyFacilityType.EnergyFuelCentral,
+                        Planet = repo.Get<Planet>(dto.PlanetId),
+                        Productivity = dto.Productivity,
+                        DarkMatterConsumption = dto.DarkMatterConsumption
+                    };
+                    break;
+                case EnergyFacilityType.SolarPanel:
+                    energyFacility = new SolarPanel
+                    {
+                        Id = dto.Id,
+                        ConstructionTime = dto.ConstructionTime,
+                        Cost = repo.Get<Cost>(dto.CostId),
+                        EnergyFacilityType = EnergyFacilityType.SolarPanel,
+                        Planet = repo.Get<Planet>(dto.PlanetId),
+                        CloudyProd = 10,
+                        SunnyProd = 25,
+                        RainyProd = 5
+                    };
+                    break;
+                case EnergyFacilityType.WindTurbine:
+                    energyFacility = new WindTurbine
+                    {
+                        Id = dto.Id,
+                        ConstructionTime = dto.ConstructionTime,
+                        Cost = repo.Get<Cost>(dto.CostId),
+                        EnergyFacilityType = EnergyFacilityType.EnergyFuelCentral,
+                        Planet = repo.Get<Planet>(dto.PlanetId),
+                        Threshold = 15,
+                        BestProd = 25,
+                        WorstProd = 10
+                    };
+                    break;
+            }
+            return energyFacility;
         }
     }
 }
