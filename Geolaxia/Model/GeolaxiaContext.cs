@@ -50,6 +50,7 @@ namespace Model
             modelBuilder.Entity<Probe>().ToTable("Probe");
             modelBuilder.Entity<Attack>().ToTable("Attack");
             modelBuilder.Entity<Queztion>().ToTable("Question");
+            modelBuilder.Entity<Colonizer>().ToTable("Colonizer");
 
             //clases abstractas, usamos TPT inheritance strategy
             modelBuilder.Entity<Military>().ToTable("Military");
@@ -82,6 +83,7 @@ namespace Model
         public DbSet<Probe> Probes { get; set; }
         public DbSet<Attack> Attacks { get; set; }
         public DbSet<Queztion> Questions { get; set; }
+        public DbSet<Colonizer> Colonizers { get; set; }
 
         //abstract classes
         public DbSet<Military> Militaries { get; set; }

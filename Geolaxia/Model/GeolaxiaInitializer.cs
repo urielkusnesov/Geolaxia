@@ -114,6 +114,18 @@ namespace Model
             context.SaveChanges();
 
             this.CargarPreguntasYRespuestasParaDefensa(context);
+
+            var colonizers = new List<Colonizer>
+            {
+                new Colonizer { Planet = planets[0], EnableDate = DateTime.Now},
+                new Colonizer { Planet = planets[0], EnableDate = DateTime.Now},
+                new Colonizer { Planet = planets[0], EnableDate = DateTime.Now}
+            };
+
+            foreach (Colonizer colonizer in colonizers)
+            {
+                context.Colonizers.Add(colonizer);
+            };
         }
 
         private void CargarPreguntasYRespuestasParaDefensa(GeolaxiaContext context)
