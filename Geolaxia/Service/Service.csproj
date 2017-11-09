@@ -53,8 +53,8 @@
     <Compile Include="Attacks\IAttackService.cs" />
     <Compile Include="Construction\ConstructionService.cs" />
     <Compile Include="Construction\IConstructionService.cs" />
-    <Compile Include="Colonize\ColonizeService.cs" />
-    <Compile Include="Colonize\IColonizeService.cs" />
+    <Compile Include="Colonization\ColonizeService.cs" />
+    <Compile Include="Colonization\IColonizeService.cs" />
     <Compile Include="Defenses\DefenseService.cs" />
     <Compile Include="Defenses\IDefenseService.cs" />
     <Compile Include="Planets\IPlanetService.cs" />

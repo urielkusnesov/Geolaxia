@@ -9,7 +9,7 @@ using Service.Planets;
 using Service.Players;
 using Service.Ships;
 using Service.Construction;
-using Service.Colonize;
+using Service.Colonization;
 
 namespace Geolaxia.Dependencies
 {

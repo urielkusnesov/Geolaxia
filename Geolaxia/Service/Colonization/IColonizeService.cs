@@ -2,11 +2,12 @@
 using Model;
 using System;
 
-namespace Service.Colonize
+namespace Service.Colonization
 {
     public interface IColonizeService
     {
         IList<Colonizer> GetColonizers(int planetId);
-        //long IsBuildingCannons(int planetId);
+        void SendColonizer(int planetId, int planetIdTarget, long time);
+        long IsSendingColonizer(int planetId);
     }
 }

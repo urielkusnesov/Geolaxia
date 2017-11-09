@@ -124,7 +124,7 @@ namespace Model
 
             foreach (Colonizer colonizer in colonizers)
             {
-                context.Colonizers.Add(colonizer);
+                context.Colonizer.Add(colonizer);
             };
         }
 

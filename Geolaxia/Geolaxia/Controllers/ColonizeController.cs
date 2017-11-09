@@ -10,7 +10,7 @@ using Service.Ships;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
-using Service.Colonize;
+using Service.Colonization;
 
 namespace Geolaxia.Controllers
 {
@@ -64,33 +64,62 @@ namespace Geolaxia.Controllers
             }
         }
 
-        ////api/defense/IsBuildingCannons
-        //[HttpPost]
-        //public JObject IsBuildingCannons(int planetId)
-        //{
-        //    if (!ValidateToken())
-        //    {
-        //        var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
-        //        return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
-        //    }
+        //api/colonize/SendColonizer
+        [HttpPost]
+        public JObject SendColonizer(int planetId, int planetIdTarget, long time)
+        {
+            if (!ValidateToken())
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
 
-        //    logger.Info("getting building cannons status in planet: " + planetId);
+            logger.Info("send colonizer to planet: " + planetIdTarget);
 
-        //    try
-        //    {
-        //        long buldingTime = defenseService.IsBuildingCannons(planetId);
-        //        var okResponse = new ApiResponse { Data = buldingTime, Status = new Status { Result = "ok", Description = "" } };
-        //        var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+            try
+            {
+                colonizeService.SendColonizer(planetId, planetIdTarget, time);
+                var okResponse = new ApiResponse { Data = string.Empty, Status = new Status { Result = "ok", Description = "" } };
+                var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                
+                return (json);
+            }
+            catch (Exception ex)
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
+                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
 
-        //        return (json);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
-        //        JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+                return (json);
+            }
+        }
 
-        //        return (json);
-        //    }
-        //}
+        //api/colonize/IsSendingColonizer
+        [HttpPost]
+        public JObject IsSendingColonizer(int planetId)
+        {
+            if (!ValidateToken())
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
+
+            logger.Info("is sending colonizer to planet: " + planetId);
+
+            try
+            {
+                long sendingTime = colonizeService.IsSendingColonizer(planetId);
+                var okResponse = new ApiResponse { Data = sendingTime, Status = new Status { Result = "ok", Description = "" } };
+                var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+
+                return (json);
+            }
+            catch (Exception ex)
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
+                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+
+                return (json);
+            }
+        }
     }
 }

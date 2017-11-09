@@ -83,7 +83,8 @@ namespace Model
         public DbSet<Probe> Probes { get; set; }
         public DbSet<Attack> Attacks { get; set; }
         public DbSet<Queztion> Questions { get; set; }
-        public DbSet<Colonizer> Colonizers { get; set; }
+        public DbSet<Colonize> Colonizations { get; set; }
+        public DbSet<Colonizer> Colonizer { get; set; }
 
         //abstract classes
         public DbSet<Military> Militaries { get; set; }

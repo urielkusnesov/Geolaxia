@@ -108,7 +108,7 @@ namespace Geolaxia.Controllers
             try
             {
                 defenseService.BuildCannons(planetId, cant);
-                var okResponse = new ApiResponse { Data = "", Status = new Status { Result = "ok", Description = "" } };
+                var okResponse = new ApiResponse { Data = string.Empty, Status = new Status { Result = "ok", Description = "" } };
                 var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
 
                 return (json);
