@@ -1,4 +1,7 @@
-﻿using System.Web.Http;
+﻿using FluentScheduler;
+using Repository;
+using Service.Colonization;
+using System.Web.Http;
 
 namespace Geolaxia
 {
@@ -11,6 +14,30 @@ namespace Geolaxia
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            //JobManager.Initialize(new MyRegistry());
         }
+
+        
     }
+
+    //public class MyRegistry : Registry
+    //{
+    //    public MyRegistry()
+    //    {
+    //        // Schedule an IJob to run at an interval
+    //        Schedule<MyJob>().ToRunNow().AndEvery(5).Seconds();
+
+    //        // Schedule an IJob to run once, delayed by a specific time interval
+    //        //Schedule<MyJob>().ToRunOnceIn(5).Seconds();
+    //    }
+    //}
+
+    //public class MyJob : IJob
+    //{
+    //    public void Execute()
+    //    {
+    //        string a = "prueba";
+    //    }
+    //}
 }

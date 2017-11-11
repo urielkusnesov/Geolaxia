@@ -8,7 +8,6 @@ namespace Model
         public virtual int Id { get; set; }
         public virtual Player ColonizerPlayer { get; set; }
         public virtual Planet ColonizerPlanet { get; set; }
-        public virtual Player DestinationPlayer { get; set; }
         public virtual Planet DestinationPlanet { get; set; }
         public virtual Colonizer Colonizer { get; set; }
         public virtual DateTime ColonizerDeparture { get; set; }

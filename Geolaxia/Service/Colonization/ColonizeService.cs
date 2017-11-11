@@ -37,22 +37,27 @@ namespace Service.Colonization
         {
             //TODO: validar que el planeta este libre.
             //TODO: validar que cuando llegue el colonizador siga estando libre para colonizar.
-            DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            DateTime date = start.AddMilliseconds(time).ToLocalTime();
+            //DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            DateTime arrival = DateTime.Now.AddMilliseconds(time).ToLocalTime();
+            //DateTime date = start.AddMilliseconds(time).ToLocalTime();
 
             Planet planetOrigen = repository.Get<Planet>(planetId);
-            Player playerOrigen = repository.Get<Player>(x => x.Planets.Contains(planetOrigen));
+            //Player playerOrigen = repository.Get<Player>(x => x.Planets.Contains(planetOrigen));
+            Player playerOrigen = repository.Get<Planet>(x => x.Id.Equals(planetId)).Conqueror;
             Planet planetDestino = repository.Get<Planet>(planetIdTarget);
-            Player playerDestino = repository.Get<Player>(x => x.Planets.Contains(planetDestino));
 
-            IList<Colonize> lista = repository.List<Colonize>(x => x.ColonizerPlanet.Id.Equals(planetId));
-            List<int> idColonizadoresUsadosList = (lista != null) ? lista.Select(x => x.Colonizer.Id).ToList() : new List<int>();   
+            IList<Colonize> listaColonizadoresUsados = repository.List<Colonize>(x => x.ColonizerPlanet.Id.Equals(planetId));
 
-            Colonizer colonizador = repository.Get<Colonizer>(x => x.Planet.Id.Equals(planetId) && x.EnableDate <= DateTime.Now && !idColonizadoresUsadosList.Contains(x.Id));
+            List<int> idColonizadoresUsadosList = (listaColonizadoresUsados != null) ? listaColonizadoresUsados.Select(x => x.Colonizer.Id).ToList() : new List<int>();
 
-            repository.Add<Colonize>(new Colonize { ColonizerArrival = date, ColonizerDeparture = DateTime.Now, ColonizerPlanet = planetOrigen, ColonizerPlayer = playerOrigen, DestinationPlanet = planetDestino, DestinationPlayer = playerDestino, Colonizer = colonizador });
+            IList<Colonizer> colonizadorList = repository.List<Colonizer>(x => x.Planet.Id.Equals(planetId) && x.EnableDate <= DateTime.Now && !idColonizadoresUsadosList.Contains(x.Id));
 
-            repository.SaveChanges();
+            if (colonizadorList != null && colonizadorList.Count > 0)
+            {
+                Colonizer colonizador = colonizadorList[0];
+                repository.Add<Colonize>(new Colonize { ColonizerArrival = arrival, ColonizerDeparture = DateTime.Now, ColonizerPlanet = planetOrigen, ColonizerPlayer = playerOrigen, DestinationPlanet = planetDestino, Colonizer = colonizador });
+                repository.SaveChanges();
+            }
         }
 
         public long IsSendingColonizer(int planetId)
