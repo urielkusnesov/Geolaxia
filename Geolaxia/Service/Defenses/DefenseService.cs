@@ -14,6 +14,8 @@ namespace Service.Defenses
         private int CANON_CONST_COSTO_CRISTAL = 50;
         private int CANON_ATAQUE = 50;
         private int CANON_DEFENSA = 50;
+        private int PREGUNTAS_CANTIDAD_A_RESPONDER = 3;
+        private int PREGUNTAS_CANTIDAD_EN_BASE = 24; //tiene que ser la (cantidad + 1) por el random
 
         public DefenseService(IRepositoryService repository)
         {
@@ -71,9 +73,37 @@ namespace Service.Defenses
             if (shield == null)
             {
                 var shieldCost = repository.Get<Cost>(x => x.Element == "shield");
-                shield = new Shield{Cost = shieldCost, Planet = new BlackPlanet(), ConstructionTime = 120, RequiredLevel = 5};
+                shield = new Shield
+                {
+                    Cost = shieldCost,
+                    Planet = new BlackPlanet(),
+                    ConstructionTime = 120,
+                    RequiredLevel = 5
+                };
             }
             return shield;
+        }
+
+        public List<Queztion> Get3RandomQuestions()
+        {
+            List<Queztion> questions = new List<Queztion>();
+            Queztion question = null;
+            Random rnd = new Random();
+            int id = 0;
+
+            while (questions.Count != this.PREGUNTAS_CANTIDAD_A_RESPONDER)
+            {
+                id = rnd.Next(1, this.PREGUNTAS_CANTIDAD_EN_BASE);
+
+                question = repository.Get<Queztion>(x => x.Id.Equals(id));
+
+                if (!questions.Exists(x => x.Id.Equals(question.Id)))
+                {
+                    questions.Add(question);
+                }
+            }
+
+            return (questions);
         }
     }
 }

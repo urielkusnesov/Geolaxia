@@ -113,6 +113,327 @@ namespace Model
             context.Shields.Add(shield);
 
             context.SaveChanges();
+
+            this.CargarPreguntasYRespuestasParaDefensa(context);
+
+            var colonizers = new List<Colonizer>
+            {
+                new Colonizer { Planet = planets[0], EnableDate = DateTime.Now},
+                new Colonizer { Planet = planets[0], EnableDate = DateTime.Now},
+                new Colonizer { Planet = planets[0], EnableDate = DateTime.Now}
+            };
+
+            foreach (Colonizer colonizer in colonizers)
+            {
+                context.Colonizer.Add(colonizer);
+            };
+        }
+
+        private void CargarPreguntasYRespuestasParaDefensa(GeolaxiaContext context)
+        {
+            List<string> respuestas = new List<string>();
+            Queztion question = null;
+
+            //Pregunta 1
+            question = new Queztion();
+            question.Question = "¿Cuál es el planeta más grande del sistema solar?";
+            respuestas.Clear();
+            respuestas.Add("Tierra");
+            respuestas.Add("Marte");
+            respuestas.Add("Sol");
+            respuestas.Add("Júpiter");
+            respuestas.Add("Saturno");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "Júpiter";
+            context.Questions.Add(question);
+
+            //Pregunta 2
+            question = new Queztion();
+            question.Question = "¿Cuál es el planeta más pequeño del sistema solar?";
+            respuestas.Clear();
+            respuestas.Add("Tierra");
+            respuestas.Add("Mercurio");
+            respuestas.Add("Plutón");
+            respuestas.Add("Júpiter");
+            respuestas.Add("Venus");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "Mercurio";
+            context.Questions.Add(question);
+
+            //Pregunta 3
+            question = new Queztion();
+            question.Question = "¿Cuál es el planeta del sistema solar ubicado en la tercera posición?";
+            respuestas.Clear();
+            respuestas.Add("Tierra");
+            respuestas.Add("Marte");
+            respuestas.Add("Urano");
+            respuestas.Add("Neptuno");
+            respuestas.Add("Mercurio");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "Tierra";
+            context.Questions.Add(question);
+
+            //Pregunta 4
+            question = new Queztion();
+            question.Question = "¿Cada cuántos años pasa el cometa Halley?";
+            respuestas.Clear();
+            respuestas.Add("75 años");
+            respuestas.Add("55 años");
+            respuestas.Add("100 años");
+            respuestas.Add("20 años");
+            respuestas.Add("60 años");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "75 años";
+            context.Questions.Add(question);
+
+            //Pregunta 5
+            question = new Queztion();
+            question.Question = "¿En qué año el hombre pisó la Luna?";
+            respuestas.Clear();
+            respuestas.Add("1962");
+            respuestas.Add("1969");
+            respuestas.Add("1973");
+            respuestas.Add("1979");
+            respuestas.Add("1968");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "1969";
+            context.Questions.Add(question);
+
+            //Pregunta 6
+            question = new Queztion();
+            question.Question = "¿Cuál fue el nombre del primer hombre en pisar la Luna?";
+            respuestas.Clear();
+            respuestas.Add("Lance Armstrong");
+            respuestas.Add("Edwin Aldrin");
+            respuestas.Add("Michael Collins");
+            respuestas.Add("Neil Armstrong");
+            respuestas.Add("Nil Armstrong");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "Neil Armstrong";
+            context.Questions.Add(question);
+
+            //Pregunta 7
+            question = new Queztion();
+            question.Question = "¿Cuál fue el nombre del segundo hombre en pisar la Luna?";
+            respuestas.Clear();
+            respuestas.Add("Lance Armstrong");
+            respuestas.Add("Edwin Aldrin");
+            respuestas.Add("Michael Collins");
+            respuestas.Add("Neil Armstrong");
+            respuestas.Add("Nil Armstrong");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "Edwin Aldrin";
+            context.Questions.Add(question);
+
+            //Pregunta 8
+            question = new Queztion();
+            question.Question = "¿Cuál fue el número de APOLO en el cual se llegó a la Luna?";
+            respuestas.Clear();
+            respuestas.Add("5");
+            respuestas.Add("10");
+            respuestas.Add("11");
+            respuestas.Add("13");
+            respuestas.Add("14");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "11";
+            context.Questions.Add(question);
+            
+            //Pregunta 9
+            question = new Queztion();
+            question.Question = "¿Cuántas misiones “APOLO” se realizaron?";
+            respuestas.Clear();
+            respuestas.Add("11");
+            respuestas.Add("13");
+            respuestas.Add("10");
+            respuestas.Add("20");
+            respuestas.Add("17");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "17";
+            context.Questions.Add(question);
+
+            //Pregunta 10
+            question = new Queztion();
+            question.Question = "¿Cuál es la distancia de la Tierra con el Sol?";
+            respuestas.Clear();
+            respuestas.Add("12742 km");
+            respuestas.Add("1.3914 millones km");
+            respuestas.Add("30000 km");
+            respuestas.Add("170 millones km");
+            respuestas.Add("149.6 millones km");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "149.6 millones km";
+            context.Questions.Add(question);
+
+            //Pregunta 11
+            question = new Queztion();
+            question.Question = "¿Cuál es la distancia de la Tierra con la luna?";
+            respuestas.Clear();
+            respuestas.Add("384400 km");
+            respuestas.Add("12742 km");
+            respuestas.Add("450000 km");
+            respuestas.Add("1 millón km");
+            respuestas.Add("30000 km");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "384400 km";
+            context.Questions.Add(question);
+
+            //Pregunta 12
+            question = new Queztion();
+            question.Question = "¿Cuál es el diámetro de la Tierra?";
+            respuestas.Clear();
+            respuestas.Add("1.3914 millones km");
+            respuestas.Add("3474 km");
+            respuestas.Add("12742 km");
+            respuestas.Add("3000 km");
+            respuestas.Add("3.2 millones km");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "12742 km";
+            context.Questions.Add(question);
+
+            //Pregunta 13
+            question = new Queztion();
+            question.Question = "¿Cuál es el diámetro del Sol?";
+            respuestas.Clear();
+            respuestas.Add("3474 km");
+            respuestas.Add("12742 km");
+            respuestas.Add("3000 km");
+            respuestas.Add("3.2 millones km");
+            respuestas.Add("1.3914 millones km");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "1.3914 millones km";
+            context.Questions.Add(question);
+
+            //Pregunta 14
+            question = new Queztion();
+            question.Question = "¿Cuándo se estima que fue el Big Bang?";
+            respuestas.Clear();
+            respuestas.Add("65 millones de años");
+            respuestas.Add("4570 millones de años");
+            respuestas.Add("5011 millones de años");
+            respuestas.Add("11.210 millones de años");
+            respuestas.Add("13.810 millones de años");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "13.810 millones de años";
+            context.Questions.Add(question);
+
+            //Pregunta 15
+            question = new Queztion();
+            question.Question = "¿Cuántos movimientos realiza la Tierra alrededor del Sol?";
+            respuestas.Clear();
+            respuestas.Add("2");
+            respuestas.Add("6");
+            respuestas.Add("3");
+            respuestas.Add("5");
+            respuestas.Add("1");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "5";
+            context.Questions.Add(question);
+
+            //Pregunta 16
+            question = new Queztion();
+            question.Question = "¿Cuánto tarda la Tierra en dar una vuelta alrededor del Sol (en horas)?";
+            respuestas.Clear();
+            respuestas.Add("8760 horas");
+            respuestas.Add("8754 horas");
+            respuestas.Add("8766 horas");
+            respuestas.Add("8770 horas");
+            respuestas.Add("8768 horas");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "8766 horas";
+            context.Questions.Add(question);
+
+            //Pregunta 17
+            question = new Queztion();
+            question.Question = "¿Cuál es el planeta más cercano al sol de nuestro sistema solar?";
+            respuestas.Clear();
+            respuestas.Add("Tierra");
+            respuestas.Add("Mercurio");
+            respuestas.Add("Plutón");
+            respuestas.Add("Júpiter");
+            respuestas.Add("Venus");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "Mercurio";
+            context.Questions.Add(question);
+
+            //Pregunta 18
+            question = new Queztion();
+            question.Question = "¿Cuál es el cuarto planeta más cercano al sol de nuestro sistema solar (empezando a contar desde el Sol)?";
+            respuestas.Clear();
+            respuestas.Add("Tierra");
+            respuestas.Add("Marte");
+            respuestas.Add("Neptuno");
+            respuestas.Add("Júpiter");
+            respuestas.Add("Saturno");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "Marte";
+            context.Questions.Add(question);
+            
+            //Pregunta 19
+            question = new Queztion();
+            question.Question = "¿Cuál es el octavo planeta más cercano al sol de nuestro sistema solar (empezando a contar desde el Sol)?";
+            respuestas.Clear();
+            respuestas.Add("Neptuno");
+            respuestas.Add("Tierra");
+            respuestas.Add("Marte");
+            respuestas.Add("Júpiter");
+            respuestas.Add("Saturno");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "Neptuno";
+            context.Questions.Add(question);
+            
+            //Pregunta 20
+            question = new Queztion();
+            question.Question = "¿Cuánto tarda la Tierra en dar una vuelta sobre sí misma (en segundos)?";
+            respuestas.Clear();
+            respuestas.Add("123400");
+            respuestas.Add("122500");
+            respuestas.Add("122450");
+            respuestas.Add("122400");
+            respuestas.Add("132400");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "122400";
+            context.Questions.Add(question);
+            
+            //Pregunta 21
+            question = new Queztion();
+            question.Question = "¿De qué forma es la trayectoria que realiza la Tierra alrededor del Sol?";
+            respuestas.Clear();
+            respuestas.Add("Circular");
+            respuestas.Add("Lineal");
+            respuestas.Add("Triangular");
+            respuestas.Add("Elíptica");
+            respuestas.Add("Aleatoria");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "Elíptica";
+            context.Questions.Add(question);
+            
+            //Pregunta 22
+            question = new Queztion();
+            question.Question = "¿En qué año se fundó la NASA?";
+            respuestas.Clear();
+            respuestas.Add("1880");
+            respuestas.Add("1930");
+            respuestas.Add("1958");
+            respuestas.Add("1962");
+            respuestas.Add("1965");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "1958";
+            context.Questions.Add(question);
+
+            //Pregunta 23
+            question = new Queztion();
+            question.Question = "¿Dónde queda ubicada la central de la NASA?";
+            respuestas.Clear();
+            respuestas.Add("Los Ángeles");
+            respuestas.Add("California");
+            respuestas.Add("Washington DC");
+            respuestas.Add("New York");
+            respuestas.Add("Colorado");
+            question.Answers = string.Join("|", respuestas);
+            question.CorrectAnswer = "Washington DC";
+            context.Questions.Add(question);
+
+            context.SaveChanges();
         }
     }
 }

@@ -10,5 +10,6 @@ namespace Service.Defenses
         void BuildCannons(int planetId, int cant);
         long IsBuildingCannons(int planetId);
         Shield GetCurrentShield(int planetId);
+        List<Queztion> Get3RandomQuestions();
     }
 }

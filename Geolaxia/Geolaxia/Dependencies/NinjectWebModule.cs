@@ -9,6 +9,7 @@ using Service.Planets;
 using Service.Players;
 using Service.Ships;
 using Service.Construction;
+using Service.Colonization;
 
 namespace Geolaxia.Dependencies
 {
@@ -25,6 +26,7 @@ namespace Geolaxia.Dependencies
             Bind<IShipService, ShipService>().To<ShipService>().InRequestScope();
             Bind<IAttackService, AttackService>().To<AttackService>().InRequestScope();
             Bind<IDefenseService, DefenseService>().To<DefenseService>().InRequestScope();
+            Bind<IColonizeService, ColonizeService>().To<ColonizeService>().InRequestScope();
             Bind<IConstructionService, ConstructionService>().To<ConstructionService>().InRequestScope();
         }
     }
