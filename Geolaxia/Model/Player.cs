@@ -19,7 +19,12 @@ namespace Model
         public virtual int Id { get; set; }
         public virtual string UserName { get; set; }
         public virtual string Password { get; set; }
-        public virtual int Level { get; set; }
+        private int level;
+        public virtual int Level
+        {
+            get { return CalculateLevel(); }
+            set { level = value; }
+        }
         public virtual int ResourcesUsed { get; set; }
         public virtual IList<Planet> Planets { get; set; }
         public virtual string Token { get; set; }
@@ -31,5 +36,33 @@ namespace Model
         public virtual string LastLongitude { get; set; }
         public virtual WeatherDesc WeatherDesc { get; set; }
         public virtual double WeatherWindSpeed { get; set; }
+
+        public int CalculateLevel()
+        {
+            if (this.level <= 5)
+            {
+                return Math.Abs((ResourcesUsed - GetResourcesByLevel(this.level - 1)) / 300);
+            }
+            else
+            {
+                return Math.Abs((ResourcesUsed - GetResourcesByLevel(this.level - 1)) / 150);
+            }
+        }
+
+        public int GetResourcesByLevel(int level)
+        {
+            if (level == 1)
+            {
+                return 0;
+            }
+            if (level <= 5)
+            {
+                return level * 300 + GetResourcesByLevel(level - 1);                
+            }
+            else
+            {
+                return level * 150 + GetResourcesByLevel(level - 1);
+            }
+        }
     }
 }

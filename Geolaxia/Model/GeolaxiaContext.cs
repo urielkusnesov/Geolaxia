@@ -49,6 +49,7 @@ namespace Model
             modelBuilder.Entity<Trader>().ToTable("Trader");
             modelBuilder.Entity<Probe>().ToTable("Probe");
             modelBuilder.Entity<Attack>().ToTable("Attack");
+            modelBuilder.Entity<Hangar>().ToTable("Hangar");
 
             //clases abstractas, usamos TPT inheritance strategy
             modelBuilder.Entity<Military>().ToTable("Military");
@@ -80,6 +81,7 @@ namespace Model
         public DbSet<Trader> Traders { get; set; }
         public DbSet<Probe> Probes { get; set; }
         public DbSet<Attack> Attacks { get; set; }
+        public DbSet<Hangar> Hangars { get; set; }
 
         //abstract classes
         public DbSet<Military> Militaries { get; set; }

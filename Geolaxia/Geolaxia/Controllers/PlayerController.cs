@@ -193,21 +193,27 @@ namespace Geolaxia.Controllers
 
         // POST api/player/setposition (json player in body)
         [HttpPost]
-        public void SetPosition(Player player)
+        public JObject SetPosition(Player player)
         {
             logger.Info("Seteando la ultima posicion del jugador");
             service.SetPosition(player.LastLatitude, player.LastLongitude, player.Id);
+            var response = new ApiResponse { Status = new Status { Result = "ok", Description = "" } };
+            JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+            return json;
         }
 
         // POST api/player/setweather
         [HttpGet]
-        public void SetWeather(WeatherDesc weatherDesc, string windSpeed)
+        public JObject SetWeather(WeatherDesc weatherDesc, string windSpeed)
         {
             var headers = Request.Headers;
             string username = headers.GetValues("username").First();
 
             logger.Info("Seteando el clima en la posicion del jugador");
             service.SetWeather(username, weatherDesc, windSpeed);
+            var response = new ApiResponse { Status = new Status { Result = "ok", Description = "" } };
+            JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+            return json;
         }
 
         private Planet AssignInitialPlanet()

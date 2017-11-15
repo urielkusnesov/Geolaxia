@@ -53,7 +53,8 @@ namespace Model
                 new Cost { Id = 32, Element = "canon", CrystalCost = 50, MetalCost = 100 },
                 new Cost { Id = 33, Element = "shield", CrystalCost = 5000, MetalCost = 5000 },
                 new Cost { Id = 34, Element = "probe", CrystalCost = 3000, MetalCost = 3000 },
-                new Cost { Id = 35, Element = "ship z", CrystalCost = 500, MetalCost = 500 }
+                new Cost { Id = 35, Element = "trader", CrystalCost = 500, MetalCost = 500 },
+                new Cost { Id = 35, Element = "hangar", CrystalCost = 2000, MetalCost = 2000, DarkMatterCost = 500 }
             };
 
             foreach (Cost cost in costs)
@@ -108,7 +109,7 @@ namespace Model
             var canon = new Canon{Id = 1, Attack = 50, Defence = 50, Cost = costs[31], Planet = planets[0], ConstructionTime = 3, RequiredLevel = 2, EnableDate = DateTime.Now};
             context.Canons.Add(canon);
 
-            var shield = new Shield { Id = 1, ConstructionTime = 3, Cost = costs[32], EnableDate = DateTime.Now, Planet = planets[0], RequiredLevel = 1 };
+            var shield = new Shield { Id = 1, ConstructionTime = 120, Cost = costs[32], EnableDate = DateTime.Now, Planet = planets[0], RequiredLevel = 1 };
             context.Shields.Add(shield);
 
             context.SaveChanges();

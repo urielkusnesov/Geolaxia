@@ -66,6 +66,7 @@
     <Compile Include="Galaxy.cs" />
     <Compile Include="GeolaxiaContext.cs" />
     <Compile Include="GeolaxiaInitializer.cs" />
+    <Compile Include="Hangar.cs" />
     <Compile Include="MetalMine.cs" />
     <Compile Include="Military.cs" />
     <Compile Include="Mine.cs" />

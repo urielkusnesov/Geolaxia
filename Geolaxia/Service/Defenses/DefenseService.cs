@@ -27,9 +27,8 @@ namespace Service.Defenses
 
         public Shield GetShieldStatus(int planetId)
         {
-            Shield shield = repository.Get<Shield>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now);
-
-            return (shield);
+            var shield = repository.Get<Shield>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now);
+            return shield;
         }
 
         public void BuildCannons(int planetId, int cant)
@@ -63,6 +62,18 @@ namespace Service.Defenses
         private long GetMilli(DateTime date)
         {
             return (Convert.ToInt64(date.ToUniversalTime().Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds));
+        }
+
+        public Shield GetCurrentShield(int planetId)
+        {
+            var shield = repository.Get<Shield>(x => x.Planet.Id == planetId);
+
+            if (shield == null)
+            {
+                var shieldCost = repository.Get<Cost>(x => x.Element == "shield");
+                shield = new Shield{Cost = shieldCost, Planet = new BlackPlanet(), ConstructionTime = 120, RequiredLevel = 5};
+            }
+            return shield;
         }
     }
 }

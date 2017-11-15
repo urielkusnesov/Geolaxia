@@ -4,6 +4,8 @@
     {
         X,
         Y,
-        Z
+        Z,
+        Probe,
+        Trader
     }
 }

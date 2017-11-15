@@ -336,7 +336,7 @@ namespace Service.Construction
         {
             var planet = repository.Get<Planet>(planetId);
             var cost = repository.Get<Cost>(x => x.Element == "solar panel");
-            for (int i = 0; i < qtt; i++)
+            for (var i = 1; i <= qtt; i++)
             {
                 repository.Add(new SolarPanel
                 {
@@ -358,7 +358,7 @@ namespace Service.Construction
         {
             var planet = repository.Get<Planet>(planetId);
             var cost = repository.Get<Cost>(x => x.Element == "solar panel");
-            for (int i = 0; i < qtt; i++)
+            for (var i = 1; i <= qtt; i++)
             {
                 repository.Add(new WindTurbine
                 {
@@ -374,6 +374,301 @@ namespace Service.Construction
             }
 
             repository.SaveChanges();
+        }
+
+        public Hangar GetCurrentHangar(int planetId)
+        {
+            var hangar = repository.Get<Hangar>(x => x.Planet.Id == planetId)
+                ?? new Hangar { Planet = new BlackPlanet(), Cost = new Cost{CrystalCost = 2000, MetalCost = 2000, DarkMatterCost = 500}, RequiredLevel = 3};
+
+            return hangar;
+        }
+
+        public Hangar AddHangar(int planetId)
+        {
+            var currentHangar = repository.Get<Hangar>(x => x.Planet.Id == planetId);
+            if (currentHangar != null)
+            {
+                return currentHangar;
+            }
+
+            var cost = repository.Get<Cost>(x => x.Element == "hangar");
+            var planet = repository.Get<Planet>(planetId);
+
+            var hangar = new Hangar
+            {
+                Planet = planet,
+                Cost = cost,
+                EnableDate = DateTime.Now.AddMinutes(60),
+                ConstructionTime = 60,
+                RequiredLevel = 3,
+                Name = "Hangar " + planet.Name
+            };
+
+            var result = repository.Add(hangar);
+            repository.SaveChanges();
+            return result;                
+        }
+
+        public void FinishHangar(Timer timer, Hangar hangar)
+        {
+            //mandar notificacion push al usuario
+
+            //elimino el timer
+            timer.Stop();
+            timer.Dispose();
+        }
+
+        public IList<Ship> GetCurrentShips(int planetId)
+        {
+            return repository.List<Ship>(x => x.Planet.Id == planetId);
+        }
+
+        public void AddShips(int planetId, int qtt, ShipType shipType)
+        {
+            switch (shipType)
+            {
+                case ShipType.X:
+                    AddShipX(planetId, qtt);
+                    break;
+                case ShipType.Y:
+                    AddShipY(planetId, qtt);
+                    break;
+                case ShipType.Z:
+                    AddShipZ(planetId, qtt);
+                    break;
+            }
+        }
+
+        public void AddShipX(int planetId, int qtt)
+        {
+            var planet = repository.Get<Planet>(planetId);
+            var cost = repository.Get<Cost>(x => x.Element == "ship x");
+            var currentShips = repository.Count<ShipX>(x => x.Planet.Id == planetId);
+            for (var i = 1; i <= qtt; i++)
+            {
+                repository.Add(new ShipX
+                {
+                    ShipType = ShipType.X,
+                    Planet = planet,
+                    Cost = cost,
+                    ConstructionTime = 5,
+                    EnableDate = DateTime.Now.AddMinutes(i * 5),
+                    Attack = 100,
+                    Defence = 100,
+                    Speed = 10,
+                    DarkMatterConsumption = 10,
+                    RequiredLevel = 2,
+                    Name = "Ship X" + currentShips + 1 + " " + planet.Name
+                });
+                currentShips++;
+            }
+
+            repository.SaveChanges();
+        }
+
+        public void AddShipY(int planetId, int qtt)
+        {
+            var planet = repository.Get<Planet>(planetId);
+            var cost = repository.Get<Cost>(x => x.Element == "ship y");
+            var currentShips = repository.Count<ShipY>(x => x.Planet.Id == planetId);
+            for (var i = 1; i <= qtt; i++)
+            {
+                repository.Add(new ShipY
+                {
+                    ShipType = ShipType.Y,
+                    Planet = planet,
+                    Cost = cost,
+                    ConstructionTime = 10,
+                    EnableDate = DateTime.Now.AddMinutes(i * 10),
+                    Attack = 150,
+                    Defence = 100,
+                    Speed = 15,
+                    DarkMatterConsumption = 15,
+                    RequiredLevel = 3,
+                    Name = "Ship Y" + currentShips + 1 + " " + planet.Name
+                });
+                currentShips++;
+            }
+
+            repository.SaveChanges();
+        }
+
+        public void AddShipZ(int planetId, int qtt)
+        {
+            var planet = repository.Get<Planet>(planetId);
+            var cost = repository.Get<Cost>(x => x.Element == "ship z");
+            var currentShips = repository.Count<ShipZ>(x => x.Planet.Id == planetId);
+            for (var i = 1; i <= qtt; i++)
+            {
+                repository.Add(new ShipZ
+                {
+                    ShipType = ShipType.Z,
+                    Planet = planet,
+                    Cost = cost,
+                    ConstructionTime = 15,
+                    EnableDate = DateTime.Now.AddMinutes(i * 15),
+                    Attack = 300,
+                    Defence = 200,
+                    Speed = 20,
+                    DarkMatterConsumption = 30,
+                    RequiredLevel = 5,
+                    Name = "Ship Z" + currentShips + 1 + " " + planet.Name
+                });
+                currentShips++;
+            }
+
+            repository.SaveChanges();
+        }
+
+        public IList<Probe> GetCurrentProbes(int planetId)
+        {
+            var probes = repository.List<Probe>(x => x.Planet.Id == planetId && x.EnableDate <= DateTime.Now).ToList();
+            var inConstructionProbe = repository.Max<Probe, DateTime>(x => x.Planet.Id == planetId && x.EnableDate > DateTime.Now, x => x.EnableDate);
+            if (inConstructionProbe != null)
+            {
+                if (probes.Any())
+                {
+                    probes.First().EnableDate = inConstructionProbe.EnableDate;
+                }
+                else
+                {
+                    probes.Add(new Probe
+                    {
+                        EnableDate = inConstructionProbe.EnableDate,
+                        Planet = new BlackPlanet(),
+                        Cost = new Cost(),
+                        RequiredLevel = 5
+                    });
+                }
+            }
+
+            return probes;
+        }
+
+        public IList<Trader> GetCurrentTraders(int planetId)
+        {
+            var traders = repository.List<Trader>(x => x.Planet.Id == planetId && x.EnableDate <= DateTime.Now).ToList();
+            var inConstructionTrader = repository.Max<Trader, DateTime>(x => x.Planet.Id == planetId && x.EnableDate > DateTime.Now, x => x.EnableDate);
+            if (inConstructionTrader != null)
+            {
+                if (traders.Any())
+                {
+                    traders.First().EnableDate = inConstructionTrader.EnableDate;
+                }
+                else
+                {
+                    traders.Add(new Trader
+                    {
+                        EnableDate = inConstructionTrader.EnableDate,
+                        Planet = new BlackPlanet(),
+                        Cost = new Cost(),
+                        RequiredLevel = 5
+                    });
+                }
+            }
+
+            return traders;
+        }
+
+        public Shield AddShield(int planetId)
+        {
+            var currentShield = repository.Get<Shield>(x => x.Planet.Id == planetId);
+            if (currentShield != null)
+            {
+                return currentShield;
+            }
+
+            var cost = repository.Get<Cost>(x => x.Element == "shield");
+            var planet = repository.Get<Planet>(planetId);
+
+            var shield = new Shield
+            {
+                Planet = planet,
+                Cost = cost,
+                EnableDate = DateTime.Now.AddMinutes(120),
+                ConstructionTime = 120,
+                RequiredLevel = 5,
+                Name = "Shield " + planet.Name
+            };
+
+            var result = repository.Add(shield);
+            repository.SaveChanges();
+            return result;
+        }
+
+        public void AddProbes(int planetId, int qtt)
+        {
+            var planet = repository.Get<Planet>(planetId);
+            var cost = repository.Get<Cost>(x => x.Element == "probe");
+            for (int i = 0; i < qtt; i++)
+            {
+                repository.Add(new Probe
+                {
+                    Planet = planet,
+                    Cost = cost,
+                    ConstructionTime = 2,
+                    EnableDate = DateTime.Now.AddMinutes(i * 30),
+                    ShipType = ShipType.Probe,
+                    RequiredLevel = 5,
+                    DarkMatterConsumption = 10,
+                    Speed = 50
+                });
+            }
+
+            repository.SaveChanges();
+        }
+
+        public void AddTraders(int planetId, int qtt)
+        {
+            var planet = repository.Get<Planet>(planetId);
+            var cost = repository.Get<Cost>(x => x.Element == "solar panel");
+            for (int i = 0; i < qtt; i++)
+            {
+                repository.Add(new Trader
+                {
+                    Planet = planet,
+                    Cost = cost,
+                    ConstructionTime = 2,
+                    EnableDate = DateTime.Now.AddMinutes(i * 2),
+                    ShipType = ShipType.Trader,
+                    RequiredLevel = 5,
+                    DarkMatterConsumption = 30,
+                    Speed = 50,
+                    MaxCrystal = 1000,
+                    MaxMetal = 1000,
+                    MaxDarkMatter = 500
+                });
+            }
+
+            repository.SaveChanges();
+        }
+
+        public void FinishShield(Timer timer, Shield shield)
+        {
+            //mandar notificacion push al usuario
+
+            //elimino el timer
+            timer.Stop();
+            timer.Dispose();
+        }
+
+        public void FinishProbe(Timer timer, Probe probe)
+        {
+            //mandar notificacion push al usuario
+
+            //elimino el timer
+            timer.Stop();
+            timer.Dispose();
+        }
+
+        public void FinishTrader(Timer timer, Trader trader)
+        {
+            //mandar notificacion push al usuario
+
+            //elimino el timer
+            timer.Stop();
+            timer.Dispose();
         }
     }
 }

@@ -5,13 +5,15 @@ using Newtonsoft.Json.Linq;
 using Service.Construction;
 using Service.Players;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Timers;
 using System.Web.Http;
 using Model;
 using Model.DTO;
+using Model.Enum;
+using Service.Defenses;
 using Service.Planets;
+using Service.Ships;
 
 namespace Geolaxia.Controllers
 {
@@ -21,15 +23,19 @@ namespace Geolaxia.Controllers
         private IConstructionService service;
         private IPlayerService playerService;
         private IPlanetService planetService;
+        private IShipService shipService;
+        private IDefenseService defenseService;
 
         private static System.Timers.Timer aTimer;
 
-        public ConstructionController(IConstructionService service, IPlayerService playerService, IPlanetService planetService)
+        public ConstructionController(IConstructionService service, IPlayerService playerService, IPlanetService planetService, IShipService shipService, IDefenseService defenseService)
             :base(playerService)
         {
             this.service = service;
             this.playerService = playerService;
             this.planetService = planetService;
+            this.shipService = shipService;
+            this.defenseService = defenseService;
         }
 
         //api/construction/currentmines
@@ -291,6 +297,393 @@ namespace Geolaxia.Controllers
             aTimer = new Timer(msUntilFinish);
             // Hook up the Elapsed event for the timer. 
             aTimer.Elapsed += (sender, e) => service.FinishEnergyFacility(aTimer, energyFacilityDto);
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
+            aTimer.Start();
+        }
+
+        //api/construction/currenthangar
+        [HttpPost]
+        public JObject CurrentHangar(int planetId)
+        {
+            if (!ValidateToken())
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
+
+            logger.Info("getting current hangar from planet: " + planetId);
+            try
+            {
+                var hangar = service.GetCurrentHangar(planetId);
+                var okResponse = new ApiResponse { Data = hangar, Status = new Status { Result = "ok", Description = "" } };
+                var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                return json;
+            }
+            catch (Exception ex)
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
+                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+                return json;
+            }
+        }
+
+        //api/construction/startbuildhangar
+        [HttpPost]
+        public JObject StartBuildHangar(int planetId)
+        {
+            if (!ValidateToken())
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
+
+            var newHangar = service.AddHangar(planetId);
+            if (newHangar != null)
+            {
+                planetService.UseResources(newHangar.Planet.Id, newHangar.Cost);
+                logger.Info("start to build hangar in planet: " + newHangar.Planet.Id);
+                SetHangarTimer(newHangar);
+
+                var okResponse = new ApiResponse { Data = newHangar, Status = new Status { Result = "ok", Description = "" } };
+                var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                return json;
+            }
+            else
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "No se pudo realizar la construccion. Intente nuevamente" } };
+                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+                return json;
+            }
+        }
+
+        private void SetHangarTimer(Hangar hangar)
+        {
+            var msUntilFinish = hangar.ConstructionTime * 60 * 1000;
+
+            // Create a timer with a timeToArrival interval.
+            aTimer = new Timer(msUntilFinish);
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += (sender, e) => service.FinishHangar(aTimer, hangar);
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
+            aTimer.Start();
+        }
+
+        //api/construction/currentships
+        [HttpPost]
+        public JObject CurrentShips(int planetId)
+        {
+            if (!ValidateToken())
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
+
+            logger.Info("getting current ships from planet: " + planetId);
+            try
+            {
+                var ships = service.GetCurrentShips(planetId);
+                var okResponse = new ApiResponse { Data = ships, Status = new Status { Result = "ok", Description = "" } };
+                var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                return json;
+            }
+            catch (Exception ex)
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
+                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+                return json;
+            }
+        }
+
+        //api/construction/shipscost
+        [HttpGet]
+        public JObject ShipsCost()
+        {
+            if (!ValidateToken())
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
+
+            logger.Info("getting ships cost");
+            try
+            {
+                var ships = shipService.GetShipsCost();
+                var okResponse = new ApiResponse { Data = ships, Status = new Status { Result = "ok", Description = "" } };
+                var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                return json;
+            }
+            catch (Exception ex)
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
+                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+                return json;
+            }
+        }
+
+        //api/construction/startbuildship
+        [HttpPost]
+        public JObject StartBuildShip(int planetId, int qtt, ShipType shipType)
+        {
+            if (!ValidateToken())
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
+
+            Ship ship;
+            switch (shipType)
+            {
+                case ShipType.X:
+                    ship = new ShipX { Cost = new Cost(), Planet = planetService.Get(planetId), ConstructionTime = 5 };
+                    break;
+                case ShipType.Y:
+                    ship = new ShipY { Cost = new Cost(), Planet = planetService.Get(planetId), ConstructionTime = 10 };
+                    break;
+                case ShipType.Z:
+                    ship = new ShipZ { Cost = new Cost(), Planet = planetService.Get(planetId), ConstructionTime = 15 };
+                    break;
+                default:
+                    ship = new ShipX { Cost = new Cost(), Planet = planetService.Get(planetId), ConstructionTime = 5 };
+                    break;
+            }
+            ship.EnableDate = DateTime.Now.AddMinutes(ship.ConstructionTime*qtt);
+            try
+            {
+                service.AddShips(planetId, qtt, shipType);
+                planetService.UseResources(planetId, new Cost { CrystalCost = 5, MetalCost = 20 });
+                logger.Info("start to build ships in planet: " + planetId);
+                SetShipTimer(ship);
+
+                var okResponse = new ApiResponse { Data = ship, Status = new Status { Result = "ok", Description = "" } };
+                var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                return json;
+            }
+            catch
+            {
+                var response = new ApiResponse {Status = new Status {Result = "error", Description = "No se pudo realizar la construccion. Intente nuevamente"}};
+                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+                return json;
+            }
+        }
+
+        private void SetShipTimer(Ship ship)
+        {
+            var msUntilFinish = ship.ConstructionTime * 60 * 1000;
+
+            // Create a timer with a timeToArrival interval.
+            aTimer = new Timer(msUntilFinish);
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += (sender, e) => shipService.FinishShip(aTimer, ship);
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
+            aTimer.Start();
+        }
+
+        //api/construction/currentshield
+        [HttpPost]
+        public JObject CurrentShield(int planetId)
+        {
+            if (!ValidateToken())
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
+
+            logger.Info("getting current shield from planet: " + planetId);
+            try
+            {
+                var shield = defenseService.GetCurrentShield(planetId);
+                var okResponse = new ApiResponse { Data = shield, Status = new Status { Result = "ok", Description = "" } };
+                var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                return json;
+            }
+            catch (Exception ex)
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
+                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+                return json;
+            }
+        }
+
+        //api/construction/currentprobes
+        [HttpPost]
+        public JObject CurrentProbes(int planetId)
+        {
+            if (!ValidateToken())
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
+
+            logger.Info("getting current probes from planet: " + planetId);
+            try
+            {
+                var probes = service.GetCurrentProbes(planetId);
+                var okResponse = new ApiResponse { Data = probes, Status = new Status { Result = "ok", Description = "" } };
+                var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                return json;
+            }
+            catch (Exception ex)
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
+                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+                return json;
+            }
+        }
+
+        //api/construction/currenttraders
+        [HttpPost]
+        public JObject CurrentTraders(int planetId)
+        {
+            if (!ValidateToken())
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
+
+            logger.Info("getting current traders from planet: " + planetId);
+            try
+            {
+                var traders = service.GetCurrentTraders(planetId);
+                var okResponse = new ApiResponse { Data = traders, Status = new Status { Result = "ok", Description = "" } };
+                var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                return json;
+            }
+            catch (Exception ex)
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
+                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+                return json;
+            }
+        }
+
+        //api/construction/startbuildshield
+        [HttpPost]
+        public JObject StartBuildShield(int planetId)
+        {
+            if (!ValidateToken())
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
+
+            var newShield = service.AddShield(planetId);
+            if (newShield != null)
+            {
+                planetService.UseResources(newShield.Planet.Id, newShield.Cost);
+                logger.Info("start to build shield in planet: " + newShield.Planet.Id);
+                SetShieldTimer(newShield);
+
+                var okResponse = new ApiResponse { Data = newShield, Status = new Status { Result = "ok", Description = "" } };
+                var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                return json;
+            }
+            else
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "No se pudo realizar la construccion. Intente nuevamente" } };
+                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+                return json;
+            }
+        }
+
+        //api/construction/startbuildprobe
+        [HttpPost]
+        public JObject StartBuildProbe(int planetId, int qtt)
+        {
+            if (!ValidateToken())
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
+
+            var probe = new Probe { Cost = new Cost(), Planet = planetService.Get(planetId), ConstructionTime = 30 };
+            probe.EnableDate = DateTime.Now.AddMinutes(probe.ConstructionTime * qtt);
+            try
+            {
+                service.AddProbes(planetId, qtt);
+                planetService.UseResources(planetId, new Cost { CrystalCost = 3000, MetalCost = 3000 });
+                logger.Info("start to build probes in planet: " + planetId);
+                SetProbeTimer(new Probe { ConstructionTime = 30 });
+
+                var okResponse = new ApiResponse { Data = probe, Status = new Status { Result = "ok", Description = "" } };
+                var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                return json;
+            }
+            catch
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "No se pudo realizar la construccion. Intente nuevamente" } };
+                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+                return json;
+            }
+        }
+
+        //api/construction/startbuildtrader
+        [HttpPost]
+        public JObject StartBuildTrader(int planetId, int qtt)
+        {
+            if (!ValidateToken())
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
+
+            var trader = new Trader { Cost = new Cost(), Planet = planetService.Get(planetId), ConstructionTime = 30 };
+            trader.EnableDate = DateTime.Now.AddMinutes(trader.ConstructionTime * qtt);
+            try
+            {
+                service.AddProbes(planetId, qtt);
+                planetService.UseResources(planetId, new Cost { CrystalCost = 3000, MetalCost = 3000 });
+                logger.Info("start to build traders in planet: " + planetId);
+                SetTraderTimer(new Trader { ConstructionTime = 30 });
+
+                var okResponse = new ApiResponse { Data = trader, Status = new Status { Result = "ok", Description = "" } };
+                var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                return json;
+            }
+            catch
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "No se pudo realizar la construccion. Intente nuevamente" } };
+                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+                return json;
+            }
+        }
+
+        private void SetShieldTimer(Shield shield)
+        {
+            var msUntilFinish = shield.ConstructionTime * 60 * 1000;
+
+            // Create a timer with a timeToArrival interval.
+            aTimer = new Timer(msUntilFinish);
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += (sender, e) => service.FinishShield(aTimer, shield);
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
+            aTimer.Start();
+        }
+
+        private void SetProbeTimer(Probe probe)
+        {
+            var msUntilFinish = probe.ConstructionTime * 60 * 1000;
+
+            // Create a timer with a timeToArrival interval.
+            aTimer = new Timer(msUntilFinish);
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += (sender, e) => service.FinishProbe(aTimer, probe);
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
+            aTimer.Start();
+        }
+
+        private void SetTraderTimer(Trader trader)
+        {
+            var msUntilFinish = trader.ConstructionTime * 60 * 1000;
+
+            // Create a timer with a timeToArrival interval.
+            aTimer = new Timer(msUntilFinish);
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += (sender, e) => service.FinishTrader(aTimer, trader);
             aTimer.AutoReset = true;
             aTimer.Enabled = true;
             aTimer.Start();

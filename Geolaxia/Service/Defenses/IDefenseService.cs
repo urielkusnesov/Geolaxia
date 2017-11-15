@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Model;
-using System;
 
 namespace Service.Defenses
 {
@@ -10,5 +9,6 @@ namespace Service.Defenses
         Shield GetShieldStatus(int planetId);
         void BuildCannons(int planetId, int cant);
         long IsBuildingCannons(int planetId);
+        Shield GetCurrentShield(int planetId);
     }
 }

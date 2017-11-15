@@ -14,6 +14,7 @@ namespace Model
         public override void AddEnergy(Planet planet)
         {
             planet.Energy += Productivity;
+            planet.DarkMatter -= DarkMatterConsumption;
         }
     }
 }

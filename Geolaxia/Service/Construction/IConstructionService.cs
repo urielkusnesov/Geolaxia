@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Timers;
 using Model.DTO;
+using Model.Enum;
 
 namespace Service.Construction
 {
@@ -36,5 +37,37 @@ namespace Service.Construction
         EnergyFacility GetFromDTO(EnergyFacilityDTO energyFacilityDto);
 
         void FinishEnergyFacility(Timer timer, EnergyFacilityDTO energyFacilityDto);
+
+        Hangar GetCurrentHangar(int planetId);
+
+        Hangar AddHangar(int planetId);
+
+        void FinishHangar(Timer timer, Hangar hangar);
+
+        IList<Ship> GetCurrentShips(int planetId);
+
+        void AddShips(int planetId, int qtt, ShipType shipType);
+
+        void AddShipX(int planetId, int qtt);
+
+        void AddShipY(int planetId, int qtt);
+
+        void AddShipZ(int planetId, int qtt);
+
+        IList<Probe> GetCurrentProbes(int planetId);
+
+        IList<Trader> GetCurrentTraders(int planetId);
+
+        Shield AddShield(int planetId);
+
+        void AddProbes(int planetId, int qtt);
+
+        void AddTraders(int planetId, int qtt);
+
+        void FinishShield(Timer timer, Shield shield);
+
+        void FinishProbe(Timer timer, Probe probe);
+
+        void FinishTrader(Timer timer, Trader trader);
     }
 }
