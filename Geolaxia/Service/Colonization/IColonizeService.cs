@@ -6,7 +6,7 @@ namespace Service.Colonization
 {
     public interface IColonizeService
     {
-        IList<Colonizer> GetColonizers(int planetId);
+        IList<Probe> GetColonizers(int planetId);
         void SendColonizer(int planetId, int planetIdTarget, long time);
         long IsSendingColonizer(int planetId);
     }

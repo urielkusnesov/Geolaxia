@@ -23,12 +23,12 @@ namespace Service.Colonization
             this.repository = repository;
         }
 
-        public IList<Colonizer> GetColonizers(int planetId)
+        public IList<Probe> GetColonizers(int planetId)
         {
             IList<Colonize> lista = repository.List<Colonize>(x => x.ColonizerPlanet.Id.Equals(planetId));
-            List<int> idColonizadoresUsadosList = (lista != null) ? lista.Select(x => x.Colonizer.Id).ToList() : new List<int>();           
+            List<int> idColonizadoresUsadosList = (lista != null) ? lista.Select(x => x.Colonizer.Id).ToList() : new List<int>();
 
-            IList<Colonizer> colonizadorList = repository.List<Colonizer>(x => x.Planet.Id.Equals(planetId) && x.EnableDate < DateTime.Now && !idColonizadoresUsadosList.Contains(x.Id));
+            IList<Probe> colonizadorList = repository.List<Probe>(x => x.Planet.Id.Equals(planetId) && x.EnableDate < DateTime.Now && !idColonizadoresUsadosList.Contains(x.Id));
 
             return (colonizadorList);
         }
@@ -50,11 +50,11 @@ namespace Service.Colonization
 
             List<int> idColonizadoresUsadosList = (listaColonizadoresUsados != null) ? listaColonizadoresUsados.Select(x => x.Colonizer.Id).ToList() : new List<int>();
 
-            IList<Colonizer> colonizadorList = repository.List<Colonizer>(x => x.Planet.Id.Equals(planetId) && x.EnableDate <= DateTime.Now && !idColonizadoresUsadosList.Contains(x.Id));
+            IList<Probe> colonizadorList = repository.List<Probe>(x => x.Planet.Id.Equals(planetId) && x.EnableDate <= DateTime.Now && !idColonizadoresUsadosList.Contains(x.Id));
 
             if (colonizadorList != null && colonizadorList.Count > 0)
             {
-                Colonizer colonizador = colonizadorList[0];
+                Probe colonizador = colonizadorList[0];
                 repository.Add<Colonize>(new Colonize { ColonizerArrival = arrival, ColonizerDeparture = DateTime.Now, ColonizerPlanet = planetOrigen, ColonizerPlayer = playerOrigen, DestinationPlanet = planetDestino, Colonizer = colonizador });
                 repository.SaveChanges();
             }

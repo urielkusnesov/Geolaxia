@@ -116,16 +116,16 @@ namespace Model
 
             this.CargarPreguntasYRespuestasParaDefensa(context);
 
-            var colonizers = new List<Colonizer>
+            var colonizers = new List<Probe>
             {
-                new Colonizer { Planet = planets[0], EnableDate = DateTime.Now},
-                new Colonizer { Planet = planets[0], EnableDate = DateTime.Now},
-                new Colonizer { Planet = planets[0], EnableDate = DateTime.Now}
+                new Probe { Planet = planets[0], EnableDate = DateTime.Now},
+                new Probe { Planet = planets[0], EnableDate = DateTime.Now},
+                new Probe { Planet = planets[0], EnableDate = DateTime.Now}
             };
 
-            foreach (Colonizer colonizer in colonizers)
+            foreach (Probe colonizer in colonizers)
             {
-                context.Colonizer.Add(colonizer);
+                context.Probes.Add(colonizer);
             };
         }
 

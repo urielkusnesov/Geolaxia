@@ -49,7 +49,7 @@ namespace Geolaxia.Controllers
 
             try
             {
-                IList<Colonizer> colonizers = colonizeService.GetColonizers(planetId);
+                IList<Probe> colonizers = colonizeService.GetColonizers(planetId);
                 var okResponse = new ApiResponse { Data = colonizers, Status = new Status { Result = "ok", Description = "" } };
                 var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
                 

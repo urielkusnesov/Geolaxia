@@ -51,7 +51,7 @@ namespace Model
             modelBuilder.Entity<Attack>().ToTable("Attack");
             modelBuilder.Entity<Hangar>().ToTable("Hangar");
             modelBuilder.Entity<Queztion>().ToTable("Question");
-            modelBuilder.Entity<Colonizer>().ToTable("Colonizer");
+            //modelBuilder.Entity<Colonizer>().ToTable("Colonizer");
 
             //clases abstractas, usamos TPT inheritance strategy
             modelBuilder.Entity<Military>().ToTable("Military");
@@ -86,7 +86,7 @@ namespace Model
         public DbSet<Hangar> Hangars { get; set; }
         public DbSet<Queztion> Questions { get; set; }
         public DbSet<Colonize> Colonizations { get; set; }
-        public DbSet<Colonizer> Colonizer { get; set; }
+        //public DbSet<Colonizer> Colonizer { get; set; }
 
         //abstract classes
         public DbSet<Military> Militaries { get; set; }

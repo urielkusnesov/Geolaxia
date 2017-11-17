@@ -51,7 +51,7 @@ namespace Model
 
         public int GetResourcesByLevel(int level)
         {
-            if (level == 1)
+            if (level <= 1)
             {
                 return 0;
             }
