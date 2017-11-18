@@ -168,5 +168,46 @@ namespace Service.Attacks
                 }
             }
         }
+
+        public List<long> GetAttacksList(int playerId)
+        {
+            List<long> envios = new List<long>();
+
+            IList<Attack> attacks = repository.List<Attack>(x => x.AttackerPlayer.Id.Equals(playerId) && x.FleetArrival > DateTime.Now);
+
+            if (attacks != null && attacks.Count > 0)
+            {
+                foreach (var item in attacks)
+                {
+                    long tiempo = this.GetMilli(item.FleetArrival);
+                    envios.Add(tiempo);
+                }
+            }
+
+            return (envios);
+        }
+
+        public List<long> GetDefensesList(int playerId)
+        {
+            List<long> envios = new List<long>();
+
+            IList<Attack> defenses = repository.List<Attack>(x => x.DestinationPlayer.Id.Equals(playerId) && x.FleetArrival > DateTime.Now);
+
+            if (defenses != null && defenses.Count > 0)
+            {
+                foreach (var item in defenses)
+                {
+                    long tiempo = this.GetMilli(item.FleetArrival);
+                    envios.Add(tiempo);
+                }
+            }
+
+            return (envios);
+        }
+
+        private long GetMilli(DateTime date)
+        {
+            return (Convert.ToInt64(date.ToUniversalTime().Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds));
+        }
     }
 }

@@ -162,6 +162,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ConstructionController.cs" />
     <Compile Include="Controllers\ColonizeController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\DefenseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlanetController.cs" />

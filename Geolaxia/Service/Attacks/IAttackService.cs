@@ -1,5 +1,6 @@
 ﻿using Model;
 using Model.DTO;
+using System.Collections.Generic;
 using System.Timers;
 
 namespace Service.Attacks
@@ -17,5 +18,9 @@ namespace Service.Attacks
         Attack GetFromDTO(AttackDTO attackDTO);
 
         void PerformAttack(Timer timer, Attack attack);
+
+        List<long> GetAttacksList(int playerId);
+
+        List<long> GetDefensesList(int playerId);
     }
 }
