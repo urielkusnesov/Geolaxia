@@ -19,8 +19,10 @@ namespace Service.Attacks
 
         void PerformAttack(Timer timer, Attack attack);
 
-        List<long> GetAttacksList(int playerId);
+        //List<long> GetAttacksList(int playerId);
+        IList<Attack> GetAttacksList(int playerId);
 
-        List<long> GetDefensesList(int playerId);
+        //List<long> GetDefensesList(int playerId);
+        IList<Attack> GetDefensesList(int playerId);
     }
 }

@@ -169,40 +169,54 @@ namespace Service.Attacks
             }
         }
 
-        public List<long> GetAttacksList(int playerId)
+        //public List<long> GetAttacksList(int playerId)
+        //{
+        //    List<long> envios = new List<long>();
+
+        //    IList<Attack> attacks = repository.List<Attack>(x => x.AttackerPlayer.Id.Equals(playerId) && x.FleetArrival > DateTime.Now);
+
+        //    if (attacks != null && attacks.Count > 0)
+        //    {
+        //        foreach (var item in attacks)
+        //        {
+        //            long tiempo = this.GetMilli(item.FleetArrival);
+        //            envios.Add(tiempo);
+        //        }
+        //    }
+
+        //    return (envios);
+        //}
+
+        //public List<long> GetDefensesList(int playerId)
+        //{
+        //    List<long> envios = new List<long>();
+
+        //    IList<Attack> defenses = repository.List<Attack>(x => x.DestinationPlayer.Id.Equals(playerId) && x.FleetArrival > DateTime.Now);
+
+        //    if (defenses != null && defenses.Count > 0)
+        //    {
+        //        foreach (var item in defenses)
+        //        {
+        //            long tiempo = this.GetMilli(item.FleetArrival);
+        //            envios.Add(tiempo);
+        //        }
+        //    }
+
+        //    return (envios);
+        //}
+
+        public IList<Attack> GetAttacksList(int playerId)
         {
-            List<long> envios = new List<long>();
-
             IList<Attack> attacks = repository.List<Attack>(x => x.AttackerPlayer.Id.Equals(playerId) && x.FleetArrival > DateTime.Now);
-
-            if (attacks != null && attacks.Count > 0)
-            {
-                foreach (var item in attacks)
-                {
-                    long tiempo = this.GetMilli(item.FleetArrival);
-                    envios.Add(tiempo);
-                }
-            }
-
-            return (envios);
+            
+            return (attacks);
         }
 
-        public List<long> GetDefensesList(int playerId)
+        public IList<Attack> GetDefensesList(int playerId)
         {
-            List<long> envios = new List<long>();
-
             IList<Attack> defenses = repository.List<Attack>(x => x.DestinationPlayer.Id.Equals(playerId) && x.FleetArrival > DateTime.Now);
 
-            if (defenses != null && defenses.Count > 0)
-            {
-                foreach (var item in defenses)
-                {
-                    long tiempo = this.GetMilli(item.FleetArrival);
-                    envios.Add(tiempo);
-                }
-            }
-
-            return (envios);
+            return (defenses);
         }
 
         private long GetMilli(DateTime date)

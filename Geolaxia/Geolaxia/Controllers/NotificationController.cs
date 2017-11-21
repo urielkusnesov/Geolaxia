@@ -45,25 +45,42 @@ namespace Geolaxia.Controllers
 
             try
             {
-                IList<long> colo = colonizeService.GetColonizesList(playerId);
-                IList<long> att = attackService.GetAttacksList(playerId);
-                IList<long> def = attackService.GetDefensesList(playerId);
+                //IList<long> colo = colonizeService.GetColonizesList(playerId);
+                IList<Colonize> colo = colonizeService.GetColonizesList(playerId);
+                //IList<long> att = attackService.GetAttacksList(playerId);
+                //IList<long> def = attackService.GetDefensesList(playerId);
+                IList<Attack> att = attackService.GetAttacksList(playerId);
+                IList<Attack> def = attackService.GetDefensesList(playerId);
 
                 IList<Notification> notifications = new List<Notification>();
 
                 foreach (var item in colo)
                 {
-                    notifications.Add(new Notification("Colonización", item));
+                    notifications.Add(new NotificacionColonizacion("Colonización", 
+                        this.GetMilli(item.ColonizerArrival), 
+                        item.ColonizerPlayer.UserName, 
+                        item.ColonizerPlanet.Name, 
+                        string.Format("{0}-{1}", item.DestinationPlanet.Order, item.DestinationPlanet.Name)));
                 }
 
                 foreach (var item in att)
                 {
-                    notifications.Add(new Notification("Ataque", item));
+                    //notifications.Add(new Notification("Ataque", item));
+                    notifications.Add(new NotificacionAtaque("Ataque", 
+                        this.GetMilli(item.FleetArrival), 
+                        item.DestinationPlayer.UserName, 
+                        string.Format("{0}-{1}", item.DestinationPlanet.Order, item.DestinationPlanet.Name),
+                        string.Format("{0}-{1}", item.AttackerPlanet.Order, item.AttackerPlanet.Name)));
                 }
 
                 foreach (var item in def)
                 {
-                    notifications.Add(new Notification("Defensa", item));
+                    //notifications.Add(new Notification("Defensa", item));
+                    notifications.Add(new NotificacionDefensa("Defensa", 
+                        this.GetMilli(item.FleetArrival), 
+                        item.AttackerPlayer.UserName, 
+                        string.Format("{0}-{1}", item.AttackerPlanet.Order, item.AttackerPlanet.Name), 
+                        string.Format("{0}-{1}", item.DestinationPlanet.Order, item.DestinationPlanet)));
                 }
 
                 var okResponse = new ApiResponse { Data = notifications, Status = new Status { Result = "ok", Description = "" } };
@@ -79,6 +96,11 @@ namespace Geolaxia.Controllers
                 return (json);
             }
         }
+
+        private long GetMilli(DateTime date)
+        {
+            return (Convert.ToInt64(date.ToUniversalTime().Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds));
+        }
     }
 
     class Notification
@@ -90,6 +112,49 @@ namespace Geolaxia.Controllers
         {
             this.TipoNotificacion = tipo;
             this.Time = tiempo;
+        }
+    }
+
+    class NotificacionAtaque : Notification
+    {
+        public string NombreJugadorAtacado { get; set; }
+        public string PlanetaAtacado { get; set; }
+        public string PlanetaAtacante { get; set; }
+
+        public NotificacionAtaque(string tipo, long tiempo, string nombre, string planetaAtacado, string planetaAtacante)
+            : base(tipo, tiempo)
+        {
+            this.NombreJugadorAtacado = nombre;
+            this.PlanetaAtacado = planetaAtacado;
+            this.PlanetaAtacante = planetaAtacante;
+        }
+    }
+
+    class NotificacionDefensa : Notification
+    {
+        public string NombreJugadorAtacante { get; set; }
+        public string PlanetaAtacante { get; set; }
+        public string PlanetaAtacado { get; set; }
+
+        public NotificacionDefensa(string tipo, long tiempo, string nombre, string planetaAtacante, string planetaAtacado)
+            : base(tipo, tiempo)
+        {
+            this.NombreJugadorAtacante = nombre;
+            this.PlanetaAtacante = planetaAtacante;
+            this.PlanetaAtacado = planetaAtacado;
+        }
+    }
+
+    class NotificacionColonizacion : Notification
+    {
+        public string PlanetaOrigen { get; set; }
+        public string PlanetaDestino { get; set; }
+
+        public NotificacionColonizacion(string tipo, long tiempo, string nombre, string planetaOrigen, string planetaDestino)
+            : base(tipo, tiempo)
+        {
+            this.PlanetaOrigen = planetaOrigen;
+            this.PlanetaDestino = planetaDestino;
         }
     }
 }

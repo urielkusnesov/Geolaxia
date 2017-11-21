@@ -10,7 +10,8 @@ namespace Service.Colonization
         IList<Probe> GetColonizers(int planetId);
         void SendColonizer(int planetId, int planetIdTarget, long time);
         long IsSendingColonizer(int planetId);
-        List<long> GetColonizesList(int playerId);
+        //List<long> GetColonizesList(int playerId);
+        IList<Colonize> GetColonizesList(int playerId);
         void PerformColonize(Timer timer, int planetId, int planetIdTarget);
     }
 }

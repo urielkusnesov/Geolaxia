@@ -75,22 +75,33 @@ namespace Service.Colonization
             return (sendingTime);
         }
 
-        public List<long> GetColonizesList(int playerId)
-        {
-            List<long> envios = new List<long>();
+        //public List<long> GetColonizesList(int playerId)
+        //{
+        //    List<long> envios = new List<long>();
 
+        //    IList<Colonize> colonizations = repository.List<Colonize>(x => x.ColonizerPlayer.Id.Equals(playerId) && x.ColonizerArrival > DateTime.Now);
+
+        //    if (colonizations != null && colonizations.Count > 0)
+        //    {
+        //        foreach (var item in colonizations)
+        //        {
+        //            long tiempo = this.GetMilli(item.ColonizerArrival);
+        //            envios.Add(tiempo);
+        //        }
+        //    }
+
+        //    return (envios);
+        //}
+
+        public IList<Colonize> GetColonizesList(int playerId)
+        {
             IList<Colonize> colonizations = repository.List<Colonize>(x => x.ColonizerPlayer.Id.Equals(playerId) && x.ColonizerArrival > DateTime.Now);
 
-            if (colonizations != null && colonizations.Count > 0)
-            {
-                foreach (var item in colonizations)
-                {
-                    long tiempo = this.GetMilli(item.ColonizerArrival);
-                    envios.Add(tiempo);
-                }
-            }
+            //if (colonizations != null && colonizations.Count > 0)
+            //{
+            //}
 
-            return (envios);
+            return (colonizations);
         }
 
         private long GetMilli(DateTime date)
