@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Model;
 using Repository;
 using System.Linq;
+using System.Timers;
 
 namespace Service.Colonization
 {
@@ -95,6 +96,42 @@ namespace Service.Colonization
         private long GetMilli(DateTime date)
         {
             return (Convert.ToInt64(date.ToUniversalTime().Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds));
+        }
+
+        public void PerformColonize(Timer timer, int planetId, int planetIdTarget)
+        {
+            //destruyo el timer
+            timer.Stop();
+            timer.Dispose();
+
+            //como el timer corre en otro thread no tengo el dbcontext instanciado
+            using (var context = new GeolaxiaContext())
+            {
+                try
+                {
+                    var repo = new RepositoryService(context);
+
+                    Planet planetaDestino = repo.Get<Planet>(x => x.Id.Equals(planetIdTarget));
+
+                    if (planetaDestino != null && planetaDestino.Conqueror == null)
+                    {
+                        planetaDestino.Conqueror = repo.Get<Planet>(x => x.Id.Equals(planetId)).Conqueror;
+                        
+                        Colonize colonizacion = repo.Get<Colonize>(x => x.ColonizerPlanet.Id.Equals(planetId) && x.DestinationPlanet.Id.Equals(planetIdTarget));
+                        
+                        if (colonizacion != null)
+                        {
+                            colonizacion.MissionComplete = true;
+                        }
+
+                        repo.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    var message = ex.Message;
+                }
+            }
         }
     }
 }

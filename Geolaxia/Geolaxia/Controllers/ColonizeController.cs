@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Web.Http;
 using Service.Colonization;
+using Timer = System.Timers.Timer;
 
 namespace Geolaxia.Controllers
 {
@@ -79,6 +80,8 @@ namespace Geolaxia.Controllers
             try
             {
                 colonizeService.SendColonizer(planetId, planetIdTarget, time);
+                this.SetTimer(planetId, planetIdTarget, time);
+
                 var okResponse = new ApiResponse { Data = string.Empty, Status = new Status { Result = "ok", Description = "" } };
                 var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
                 
@@ -120,6 +123,16 @@ namespace Geolaxia.Controllers
 
                 return (json);
             }
+        }
+
+        private void SetTimer(int planetId, int planetIdTarget, long time)
+        {
+            aTimer = new Timer(time);
+
+            aTimer.Elapsed += (sender, e) => colonizeService.PerformColonize(aTimer, planetId, planetIdTarget);
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
+            aTimer.Start();
         }
     }
 }
