@@ -114,44 +114,46 @@ namespace Geolaxia.Controllers
 
     class NotificacionAtaque : Notification
     {
-        public string NombreJugadorAtacado { get; set; }
-        public string PlanetaAtacado { get; set; }
-        public string PlanetaAtacante { get; set; }
+        public string PlayerName { get; set; }
+        public string PlanetNameT { get; set; }
+        public string PlanetNameO { get; set; }
 
         public NotificacionAtaque(string tipo, long tiempo, string nombre, string planetaAtacado, string planetaAtacante)
             : base(tipo, tiempo)
         {
-            this.NombreJugadorAtacado = nombre;
-            this.PlanetaAtacado = planetaAtacado;
-            this.PlanetaAtacante = planetaAtacante;
+            this.PlayerName = nombre;
+            this.PlanetNameT = planetaAtacado;
+            this.PlanetNameO = planetaAtacante;
         }
     }
 
     class NotificacionDefensa : Notification
     {
-        public string NombreJugadorAtacante { get; set; }
-        public string PlanetaAtacante { get; set; }
-        public string PlanetaAtacado { get; set; }
+        public string PlayerName { get; set; }
+        public string PlanetNameT { get; set; }
+        public string PlanetNameO { get; set; }
 
         public NotificacionDefensa(string tipo, long tiempo, string nombre, string planetaAtacante, string planetaAtacado)
             : base(tipo, tiempo)
         {
-            this.NombreJugadorAtacante = nombre;
-            this.PlanetaAtacante = planetaAtacante;
-            this.PlanetaAtacado = planetaAtacado;
+            this.PlayerName = nombre;
+            this.PlanetNameO = planetaAtacante;
+            this.PlanetNameT = planetaAtacado;
         }
     }
 
     class NotificacionColonizacion : Notification
     {
-        public string PlanetaOrigen { get; set; }
-        public string PlanetaDestino { get; set; }
+        public string PlayerName { get; set; }
+        public string PlanetNameT { get; set; }
+        public string PlanetNameO { get; set; }
 
         public NotificacionColonizacion(string tipo, long tiempo, string nombre, string planetaOrigen, string planetaDestino)
             : base(tipo, tiempo)
         {
-            this.PlanetaOrigen = planetaOrigen;
-            this.PlanetaDestino = planetaDestino;
+            this.PlayerName = nombre;
+            this.PlanetNameO = planetaOrigen;
+            this.PlanetNameT = planetaDestino;
         }
     }
 }
