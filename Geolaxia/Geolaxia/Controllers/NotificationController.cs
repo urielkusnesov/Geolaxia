@@ -4,13 +4,10 @@ using Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Service.Attacks;
-using Service.Planets;
 using Service.Players;
-using Service.Ships;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
-using Service.Defenses;
 using Service.Colonization;
 
 namespace Geolaxia.Controllers

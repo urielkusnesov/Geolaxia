@@ -10,7 +10,6 @@ using Geolaxia.Models;
 using Model.Enum;
 using Newtonsoft.Json.Linq;
 using Service.Players;
-using Service.Colonization;
 
 namespace Geolaxia.Controllers
 {

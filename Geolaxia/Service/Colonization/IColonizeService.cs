@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Model;
-using System;
 using System.Timers;
 
 namespace Service.Colonization

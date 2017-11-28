@@ -86,7 +86,6 @@ namespace Model
         public DbSet<Hangar> Hangars { get; set; }
         public DbSet<Queztion> Questions { get; set; }
         public DbSet<Colonize> Colonizations { get; set; }
-        //public DbSet<Colonizer> Colonizer { get; set; }
 
         //abstract classes
         public DbSet<Military> Militaries { get; set; }

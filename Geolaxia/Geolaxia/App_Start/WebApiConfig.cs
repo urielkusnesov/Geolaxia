@@ -1,7 +1,4 @@
-﻿using FluentScheduler;
-using Repository;
-using Service.Colonization;
-using System.Web.Http;
+﻿using System.Web.Http;
 
 namespace Geolaxia
 {
