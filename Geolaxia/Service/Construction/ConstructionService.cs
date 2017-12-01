@@ -6,7 +6,9 @@ using System.Linq;
 using System.Timers;
 using Model.DTO;
 using Model.Enum;
+using Service.Notification;
 using Service.Planets;
+using Service.Players;
 
 namespace Service.Construction
 {
@@ -14,11 +16,13 @@ namespace Service.Construction
     {
         private readonly IRepositoryService repository;
         private IPlanetService planetService;
+        private INotificationService notificationService;
 
-        public ConstructionService(IRepositoryService repository, IPlanetService planetService)
+        public ConstructionService(IRepositoryService repository, IPlanetService planetService, INotificationService notificationService)
         {
             this.repository = repository;
             this.planetService = planetService;
+            this.notificationService = notificationService;
         }
 
         public IList<Mine> GetCurrentMines(int planetId)
@@ -320,6 +324,20 @@ namespace Service.Construction
         public void FinishEnergyFacility(Timer timer, EnergyFacilityDTO energyFacilityDto)
         {
             //mandar notificacion push al usuario
+            using (var context = new GeolaxiaContext())
+            {
+                try
+                {
+                    var repo = new RepositoryService(context);
+                    var planet = repo.Get<Planet>(x => x.Id == energyFacilityDto.PlanetId);
+                    var player = repo.Get<Player>(x => x.Id == planet.Conqueror.Id);
+                    notificationService.SendPushNotification(player.FirebaseToken, "Construccion finalizada", "Finalizo la construccion de " + energyFacilityDto.EnergyFacilityType, "ConstructionsActivity");
+                }
+                catch (Exception ex)
+                {
+                    var message = ex.Message;
+                }
+            }
 
             //arranco el timer por hora para la produccion
             var msUntilFinish = 60 * 60 * 1000;
@@ -653,7 +671,7 @@ namespace Service.Construction
             timer.Dispose();
         }
 
-        public void FinishProbe(Timer timer, Probe probe)
+        public void FinishProbe(Timer timer, Probe probe, int planetId)
         {
             //mandar notificacion push al usuario
 
@@ -662,7 +680,7 @@ namespace Service.Construction
             timer.Dispose();
         }
 
-        public void FinishTrader(Timer timer, Trader trader)
+        public void FinishTrader(Timer timer, Trader trader, int planetId)
         {
             //mandar notificacion push al usuario
 

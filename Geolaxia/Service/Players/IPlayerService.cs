@@ -30,6 +30,8 @@ namespace Service.Players
 
         bool SetWeather(string username, WeatherDesc weatherDesc, string windSpeed);
 
+        bool SetFirebaseToken(string username, string firebaseToken);
+
         IList<Player> GetCloserPlayers(string username);
     }
 }

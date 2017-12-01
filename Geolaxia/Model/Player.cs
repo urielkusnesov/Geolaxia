@@ -36,6 +36,7 @@ namespace Model
         public virtual string LastLongitude { get; set; }
         public virtual WeatherDesc WeatherDesc { get; set; }
         public virtual double WeatherWindSpeed { get; set; }
+        public virtual string FirebaseToken { get; set; }
 
         public int CalculateLevel()
         {

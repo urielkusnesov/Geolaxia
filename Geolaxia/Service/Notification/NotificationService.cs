@@ -8,7 +8,7 @@ namespace Service.Notification
 {
     public class NotificationService : INotificationService
     {
-        public void SendPushNotification(string token, string title, string message)
+        public void SendPushNotification(string token, string title, string message, string activity)
         {
             try
             {
@@ -26,7 +26,8 @@ namespace Service.Notification
                     {
                         body = message,
                         title = title,
-                        sound = "Enabled"
+                        sound = "Enabled",
+                        click_action = activity
                     }
                 };
                 var serializer = new JavaScriptSerializer();

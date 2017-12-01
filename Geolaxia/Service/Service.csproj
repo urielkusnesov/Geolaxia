@@ -51,6 +51,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attacks\AttackService.cs" />
@@ -61,6 +62,8 @@
     <Compile Include="Colonization\IColonizeService.cs" />
     <Compile Include="Defenses\DefenseService.cs" />
     <Compile Include="Defenses\IDefenseService.cs" />
+    <Compile Include="Notification\INotificationService.cs" />
+    <Compile Include="Notification\NotificationService.cs" />
     <Compile Include="Planets\IPlanetService.cs" />
     <Compile Include="Planets\PlanetService.cs" />
     <Compile Include="Players\IPlayerService.cs" />

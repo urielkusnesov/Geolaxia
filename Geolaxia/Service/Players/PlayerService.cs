@@ -110,6 +110,21 @@ namespace Service.Players
             }
         }
 
+        public bool SetFirebaseToken(string username, string firebaseToken)
+        {
+            try
+            {
+                var player = repository.Get<Player>(x => x.UserName == username);
+                player.FirebaseToken = firebaseToken;
+                repository.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         public IList<Player> GetCloserPlayers(string username)
         {
             var player = repository.Get<Player>(x => x.UserName == username);

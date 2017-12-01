@@ -231,7 +231,7 @@ namespace Geolaxia.Controllers
                 service.AddSolarPanels(planetId, qtt);
                 planetService.UseResources(planetId, new Cost{CrystalCost = 5, MetalCost = 20});
                 logger.Info("start to build solar panels in planet: " + planetId);
-                SetEnergyFacilityTimer(new EnergyFacilityDTO{ConstructionTime = 2});
+                SetEnergyFacilityTimer(new EnergyFacilityDTO{ConstructionTime = 2, PlanetId = planetId, EnergyFacilityType = EnergyFacilityType.SolarPanel});
 
                 var okResponse = new ApiResponse { Data = solarPanel, Status = new Status { Result = "ok", Description = "" } };
                 var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
@@ -262,7 +262,7 @@ namespace Geolaxia.Controllers
                 service.AddWindTurbines(planetId, qtt);
                 planetService.UseResources(planetId, new Cost { CrystalCost = 5, MetalCost = 20 });
                 logger.Info("start to build wind turbines in planet: " + planetId);
-                SetEnergyFacilityTimer(new EnergyFacilityDTO { ConstructionTime = 2 });
+                SetEnergyFacilityTimer(new EnergyFacilityDTO { ConstructionTime = 2, PlanetId = planetId, EnergyFacilityType = EnergyFacilityType.WindTurbine});
 
                 var okResponse = new ApiResponse { Data = windTurbine, Status = new Status { Result = "ok", Description = "" } };
                 var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
@@ -605,7 +605,7 @@ namespace Geolaxia.Controllers
                 service.AddProbes(planetId, qtt);
                 planetService.UseResources(planetId, new Cost { CrystalCost = 3000, MetalCost = 3000 });
                 logger.Info("start to build probes in planet: " + planetId);
-                SetProbeTimer(new Probe { ConstructionTime = 30 });
+                SetProbeTimer(new Probe { ConstructionTime = 30}, planetId);
 
                 var okResponse = new ApiResponse { Data = probe, Status = new Status { Result = "ok", Description = "" } };
                 var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
@@ -636,7 +636,7 @@ namespace Geolaxia.Controllers
                 service.AddProbes(planetId, qtt);
                 planetService.UseResources(planetId, new Cost { CrystalCost = 3000, MetalCost = 3000 });
                 logger.Info("start to build traders in planet: " + planetId);
-                SetTraderTimer(new Trader { ConstructionTime = 30 });
+                SetTraderTimer(new Trader { ConstructionTime = 30 }, planetId);
 
                 var okResponse = new ApiResponse { Data = trader, Status = new Status { Result = "ok", Description = "" } };
                 var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
@@ -663,27 +663,27 @@ namespace Geolaxia.Controllers
             aTimer.Start();
         }
 
-        private void SetProbeTimer(Probe probe)
+        private void SetProbeTimer(Probe probe, int planetId)
         {
             var msUntilFinish = probe.ConstructionTime * 60 * 1000;
 
             // Create a timer with a timeToArrival interval.
             aTimer = new Timer(msUntilFinish);
             // Hook up the Elapsed event for the timer. 
-            aTimer.Elapsed += (sender, e) => service.FinishProbe(aTimer, probe);
+            aTimer.Elapsed += (sender, e) => service.FinishProbe(aTimer, probe, planetId);
             aTimer.AutoReset = true;
             aTimer.Enabled = true;
             aTimer.Start();
         }
 
-        private void SetTraderTimer(Trader trader)
+        private void SetTraderTimer(Trader trader, int planetId)
         {
             var msUntilFinish = trader.ConstructionTime * 60 * 1000;
 
             // Create a timer with a timeToArrival interval.
             aTimer = new Timer(msUntilFinish);
             // Hook up the Elapsed event for the timer. 
-            aTimer.Elapsed += (sender, e) => service.FinishTrader(aTimer, trader);
+            aTimer.Elapsed += (sender, e) => service.FinishTrader(aTimer, trader, planetId);
             aTimer.AutoReset = true;
             aTimer.Enabled = true;
             aTimer.Start();

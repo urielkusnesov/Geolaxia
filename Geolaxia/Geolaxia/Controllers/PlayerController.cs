@@ -216,6 +216,20 @@ namespace Geolaxia.Controllers
             return json;
         }
 
+        // POST api/player/setfirebase
+        [HttpGet]
+        public JObject SetFirebase(string token)
+        {
+            var headers = Request.Headers;
+            string username = headers.GetValues("username").First();
+
+            logger.Info("Seteando el clima en la posicion del jugador");
+            service.SetFirebaseToken(username, token);
+            var response = new ApiResponse { Status = new Status { Result = "ok", Description = "" } };
+            JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+            return json;
+        }
+        
         private Planet AssignInitialPlanet()
         {
             return planetService.GetRandomFreePlanet();

@@ -2,6 +2,6 @@
 {
     public interface INotificationService
     {
-        void SendPushNotification(string token, string title, string message);
+        void SendPushNotification(string token, string title, string message, string activity);
     }
 }

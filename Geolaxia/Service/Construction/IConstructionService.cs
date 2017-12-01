@@ -66,8 +66,8 @@ namespace Service.Construction
 
         void FinishShield(Timer timer, Shield shield);
 
-        void FinishProbe(Timer timer, Probe probe);
+        void FinishProbe(Timer timer, Probe probe, int planetId);
 
-        void FinishTrader(Timer timer, Trader trader);
+        void FinishTrader(Timer timer, Trader trader, int planetId);
     }
 }
