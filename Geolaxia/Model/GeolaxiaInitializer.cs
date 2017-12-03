@@ -9,8 +9,8 @@ namespace Model
         protected override void Seed(GeolaxiaContext context)
         {
             var players = new List<Player> { 
-                new Player { Id = 1, UserName = "Uriel", FirstName = "Uriel", LastName = "Kusnesov", Password = "pass1" },
-                new Player { Id = 2, UserName = "Ramiro", FirstName = "Ramiro", LastName = "Doi", Password = "pass2" }
+                new Player { Id = 1, UserName = "Uriel", FirstName = "Uriel", LastName = "Kusnesov", Password = "a722c63db8ec8625af6cf71cb8c2d939" },
+                new Player { Id = 2, UserName = "Ramiro", FirstName = "Ramiro", LastName = "Doi", Password = "c1572d05424d0ecb2a65ec6a82aeacbf" }
             };
 
             foreach (Player player in players)
@@ -79,9 +79,9 @@ namespace Model
             }
 
             var planets = new List<Planet> { 
-                new WhitePlanet { Id= 1, PlanetType = PlanetType.White, Name = "White", Order = 1, Conqueror = players[0], Crystal = 100, Metal = 200, DarkMatter = 300, Energy = 400, SolarSystem = solarSystems[0] },
-                new BluePlanet { Id= 2, PlanetType = PlanetType.Blue, Name = "Blue", Order = 2, Conqueror = players[0], Crystal = 10, Metal = 20, DarkMatter = 30, Energy = 40, SolarSystem = solarSystems[0] },
-                new BlackPlanet { Id= 3, PlanetType = PlanetType.Black, Name = "Black", Order = 3, Conqueror = players[1], Crystal = 150, Metal = 250, DarkMatter = 350, Energy = 450, SolarSystem = solarSystems[0] },
+                new WhitePlanet { Id= 1, PlanetType = PlanetType.White, Name = "White", Order = 1, Conqueror = players[0], IsOrigin = true, Crystal = 100, Metal = 200, DarkMatter = 300, Energy = 400, SolarSystem = solarSystems[0] },
+                new BluePlanet { Id= 2, PlanetType = PlanetType.Blue, Name = "Blue", Order = 2, Conqueror = players[0], IsOrigin = false, Crystal = 10, Metal = 20, DarkMatter = 30, Energy = 40, SolarSystem = solarSystems[0] },
+                new BlackPlanet { Id= 3, PlanetType = PlanetType.Black, Name = "Black", Order = 3, Conqueror = players[1], IsOrigin = true, Crystal = 150, Metal = 250, DarkMatter = 350, Energy = 450, SolarSystem = solarSystems[0] },
                 new WhitePlanet { Id= 4, PlanetType = PlanetType.White, Name = "White2", Order = 4, Crystal = 100, Metal = 200, DarkMatter = 300, Energy = 400, SolarSystem = solarSystems[0] },
                 new BluePlanet { Id= 5, PlanetType = PlanetType.Blue, Name = "Blue2", Order = 5, Crystal = 10, Metal = 20, DarkMatter = 30, Energy = 40, SolarSystem = solarSystems[0] },
                 new BlackPlanet { Id= 6, PlanetType = PlanetType.Black, Name = "Black2", Order = 6, Crystal = 150, Metal = 250, DarkMatter = 350, Energy = 450, SolarSystem = solarSystems[0] },

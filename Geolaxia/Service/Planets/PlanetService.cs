@@ -25,7 +25,7 @@ namespace Service.Planets
 
         public IList<Planet> GetByPlayer(string username)
         {
-            var planets = repository.List<Planet>(x => x.Conqueror.UserName == username);
+            var planets = repository.List<Planet>(x => x.Conqueror.UserName == username).OrderByDescending(x => x.IsOrigin).OrderBy(x => x.Id).ToList();
             return planets;
         }
 

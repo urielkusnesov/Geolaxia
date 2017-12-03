@@ -53,6 +53,7 @@
     <Compile Include="BluePlanet.cs" />
     <Compile Include="Canon.cs" />
     <Compile Include="Colonize.cs" />
+    <Compile Include="Defense.cs" />
     <Compile Include="Question.cs" />
     <Compile Include="Cost.cs" />
     <Compile Include="CrystalMine.cs" />

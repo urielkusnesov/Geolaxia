@@ -105,5 +105,43 @@ namespace Service.Defenses
 
             return (questions);
         }
+
+        public int CreateDefense(int attackId, List<Queztion> questions)
+        {
+            Attack attack = repository.Get<Attack>(x => x.Id.Equals(attackId));
+            Queztion question1 = repository.Get<Queztion>(x => x.Id.Equals(questions[0].Id));
+            Queztion question2 = repository.Get<Queztion>(x => x.Id.Equals(questions[1].Id));
+            Queztion question3 = repository.Get<Queztion>(x => x.Id.Equals(questions[2].Id));
+
+            Defense defense = repository.Add<Defense>(new Defense { Attack = attack, Question1 = question1, Question2 = question2, Question3 = question3 });
+
+            repository.SaveChanges();
+
+            return (defense.Id);
+        }
+
+        public void DefenseFromAttack(int defenseId, int cantidadCorrectas)
+        {
+            Defense defense = repository.Get<Defense>(x => x.Id.Equals(defenseId));
+
+            if (cantidadCorrectas.Equals(3)) 
+            {
+                defense.Defended = 50;
+            }
+            else if (cantidadCorrectas.Equals(2))
+            {
+                defense.Defended = 30;
+            }
+            else if (cantidadCorrectas.Equals(1))
+            {
+                defense.Defended = 10;
+            }
+            else
+            {
+                defense.Defended = 0;
+            }
+
+            repository.SaveChanges();
+        }
     }
 }
