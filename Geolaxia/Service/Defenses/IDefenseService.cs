@@ -17,8 +17,16 @@ namespace Service.Defenses
 
         List<Queztion> Get3RandomQuestions();
 
-        int CreateDefense(int attackId, List<Queztion> questions);
+        //int CreateDefense(int attackId, List<Queztion> questions);
 
-        void DefenseFromAttack(int defenseId, int cantidadCorrectas);
+        //void DefenseFromAttack(int defenseId, int cantidadCorrectas);
+
+        //long IsUnderAttack(int planetId);
+
+        void DefenseFromAttack(int attackId, int idPreg1, int idPreg2, int idPreg3, int cantidadCorrectas);
+
+        int ObtenerIdAtaqueMasProximo(int planetId);
+
+        int ObtenerIdAtaqueMasProximoNoDefendido(int planetId);
     }
 }

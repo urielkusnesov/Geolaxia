@@ -182,8 +182,70 @@ namespace Geolaxia.Controllers
         }
 
         //api/defense/Get3RandomQuestions
+        //[HttpPost]
+        //public JObject Get3RandomQuestions(int attackId)
+        //{
+        //    if (!ValidateToken())
+        //    {
+        //        var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+        //        return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+        //    }
+
+        //    logger.Info("getting questions");
+
+        //    try
+        //    {
+        //        List<Queztion> questions = defenseService.Get3RandomQuestions();
+        //        int id = defenseService.CreateDefense(attackId, questions);
+
+        //        var okResponse = new ApiResponse { Data = new Questions { Data = questions, DefenseId = id }, Status = new Status { Result = "ok", Description = "" } };
+        //        var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+
+        //        return (json);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
+        //        JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+
+        //        return (json);
+        //    }
+        //}
+
+        //api/defense/Get3RandomQuestions
+        //[HttpPost]
+        //public JObject DefenseFromAttack(int defenseId, int cantidadCorrectas)
+        //{
+        //    if (!ValidateToken())
+        //    {
+        //        var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+        //        return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+        //    }
+
+        //    logger.Info("getting questions");
+
+        //    try
+        //    {
+        //        defenseService.DefenseFromAttack(defenseId, cantidadCorrectas);
+
+        //        var okResponse = new ApiResponse { Data = "", Status = new Status { Result = "ok", Description = "" } };
+        //        var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+
+        //        return (json);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
+        //        JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+
+        //        return (json);
+        //    }
+        //}
+
+        //api/defense/DefenseFromAttack
+
         [HttpPost]
-        public JObject Get3RandomQuestions(int attackId)
+        public JObject DefenseFromAttack(int attackId, int idPregunta1, int idPregunta2, int idPregunta3, int cantidadCorrectas)
         {
             if (!ValidateToken())
             {
@@ -191,14 +253,13 @@ namespace Geolaxia.Controllers
                 return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
             }
 
-            logger.Info("getting questions");
+            logger.Info("defense from attack" + attackId);
 
             try
             {
-                List<Queztion> questions = defenseService.Get3RandomQuestions();
-                int id = defenseService.CreateDefense(attackId, questions);
+                defenseService.DefenseFromAttack(attackId, idPregunta1, idPregunta2, idPregunta3, cantidadCorrectas);
 
-                var okResponse = new ApiResponse { Data = new Questions { Data = questions, DefenseId = id }, Status = new Status { Result = "ok", Description = "" } };
+                var okResponse = new ApiResponse { Data = "", Status = new Status { Result = "ok", Description = "" } };
                 var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
 
                 return (json);
@@ -212,9 +273,9 @@ namespace Geolaxia.Controllers
             }
         }
 
-        //api/defense/Get3RandomQuestions
+        //api/defense/ObtenerIdAtaqueMasProximoNoDefendido
         [HttpPost]
-        public JObject DefenseFromAttack(int defenseId, int cantidadCorrectas)
+        public JObject ObtenerIdAtaqueMasProximoNoDefendido(int planetId)
         {
             if (!ValidateToken())
             {
@@ -222,13 +283,13 @@ namespace Geolaxia.Controllers
                 return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
             }
 
-            logger.Info("getting questions");
+            logger.Info("getting attack");
 
             try
             {
-                defenseService.DefenseFromAttack(defenseId, cantidadCorrectas);
+                int id = defenseService.ObtenerIdAtaqueMasProximoNoDefendido(planetId);
 
-                var okResponse = new ApiResponse { Data = "", Status = new Status { Result = "ok", Description = "" } };
+                var okResponse = new ApiResponse { Data = id, Status = new Status { Result = "ok", Description = "" } };
                 var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
 
                 return (json);
