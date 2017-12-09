@@ -23,7 +23,7 @@ namespace Geolaxia.Controllers
         private IAttackService service;
         private IDefenseService defenseService;
 
-        private static System.Timers.Timer aTimer;
+        //private static System.Timers.Timer aTimer;
 
         public DefenseController(IAttackService service, IPlayerService playerService, IPlanetService planetService, IShipService shipService, IDefenseService defenseService)
             : base(playerService)

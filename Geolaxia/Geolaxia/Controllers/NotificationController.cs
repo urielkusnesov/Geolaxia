@@ -15,11 +15,10 @@ namespace Geolaxia.Controllers
     public class NotificationController : BaseController
     {
         private static readonly ILog logger = LogManager.GetLogger(typeof(NotificationController));
-        private IPlayerService playerService;
         private IAttackService attackService;
         private IColonizeService colonizeService;
 
-        private static System.Timers.Timer aTimer;
+        //private static System.Timers.Timer aTimer;
 
         public NotificationController(IPlayerService playerService, IAttackService attackService, IColonizeService colonizeService)
             : base(playerService)
@@ -77,7 +76,7 @@ namespace Geolaxia.Controllers
                         this.GetMilli(item.FleetArrival), 
                         item.AttackerPlayer.UserName, 
                         string.Format("{0}-{1}", item.AttackerPlanet.Order, item.AttackerPlanet.Name), 
-                        string.Format("{0}-{1}", item.DestinationPlanet.Order, item.DestinationPlanet)));
+                        string.Format("{0}-{1}", item.DestinationPlanet.Order, item.DestinationPlanet.Name)));
                 }
 
                 var okResponse = new ApiResponse { Data = notifications, Status = new Status { Result = "ok", Description = "" } };
