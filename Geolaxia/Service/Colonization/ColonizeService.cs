@@ -11,6 +11,7 @@ namespace Service.Colonization
     {
         private readonly IRepositoryService repository;
 
+        private int COLONIZADOR_CONST_COSTO_MO = 10;
         //private int CANON_CONST_TIEMPO = 3;
         //private int CANON_CONST_COSTO_METAL = 100;
         //private int CANON_CONST_COSTO_CRISTAL = 50;
@@ -36,14 +37,9 @@ namespace Service.Colonization
 
         public void SendColonizer(int planetId, int planetIdTarget, long time)
         {
-            //TODO: validar que el planeta este libre.
-            //TODO: validar que cuando llegue el colonizador siga estando libre para colonizar.
-            //DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             DateTime arrival = DateTime.Now.AddMilliseconds(time).ToLocalTime();
-            //DateTime date = start.AddMilliseconds(time).ToLocalTime();
 
             Planet planetOrigen = repository.Get<Planet>(planetId);
-            //Player playerOrigen = repository.Get<Player>(x => x.Planets.Contains(planetOrigen));
             Player playerOrigen = repository.Get<Planet>(x => x.Id.Equals(planetId)).Conqueror;
             Planet planetDestino = repository.Get<Planet>(planetIdTarget);
 
@@ -57,6 +53,11 @@ namespace Service.Colonization
             {
                 Probe colonizador = colonizadorList[0];
                 repository.Add<Colonize>(new Colonize { ColonizerArrival = arrival, ColonizerDeparture = DateTime.Now, ColonizerPlanet = planetOrigen, ColonizerPlayer = playerOrigen, DestinationPlanet = planetDestino, Colonizer = colonizador });
+
+                var planet = repository.Get<Planet>(planetId);
+                TimeSpan dif = arrival.Subtract(DateTime.Now);
+                planet.DarkMatter -= (dif.Hours + 1) * this.COLONIZADOR_CONST_COSTO_MO;
+
                 repository.SaveChanges();
             }
         }

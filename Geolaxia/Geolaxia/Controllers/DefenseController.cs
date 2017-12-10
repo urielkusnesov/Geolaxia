@@ -11,6 +11,10 @@ using System;
 using System.Collections.Generic;
 using System.Web.Http;
 using Service.Defenses;
+using Timer = System.Timers.Timer;
+using Service.Notification;
+using Repository;
+using System.Linq;
 
 namespace Geolaxia.Controllers
 {
@@ -23,7 +27,7 @@ namespace Geolaxia.Controllers
         private IAttackService service;
         private IDefenseService defenseService;
 
-        //private static System.Timers.Timer aTimer;
+        private static System.Timers.Timer aTimer;
 
         public DefenseController(IAttackService service, IPlayerService playerService, IPlanetService planetService, IShipService shipService, IDefenseService defenseService)
             : base(playerService)
@@ -302,6 +306,34 @@ namespace Geolaxia.Controllers
                 return (json);
             }
         }
+
+        //private void PushLlegaElAtaque(string token, string title, string message, string activity, long time)
+        //{
+        //    //mandar notificacion push al usuario
+        //    using (var context = new GeolaxiaContext())
+        //    {
+        //        try
+        //        {
+        //            var repo = new RepositoryService(context);
+        //            var planet = repo.Get<Planet>(x => x.Id == energyFacilityDto.PlanetId);
+        //            var player = repo.Get<Player>(x => x.Id == planet.Conqueror.Id);
+        //            notificationService.SendPushNotification(player.FirebaseToken, "Construccion finalizada", "Finalizo la construccion de " + energyFacilityDto.EnergyFacilityType, "ConstructionsActivity");
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            var message = ex.Message;
+        //        }
+        //    }
+
+        //    //arranco el timer por hora para la produccion
+        //    var msUntilFinish = 60 * 60 * 1000;
+        //    aTimer.Interval = msUntilFinish;
+        //    // Hook up the Elapsed event for the timer. 
+        //    aTimer.Elapsed += (sender, e) => planetService.AddEnergy(energyFacilityDto);
+        //    aTimer.AutoReset = true;
+        //    aTimer.Enabled = true;
+        //    aTimer.Start();
+        //}
     }
 
     class Questions
