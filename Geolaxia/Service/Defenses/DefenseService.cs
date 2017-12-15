@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using Model;
 using Repository;
 using System.Linq;
+using Service.Notification;
+using System.Timers;
 
 namespace Service.Defenses
 {
     public class DefenseService : IDefenseService
     {
         private readonly IRepositoryService repository;
+        //private INotificationService notificationService;
 
-        private int CANON_CONST_TIEMPO = 3;
+        private int CANON_CONST_TIEMPO = 3; //en mins
         private int CANON_CONST_COSTO_METAL = 100;
         private int CANON_CONST_COSTO_CRISTAL = 50;
         private int CANON_ATAQUE = 50;
@@ -19,9 +22,11 @@ namespace Service.Defenses
         private int PREGUNTAS_CANTIDAD_EN_BASE = 24; //tiene que ser la (cantidad + 1) por el random
         private int TIEMPO_AVISO_PARA_DEFENSA = 3600; //en segundos
 
+        //public DefenseService(IRepositoryService repository, INotificationService notificationService)
         public DefenseService(IRepositoryService repository)
         {
             this.repository = repository;
+            //this.notificationService = notificationService;
         }
 
         public IList<Canon> GetCanons(int planetId)
@@ -245,6 +250,30 @@ namespace Service.Defenses
             }
 
             return (0);
+        }
+
+        public void MandarPushCanonTerminado(Timer timer, int planetId, int cant)
+        {
+            //destruyo el timer
+            //timer.Stop();
+            //timer.Dispose();
+
+            //mandar notificacion push al usuario
+            using (var context = new GeolaxiaContext())
+            {
+                try
+                {
+                    var repo = new RepositoryService(context);
+                    var notificationService = new NotificationService();
+                    var planet = repo.Get<Planet>(x => x.Id.Equals(planetId));
+                    var player = repo.Get<Player>(x => x.Id.Equals(planet.Conqueror.Id));
+                    notificationService.SendPushNotification(player.FirebaseToken, "Construcción finalizada", string.Format("Finalizo la construccion de {0} ", "cañones"), "geolaxia.geolaxia.HOME");
+                }
+                catch (Exception ex)
+                {
+                    var message = ex.Message;
+                }
+            }
         }
     }
 }

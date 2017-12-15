@@ -658,7 +658,7 @@ namespace Geolaxia.Controllers
             aTimer = new Timer(msUntilFinish);
             // Hook up the Elapsed event for the timer. 
             aTimer.Elapsed += (sender, e) => service.FinishShield(aTimer, shield);
-            aTimer.AutoReset = true;
+            aTimer.AutoReset = false;
             aTimer.Enabled = true;
             aTimer.Start();
         }
@@ -671,7 +671,7 @@ namespace Geolaxia.Controllers
             aTimer = new Timer(msUntilFinish);
             // Hook up the Elapsed event for the timer. 
             aTimer.Elapsed += (sender, e) => service.FinishProbe(aTimer, probe, planetId);
-            aTimer.AutoReset = true;
+            aTimer.AutoReset = false;
             aTimer.Enabled = true;
             aTimer.Start();
         }
@@ -684,7 +684,7 @@ namespace Geolaxia.Controllers
             aTimer = new Timer(msUntilFinish);
             // Hook up the Elapsed event for the timer. 
             aTimer.Elapsed += (sender, e) => service.FinishTrader(aTimer, trader, planetId);
-            aTimer.AutoReset = true;
+            aTimer.AutoReset = false;
             aTimer.Enabled = true;
             aTimer.Start();
         }

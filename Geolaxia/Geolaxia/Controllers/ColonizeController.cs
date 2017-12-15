@@ -130,7 +130,7 @@ namespace Geolaxia.Controllers
             aTimer = new Timer(time);
 
             aTimer.Elapsed += (sender, e) => colonizeService.PerformColonize(aTimer, planetId, planetIdTarget);
-            aTimer.AutoReset = true;
+            aTimer.AutoReset = false;
             aTimer.Enabled = true;
             aTimer.Start();
         }

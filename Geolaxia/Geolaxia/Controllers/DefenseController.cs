@@ -20,6 +20,8 @@ namespace Geolaxia.Controllers
 {
     public class DefenseController : BaseController
     {
+        private int CANON_CONST_TIEMPO = 3; //en mins
+
         private static readonly ILog logger = LogManager.GetLogger(typeof(DefenseController));
         private IPlayerService playerService;
         private IPlanetService planetService;
@@ -112,6 +114,8 @@ namespace Geolaxia.Controllers
             try
             {
                 defenseService.BuildCannons(planetId, cant);
+                this.MandarPushCanonTerminado(planetId, cant);
+
                 var okResponse = new ApiResponse { Data = string.Empty, Status = new Status { Result = "ok", Description = "" } };
                 var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
 
@@ -307,33 +311,19 @@ namespace Geolaxia.Controllers
             }
         }
 
-        //private void PushLlegaElAtaque(string token, string title, string message, string activity, long time)
-        //{
-        //    //mandar notificacion push al usuario
-        //    using (var context = new GeolaxiaContext())
-        //    {
-        //        try
-        //        {
-        //            var repo = new RepositoryService(context);
-        //            var planet = repo.Get<Planet>(x => x.Id == energyFacilityDto.PlanetId);
-        //            var player = repo.Get<Player>(x => x.Id == planet.Conqueror.Id);
-        //            notificationService.SendPushNotification(player.FirebaseToken, "Construccion finalizada", "Finalizo la construccion de " + energyFacilityDto.EnergyFacilityType, "ConstructionsActivity");
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            var message = ex.Message;
-        //        }
-        //    }
+        private void MandarPushCanonTerminado(int planetId, int cant)
+        {
+            //var msUntilFinish = cant * this.CANON_CONST_TIEMPO * 60000;
+            var msUntilFinish = 5000;
 
-        //    //arranco el timer por hora para la produccion
-        //    var msUntilFinish = 60 * 60 * 1000;
-        //    aTimer.Interval = msUntilFinish;
-        //    // Hook up the Elapsed event for the timer. 
-        //    aTimer.Elapsed += (sender, e) => planetService.AddEnergy(energyFacilityDto);
-        //    aTimer.AutoReset = true;
-        //    aTimer.Enabled = true;
-        //    aTimer.Start();
-        //}
+            // Create a timer with a timeToArrival interval.
+            aTimer = new Timer(msUntilFinish);
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += (sender, e) => defenseService.MandarPushCanonTerminado(aTimer, planetId, cant);
+            aTimer.AutoReset = false;
+            aTimer.Enabled = true;
+            aTimer.Start();
+        }
     }
 
     class Questions

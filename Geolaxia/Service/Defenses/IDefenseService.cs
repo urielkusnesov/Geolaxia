@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Model;
+using System.Timers;
 
 namespace Service.Defenses
 {
@@ -28,5 +29,7 @@ namespace Service.Defenses
         int ObtenerIdAtaqueMasProximo(int planetId);
 
         int ObtenerIdAtaqueMasProximoNoDefendido(int planetId);
+
+        void MandarPushCanonTerminado(Timer timer, int planetId, int cant);
     }
 }
