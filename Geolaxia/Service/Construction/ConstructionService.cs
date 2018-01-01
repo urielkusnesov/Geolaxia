@@ -100,6 +100,28 @@ namespace Service.Construction
             return mines;
         }
 
+        public IList<long> GetMinesBuildingTime(int planetId)
+        {
+            var mineBuildingTimes = new List<long>();
+
+            var inConstructionCrystalMine = repository.Get<CrystalMine>(x => x.Planet.Id == planetId && x.EnableDate > DateTime.Now);
+            mineBuildingTimes.Add(inConstructionCrystalMine != null ? GetMilli(inConstructionCrystalMine.EnableDate) : GetMilli(DateTime.MinValue));
+
+            var inConstructionMetalMine = repository.Get <MetalMine>(x => x.Planet.Id == planetId && x.EnableDate > DateTime.Now);
+            mineBuildingTimes.Add(inConstructionMetalMine != null ? GetMilli(inConstructionMetalMine.EnableDate) : GetMilli(DateTime.MinValue));
+
+            var inConstructionDarkMatterMine = repository.Get<DarkMatterMine>(x => x.Planet.Id == planetId && x.EnableDate > DateTime.Now);
+            mineBuildingTimes.Add(inConstructionDarkMatterMine != null ? GetMilli(inConstructionDarkMatterMine.EnableDate) : GetMilli(DateTime.MinValue));
+
+            return mineBuildingTimes;
+        }
+
+        private long GetMilli(DateTime date)
+        {
+            return Convert.ToInt64((date - DateTime.Now).TotalMilliseconds);
+            //return (Convert.ToInt64(date.ToUniversalTime().Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds));
+        }
+
         public Mine Add(Mine mine)
         {
             var result = repository.Add(mine);
@@ -158,6 +180,20 @@ namespace Service.Construction
         public void FinishMine(Timer timer, MineDTO mineDto)
         {
             //mandar notificacion push al usuario
+            using (var context = new GeolaxiaContext())
+            {
+                try
+                {
+                    var repo = new RepositoryService(context);
+                    var planet = repo.Get<Planet>(x => x.Id == mineDto.PlanetId);
+                    var player = repo.Get<Player>(x => x.Id == planet.Conqueror.Id);
+                    notificationService.SendPushNotification(player.FirebaseToken, "Construccion finalizada", "Finalizo la construccion de la mina" + mineDto.MineType, "ConstructionsActivity");
+                }
+                catch (Exception ex)
+                {
+                    var message = ex.Message;
+                }
+            }
 
             //arranco el timer por hora de produccion
             timer.Stop();   
@@ -278,6 +314,25 @@ namespace Service.Construction
             energyFacilities.Add(newEnergyFuelCentral);
 
             return energyFacilities;
+        }
+
+        public IList<long> GetEnergyFacilitiesBuildingTime(int planetId)
+        {
+            var energyFacilityBuildingTimes = new List<long>();
+
+            var inConstructionEnergyCentral = repository.Get<EnergyCentral>(x => x.Planet.Id == planetId && x.EnableDate > DateTime.Now);
+            energyFacilityBuildingTimes.Add(inConstructionEnergyCentral != null ? GetMilli(inConstructionEnergyCentral.EnableDate) : GetMilli(DateTime.MinValue));
+
+            var inConstructionEnergyFuelCentral = repository.Get<EnergyFuelCentral>(x => x.Planet.Id == planetId && x.EnableDate > DateTime.Now);
+            energyFacilityBuildingTimes.Add(inConstructionEnergyFuelCentral != null ? GetMilli(inConstructionEnergyFuelCentral.EnableDate) : GetMilli(DateTime.MinValue));
+
+            var inConstructionSolarPanel = repository.Max<SolarPanel, DateTime>(x => x.Planet.Id.Equals(planetId) && x.EnableDate > DateTime.Now, x => x.EnableDate);
+            energyFacilityBuildingTimes.Add(inConstructionSolarPanel != null ? GetMilli(inConstructionSolarPanel.EnableDate) : GetMilli(DateTime.MinValue));
+
+            var inConstructionWindTurbine = repository.Max<WindTurbine, DateTime>(x => x.Planet.Id.Equals(planetId) && x.EnableDate > DateTime.Now, x => x.EnableDate);
+            energyFacilityBuildingTimes.Add(inConstructionWindTurbine != null ? GetMilli(inConstructionWindTurbine.EnableDate) : GetMilli(DateTime.MinValue));
+
+            return energyFacilityBuildingTimes;
         }
 
         public EnergyFacility Add(EnergyFacility energyFacility)
@@ -402,6 +457,12 @@ namespace Service.Construction
             return hangar;
         }
 
+        public IList<long> GetHangarBuildingTime(int planetId)
+        {
+            var inConstructionHangar = repository.Get<Hangar>(x => x.Planet.Id == planetId && x.EnableDate > DateTime.Now);
+            return inConstructionHangar != null ? new List<long>{GetMilli(inConstructionHangar.EnableDate)} : new List<long>{GetMilli(DateTime.MinValue)};
+        }
+
         public Hangar AddHangar(int planetId)
         {
             var currentHangar = repository.Get<Hangar>(x => x.Planet.Id == planetId);
@@ -431,6 +492,20 @@ namespace Service.Construction
         public void FinishHangar(Timer timer, Hangar hangar)
         {
             //mandar notificacion push al usuario
+            using (var context = new GeolaxiaContext())
+            {
+                try
+                {
+                    var repo = new RepositoryService(context);
+                    var planet = repo.Get<Planet>(x => x.Id == hangar.Planet.Id);
+                    var player = repo.Get<Player>(x => x.Id == planet.Conqueror.Id);
+                    notificationService.SendPushNotification(player.FirebaseToken, "Construccion finalizada", "Finalizo la construccion del hangar", "ConstructionsActivity");
+                }
+                catch (Exception ex)
+                {
+                    var message = ex.Message;
+                }
+            }
 
             //elimino el timer
             timer.Stop();
@@ -456,6 +531,22 @@ namespace Service.Construction
                     AddShipZ(planetId, qtt);
                     break;
             }
+        }
+
+        public IList<long> GetShipsBuildingTime(int planetId)
+        {
+            var shipsBuildingTimes = new List<long>();
+
+            var inConstructionShipX = repository.Max<ShipX, DateTime>(x => x.Planet.Id.Equals(planetId) && x.EnableDate > DateTime.Now, x => x.EnableDate);
+            shipsBuildingTimes.Add(inConstructionShipX != null ? GetMilli(inConstructionShipX.EnableDate) : GetMilli(DateTime.MinValue));
+
+            var inConstructionShipY = repository.Max<ShipY, DateTime>(x => x.Planet.Id.Equals(planetId) && x.EnableDate > DateTime.Now, x => x.EnableDate);
+            shipsBuildingTimes.Add(inConstructionShipY != null ? GetMilli(inConstructionShipY.EnableDate) : GetMilli(DateTime.MinValue));
+
+            var inConstructionShipZ = repository.Max<ShipZ, DateTime>(x => x.Planet.Id.Equals(planetId) && x.EnableDate > DateTime.Now, x => x.EnableDate);
+            shipsBuildingTimes.Add(inConstructionShipZ != null ? GetMilli(inConstructionShipZ.EnableDate) : GetMilli(DateTime.MinValue));
+
+            return shipsBuildingTimes;
         }
 
         public void AddShipX(int planetId, int qtt)
@@ -589,6 +680,22 @@ namespace Service.Construction
             return traders;
         }
 
+        public IList<long> GetOthersBuildingTime(int planetId)
+        {
+            var otherBuildingTimes = new List<long>();
+
+            var inConstructionShield = repository.Get<Shield>(x => x.Planet.Id == planetId && x.EnableDate > DateTime.Now);
+            otherBuildingTimes.Add(inConstructionShield != null ? GetMilli(inConstructionShield.EnableDate) : GetMilli(DateTime.MinValue));
+
+            var inConstructionProbe = repository.Max<Probe, DateTime>(x => x.Planet.Id.Equals(planetId) && x.EnableDate > DateTime.Now, x => x.EnableDate);
+            otherBuildingTimes.Add(inConstructionProbe != null ? GetMilli(inConstructionProbe.EnableDate) : GetMilli(DateTime.MinValue));
+
+            var inConstructionTrader = repository.Max<Trader, DateTime>(x => x.Planet.Id.Equals(planetId) && x.EnableDate > DateTime.Now, x => x.EnableDate);
+            otherBuildingTimes.Add(inConstructionTrader != null ? GetMilli(inConstructionTrader.EnableDate) : GetMilli(DateTime.MinValue));
+
+            return otherBuildingTimes;
+        }
+
         public Shield AddShield(int planetId)
         {
             var currentShield = repository.Get<Shield>(x => x.Planet.Id == planetId);
@@ -665,6 +772,20 @@ namespace Service.Construction
         public void FinishShield(Timer timer, Shield shield)
         {
             //mandar notificacion push al usuario
+            using (var context = new GeolaxiaContext())
+            {
+                try
+                {
+                    var repo = new RepositoryService(context);
+                    var planet = repo.Get<Planet>(x => x.Id == shield.Planet.Id);
+                    var player = repo.Get<Player>(x => x.Id == planet.Conqueror.Id);
+                    notificationService.SendPushNotification(player.FirebaseToken, "Construccion finalizada", "Finalizo la construccion del escudo", "ConstructionsActivity");
+                }
+                catch (Exception ex)
+                {
+                    var message = ex.Message;
+                }
+            }
 
             //elimino el timer
             timer.Stop();
@@ -674,6 +795,20 @@ namespace Service.Construction
         public void FinishProbe(Timer timer, Probe probe, int planetId)
         {
             //mandar notificacion push al usuario
+            using (var context = new GeolaxiaContext())
+            {
+                try
+                {
+                    var repo = new RepositoryService(context);
+                    var planet = repo.Get<Planet>(x => x.Id == planetId);
+                    var player = repo.Get<Player>(x => x.Id == planet.Conqueror.Id);
+                    notificationService.SendPushNotification(player.FirebaseToken, "Construccion finalizada", "Finalizo la construccion de la sonda", "ConstructionsActivity");
+                }
+                catch (Exception ex)
+                {
+                    var message = ex.Message;
+                }
+            }
 
             //elimino el timer
             timer.Stop();
@@ -683,6 +818,20 @@ namespace Service.Construction
         public void FinishTrader(Timer timer, Trader trader, int planetId)
         {
             //mandar notificacion push al usuario
+            using (var context = new GeolaxiaContext())
+            {
+                try
+                {
+                    var repo = new RepositoryService(context);
+                    var planet = repo.Get<Planet>(x => x.Id == planetId);
+                    var player = repo.Get<Player>(x => x.Id == planet.Conqueror.Id);
+                    notificationService.SendPushNotification(player.FirebaseToken, "Construccion finalizada", "Finalizo la construccion del carguero", "ConstructionsActivity");
+                }
+                catch (Exception ex)
+                {
+                    var message = ex.Message;
+                }
+            }
 
             //elimino el timer
             timer.Stop();

@@ -56,6 +56,8 @@ namespace Geolaxia.Controllers
                 if (newAttack != null)
                 {
                     logger.Info("attack added succesfully");
+                    var darkMatterConsumption = CalculateDarkMatterConsumption(attack);
+                    planetService.UseResources(attack.AttackerPlanet.Id, new Cost{DarkMatterCost = darkMatterConsumption});
                     SetTimer(attack);
 
                     var response = new ApiResponse { Status = new Status { Result = "ok", Description = "" } };
@@ -89,9 +91,22 @@ namespace Geolaxia.Controllers
             aTimer = new Timer(msUntilArrival);
             // Hook up the Elapsed event for the timer. 
             aTimer.Elapsed += (sender, e) => service.PerformAttack(aTimer, attack);
-            aTimer.AutoReset = true;
+            aTimer.AutoReset = false;
             aTimer.Enabled = true;
             aTimer.Start();
+        }
+
+        private int CalculateDarkMatterConsumption(Attack attack)
+        {
+            // Figure how much time until arrival
+            DateTime departure = attack.FleetDeparture;
+            DateTime arrival = attack.FleetArrival;
+
+            //calculo el doble del tiempo porque tengo que tomar el tiempo de ida y de vuelta
+            var hsUntilArrival = (arrival - departure).TotalHours * 2;
+
+            var darkMatterConsumption = attack.Fleet.Sum(ship => ship.DarkMatterConsumption*hsUntilArrival);
+            return Convert.ToInt32(darkMatterConsumption);
         }
 
         //api/attack/galaxies
@@ -185,7 +200,7 @@ namespace Geolaxia.Controllers
             logger.Info("getting fleet from planet: " + planetId);
             try
             {
-                IList<Ship> ships = shipService.GetByPlanet(planetId);
+                IList<Ship> ships = shipService.GetAvailableByPlanet(planetId);
                 var okResponse = new ApiResponse { Data = ships, Status = new Status { Result = "ok", Description = "" } };
                 var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
                 return json;

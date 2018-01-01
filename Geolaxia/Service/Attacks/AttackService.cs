@@ -8,6 +8,7 @@ using Service.Players;
 using System.Linq;
 using System.Timers;
 using Service.Defenses;
+using Service.Notification;
 using Service.Ships;
 
 namespace Service.Attacks
@@ -17,12 +18,14 @@ namespace Service.Attacks
         private readonly IRepositoryService repository;
         private IPlayerService playerService;
         private IPlanetService planetService;
+        private INotificationService notificationService;
 
-        public AttackService(IRepositoryService repository, IPlayerService playerService, IPlanetService planetService)
+        public AttackService(IRepositoryService repository, IPlayerService playerService, IPlanetService planetService, INotificationService notificationService)
         {
             this.repository = repository;
             this.playerService = playerService;
             this.planetService = planetService;
+            this.notificationService = notificationService;
         }
 
         public Attack Get(int id)
@@ -87,7 +90,7 @@ namespace Service.Attacks
                     var shipSv = new ShipService(repo);
                     var defenceSv = new DefenseService(repo);
 
-                    var defenseFleet = shipSv.GetByPlanet(attack.DestinationPlanet.Id);
+                    var defenseFleet = shipSv.GetAvailableByPlanet(attack.DestinationPlanet.Id);
                     var defenseCanons = defenceSv.GetCanons(attack.DestinationPlanet.Id);
                     var aud = defenseFleet.Sum(x => x.Attack) + defenseCanons.Sum(x => x.Attack);
 
@@ -99,6 +102,11 @@ namespace Service.Attacks
                     }
 
                     repo.SaveChanges();
+
+                    //notificacion push al usuario diciendo que se realizo el ataque y si gano o perdio
+                    var player = repo.Get<Player>(x => x.Id == attack.AttackerPlayer.Id);
+                    var attackerWon = aua >= defenseCanons.Sum(x => x.Defence) + defenseFleet.Sum(x => x.Defence);
+                    notificationService.SendPushNotification(player.FirebaseToken, "Ataque realizado", attackerWon ? "Has derrotado al enemigo" : "Has sido derrotado", "HomeActivity");
                 }
                 catch (Exception ex)
                 {

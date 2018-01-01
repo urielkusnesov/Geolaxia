@@ -77,7 +77,33 @@ namespace Geolaxia.Controllers
             logger.Info("getting mines to build from planet: " + planetId);
             try
             {
-                var mines = service.GetMinesToBuild(planetId);
+                var minesBuildingTime = service.GetMinesToBuild(planetId);
+                var okResponse = new ApiResponse { Data = minesBuildingTime, Status = new Status { Result = "ok", Description = "" } };
+                var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                return json;
+            }
+            catch (Exception ex)
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
+                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+                return json;
+            }
+        }
+
+        //api/construction/minebuildtime
+        [HttpPost]
+        public JObject MineBuildTIme(int planetId)
+        {
+            if (!ValidateToken())
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
+
+            logger.Info("getting mines to build from planet: " + planetId);
+            try
+            {
+                var mines = service.GetMinesBuildingTime(planetId);
                 var okResponse = new ApiResponse { Data = mines, Status = new Status { Result = "ok", Description = "" } };
                 var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
                 return json;
@@ -171,6 +197,32 @@ namespace Geolaxia.Controllers
             try
             {
                 var energyFacilities = service.GetEnergyFacilitiesToBuild(planetId);
+                var okResponse = new ApiResponse { Data = energyFacilities, Status = new Status { Result = "ok", Description = "" } };
+                var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                return json;
+            }
+            catch (Exception ex)
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
+                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+                return json;
+            }
+        }
+
+        //api/construction/energybuildtime
+        [HttpPost]
+        public JObject EnergyBuildTIme(int planetId)
+        {
+            if (!ValidateToken())
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
+
+            logger.Info("getting mines to build from planet: " + planetId);
+            try
+            {
+                var energyFacilities = service.GetEnergyFacilitiesBuildingTime(planetId);
                 var okResponse = new ApiResponse { Data = energyFacilities, Status = new Status { Result = "ok", Description = "" } };
                 var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
                 return json;
@@ -284,7 +336,7 @@ namespace Geolaxia.Controllers
             aTimer = new Timer(msUntilFinish);
             // Hook up the Elapsed event for the timer. 
             aTimer.Elapsed += (sender, e) => service.FinishMine(aTimer, mineDto);
-            aTimer.AutoReset = true;
+            aTimer.AutoReset = false;
             aTimer.Enabled = true;
             aTimer.Start();
         }
@@ -297,7 +349,7 @@ namespace Geolaxia.Controllers
             aTimer = new Timer(msUntilFinish);
             // Hook up the Elapsed event for the timer. 
             aTimer.Elapsed += (sender, e) => service.FinishEnergyFacility(aTimer, energyFacilityDto);
-            aTimer.AutoReset = true;
+            aTimer.AutoReset = false;
             aTimer.Enabled = true;
             aTimer.Start();
         }
@@ -316,6 +368,32 @@ namespace Geolaxia.Controllers
             try
             {
                 var hangar = service.GetCurrentHangar(planetId);
+                var okResponse = new ApiResponse { Data = hangar, Status = new Status { Result = "ok", Description = "" } };
+                var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                return json;
+            }
+            catch (Exception ex)
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
+                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+                return json;
+            }
+        }
+
+        //api/construction/hangarbuildtime
+        [HttpPost]
+        public JObject HangarBuildTIme(int planetId)
+        {
+            if (!ValidateToken())
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
+
+            logger.Info("getting mines to build from planet: " + planetId);
+            try
+            {
+                var hangar = service.GetHangarBuildingTime(planetId);
                 var okResponse = new ApiResponse { Data = hangar, Status = new Status { Result = "ok", Description = "" } };
                 var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
                 return json;
@@ -365,7 +443,7 @@ namespace Geolaxia.Controllers
             aTimer = new Timer(msUntilFinish);
             // Hook up the Elapsed event for the timer. 
             aTimer.Elapsed += (sender, e) => service.FinishHangar(aTimer, hangar);
-            aTimer.AutoReset = true;
+            aTimer.AutoReset = false;
             aTimer.Enabled = true;
             aTimer.Start();
         }
@@ -410,6 +488,32 @@ namespace Geolaxia.Controllers
             try
             {
                 var ships = shipService.GetShipsCost();
+                var okResponse = new ApiResponse { Data = ships, Status = new Status { Result = "ok", Description = "" } };
+                var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                return json;
+            }
+            catch (Exception ex)
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
+                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+                return json;
+            }
+        }
+
+        //api/construction/shipbuildtime
+        [HttpPost]
+        public JObject ShipBuildTIme(int planetId)
+        {
+            if (!ValidateToken())
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
+
+            logger.Info("getting mines to build from planet: " + planetId);
+            try
+            {
+                var ships = service.GetShipsBuildingTime(planetId);
                 var okResponse = new ApiResponse { Data = ships, Status = new Status { Result = "ok", Description = "" } };
                 var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
                 return json;
@@ -476,7 +580,7 @@ namespace Geolaxia.Controllers
             aTimer = new Timer(msUntilFinish);
             // Hook up the Elapsed event for the timer. 
             aTimer.Elapsed += (sender, e) => shipService.FinishShip(aTimer, ship);
-            aTimer.AutoReset = true;
+            aTimer.AutoReset = false;
             aTimer.Enabled = true;
             aTimer.Start();
         }
@@ -548,6 +652,32 @@ namespace Geolaxia.Controllers
             {
                 var traders = service.GetCurrentTraders(planetId);
                 var okResponse = new ApiResponse { Data = traders, Status = new Status { Result = "ok", Description = "" } };
+                var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                return json;
+            }
+            catch (Exception ex)
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = ex.Message } };
+                JObject json = JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+                return json;
+            }
+        }
+
+        //api/construction/otherbuildtime
+        [HttpPost]
+        public JObject OtherBuildTIme(int planetId)
+        {
+            if (!ValidateToken())
+            {
+                var response = new ApiResponse { Status = new Status { Result = "error", Description = "datos de sesión invalidos" } };
+                return JObject.Parse(JsonConvert.SerializeObject(response, Formatting.None));
+            }
+
+            logger.Info("getting mines to build from planet: " + planetId);
+            try
+            {
+                var others = service.GetOthersBuildingTime(planetId);
+                var okResponse = new ApiResponse { Data = others, Status = new Status { Result = "ok", Description = "" } };
                 var json = JObject.Parse(JsonConvert.SerializeObject(okResponse, Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
                 return json;
             }

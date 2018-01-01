@@ -8,6 +8,8 @@ namespace Service.Ships
     {
         Ship Get(int id);
 
+        IList<Ship> GetAvailableByPlanet(int planetId);
+
         IList<Ship> GetByPlanet(int planetId);
 
         IList<Ship> GetShipsCost();

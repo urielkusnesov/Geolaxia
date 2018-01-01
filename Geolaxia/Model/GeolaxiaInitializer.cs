@@ -9,8 +9,8 @@ namespace Model
         protected override void Seed(GeolaxiaContext context)
         {
             var players = new List<Player> { 
-                new Player { Id = 1, UserName = "Uriel", FirstName = "Uriel", LastName = "Kusnesov", Password = "a722c63db8ec8625af6cf71cb8c2d939" },
-                new Player { Id = 2, UserName = "Ramiro", FirstName = "Ramiro", LastName = "Doi", Password = "c1572d05424d0ecb2a65ec6a82aeacbf" }
+                new Player { Id = 1, UserName = "Uriel", FirstName = "Uriel", LastName = "Kusnesov", Password = "a722c63db8ec8625af6cf71cb8c2d939", Level = 1},
+                new Player { Id = 2, UserName = "Ramiro", FirstName = "Ramiro", LastName = "Doi", Password = "c1572d05424d0ecb2a65ec6a82aeacbf", Level = 1}
             };
 
             foreach (Player player in players)
@@ -118,9 +118,9 @@ namespace Model
 
             var colonizers = new List<Probe>
             {
-                new Probe { Planet = planets[0], EnableDate = DateTime.Now},
-                new Probe { Planet = planets[0], EnableDate = DateTime.Now},
-                new Probe { Planet = planets[0], EnableDate = DateTime.Now}
+                new Probe { Planet = planets[0], EnableDate = DateTime.Now, ShipType = ShipType.Probe},
+                new Probe { Planet = planets[0], EnableDate = DateTime.Now, ShipType = ShipType.Probe},
+                new Probe { Planet = planets[0], EnableDate = DateTime.Now, ShipType = ShipType.Probe}
             };
 
             foreach (Probe colonizer in colonizers)

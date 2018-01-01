@@ -12,6 +12,8 @@ namespace Service.Construction
 
         IList<Mine> GetMinesToBuild(int planetId);
 
+        IList<long> GetMinesBuildingTime(int planetId);
+
         Mine Add(Mine mine);
 
         Mine GetFromDTO(MineDTO mineDto);
@@ -28,6 +30,8 @@ namespace Service.Construction
 
         IList<EnergyFacility> GetEnergyFacilitiesToBuild(int planetId);
 
+        IList<long> GetEnergyFacilitiesBuildingTime(int planetId);
+
         EnergyFacility Add(EnergyFacility energyFacility);
 
         void AddSolarPanels(int planetId, int qtt);
@@ -40,11 +44,15 @@ namespace Service.Construction
 
         Hangar GetCurrentHangar(int planetId);
 
+        IList<long> GetHangarBuildingTime(int planetId);
+
         Hangar AddHangar(int planetId);
 
         void FinishHangar(Timer timer, Hangar hangar);
 
         IList<Ship> GetCurrentShips(int planetId);
+
+        IList<long> GetShipsBuildingTime(int planetId);
 
         void AddShips(int planetId, int qtt, ShipType shipType);
 
@@ -57,6 +65,8 @@ namespace Service.Construction
         IList<Probe> GetCurrentProbes(int planetId);
 
         IList<Trader> GetCurrentTraders(int planetId);
+
+        IList<long> GetOthersBuildingTime(int planetId);
 
         Shield AddShield(int planetId);
 

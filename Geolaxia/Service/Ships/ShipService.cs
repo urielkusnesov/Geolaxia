@@ -2,6 +2,8 @@
 using Model;
 using Repository;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Timers;
 using Model.Enum;
 
@@ -21,9 +23,20 @@ namespace Service.Ships
             return repository.Get<Ship>(id);
         }
 
+        public IList<Ship> GetAvailableByPlanet(int planetId)
+        {
+            var attacks = repository.List<Attack>(x => x.AttackerPlanet.Id == planetId && (x.FleetArrival < DateTime.Now
+                || DbFunctions.DiffSeconds(x.FleetArrival, x.FleetDeparture) > DbFunctions.DiffSeconds(DateTime.Now, x.FleetArrival)));
+            var attackingShipsIds = attacks.SelectMany(x => x.Fleet.Select(y => y.Id));
+
+            return repository.List<Ship>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now && !attackingShipsIds.Contains(x.Id)
+                && (x.ShipType == ShipType.X || x.ShipType == ShipType.Y || x.ShipType == ShipType.Z));
+        }
+
         public IList<Ship> GetByPlanet(int planetId)
         {
-            return repository.List<Ship>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now);
+            return repository.List<Ship>(x => x.Planet.Id == planetId && x.EnableDate < DateTime.Now
+                && (x.ShipType == ShipType.X || x.ShipType == ShipType.Y || x.ShipType == ShipType.Z));
         }
 
         public IList<Ship> GetShipsCost()
