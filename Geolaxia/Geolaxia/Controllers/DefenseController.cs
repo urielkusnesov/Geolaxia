@@ -313,8 +313,8 @@ namespace Geolaxia.Controllers
 
         private void MandarPushCanonTerminado(int planetId, int cant)
         {
-            //var msUntilFinish = cant * this.CANON_CONST_TIEMPO * 60000;
-            var msUntilFinish = 5000;
+            var msUntilFinish = cant * this.CANON_CONST_TIEMPO * 60000;
+            //var msUntilFinish = 5000;
 
             // Create a timer with a timeToArrival interval.
             aTimer = new Timer(msUntilFinish);
