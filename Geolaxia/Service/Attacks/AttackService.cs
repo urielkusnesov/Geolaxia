@@ -63,7 +63,7 @@ namespace Service.Attacks
             {
                 Id = dto.Id,
                 AttackerPlayer = playerService.Get(dto.AttackerPlayerId),
-                AttackerPlanet = planetService.Get(dto.DestinationPlanetId),
+                AttackerPlanet = planetService.Get(dto.AttackerPlanetId),
                 DestinationPlayer = playerService.Get(dto.DestinationPlayerId),
                 DestinationPlanet = planetService.Get(dto.DestinationPlanetId),
                 Fleet = repository.List<Ship>(x => attackFleet.Contains(x.Id)).ToList(),

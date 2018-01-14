@@ -25,7 +25,7 @@ namespace Service.Ships
 
         public IList<Ship> GetAvailableByPlanet(int planetId)
         {
-            var attacks = repository.List<Attack>(x => x.AttackerPlanet.Id == planetId && (x.FleetArrival < DateTime.Now
+            var attacks = repository.List<Attack>(x => x.AttackerPlanet.Id == planetId && (x.FleetArrival > DateTime.Now
                 || DbFunctions.DiffSeconds(x.FleetArrival, x.FleetDeparture) > DbFunctions.DiffSeconds(DateTime.Now, x.FleetArrival)));
             var attackingShipsIds = attacks.SelectMany(x => x.Fleet.Select(y => y.Id));
 

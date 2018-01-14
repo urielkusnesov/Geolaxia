@@ -40,30 +40,28 @@ namespace Model
 
         public int CalculateLevel()
         {
-            if (this.level <= 5)
+            if (ResourcesUsed < 600)
             {
-                return Math.Abs((ResourcesUsed - GetResourcesByLevel(this.level - 1)) / 300);
+                return 1;
             }
-            else
+            else if (ResourcesUsed >= 600 && ResourcesUsed < 1500)
             {
-                return Math.Abs((ResourcesUsed - GetResourcesByLevel(this.level - 1)) / 150);
+                return 2;
             }
-        }
+            else if (ResourcesUsed >= 1500 && ResourcesUsed < 2700)
+            {
+                return 3;
+            }
+            else if (ResourcesUsed >= 2700 && ResourcesUsed < 4200)
+            {
+                return 4;
+            }
+            else if (ResourcesUsed >= 4200)
+            {
+                return 5;
+            }
 
-        public int GetResourcesByLevel(int level)
-        {
-            if (level <= 1)
-            {
-                return 0;
-            }
-            if (level <= 5)
-            {
-                return level * 300 + GetResourcesByLevel(level - 1);                
-            }
-            else
-            {
-                return level * 150 + GetResourcesByLevel(level - 1);
-            }
+            return 1;
         }
     }
 }

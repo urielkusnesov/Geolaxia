@@ -92,6 +92,7 @@ namespace Service.Planets
             planet.Crystal -= cost.CrystalCost;
             planet.Metal -= cost.MetalCost;
             planet.DarkMatter -= cost.DarkMatterCost;
+            planet.Conqueror.ResourcesUsed += (cost.CrystalCost + cost.MetalCost + cost.DarkMatterCost);
 
             repository.SaveChanges();
         }
